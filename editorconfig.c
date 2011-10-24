@@ -28,9 +28,8 @@ static int handler(void* user, const char* section, const char* name, const char
 
 void split_file_path(char** directory, char** filename, const char* full_path)
 {
-    char* path_char;
+    char* path_char = strrchr(full_path, '/');
 
-    path_char = strrchr(full_path, '/');
     if (path_char == NULL) {
         *directory = NULL;
         *filename = NULL;
