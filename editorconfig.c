@@ -73,14 +73,12 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    if (config.indent_style != NULL)
-    {
+    if (config.indent_style != NULL) {
         printf("indent_style=");
         puts(config.indent_style);
     }
 
-    if (config.tab_width != NULL)
-    {
+    if (config.tab_width != NULL) {
         printf("tab_width=");
         puts(config.tab_width);
     }
