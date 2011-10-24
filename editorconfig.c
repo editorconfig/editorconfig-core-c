@@ -108,8 +108,7 @@ int main(int argc, char* argv[])
 
     full_filename = to_absolute_path(argv[1]);
 
-    if (full_filename == NULL)
-    {
+    if (full_filename == NULL) {
         fprintf(stderr, "Unable to obtain the full path.\n");
         return 1;
     }
