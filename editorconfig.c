@@ -16,10 +16,10 @@ static int handler(void* user, const char* section, const char* name, const char
     configuration* config = (configuration*)user;
 
     if (fnmatch(section, config->filename, FNM_PATHNAME) == 0) {
-        if (strcmp(name, "indent_style")) {
+        if (strcmp(name, "indent_style") == 0) {
             config->indent_style = strdup(value);
         }
-        else if (strcmp(name, "tab_width")) {
+        else if (strcmp(name, "tab_width") == 0) {
             config->tab_width = atoi(value);
         }
     }
