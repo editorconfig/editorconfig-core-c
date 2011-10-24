@@ -12,9 +12,12 @@ typedef struct
     const char* tab_width;
 } configuration;
 
-static int handler(void* user, const char* section, const char* name, const char* value)
+/*
+ * Accept INI property value and store known values in configuration struct.
+ */
+static int handler(void* conf, const char* section, const char* name, const char* value)
 {
-    configuration* config = (configuration*)user;
+    configuration* config = (configuration*)conf;
 
     if (fnmatch(section, config->filename, FNM_PATHNAME) == 0) {
         if (strcmp(name, "indent_style") == 0) {
@@ -26,9 +29,15 @@ static int handler(void* user, const char* section, const char* name, const char
     }
 }
 
-void split_file_path(char** directory, char** filename, const char* full_path)
+/* 
+ * Split an absolute file path into directory and filename parts.
+ *
+ * If absolute_path does not contain a path separator, set directory and
+ * filename to NULL pointers.
+ */ 
+void split_file_path(char** directory, char** filename, const char* absolute_path)
 {
-    char* path_char = strrchr(full_path, '/');
+    char* path_char = strrchr(absolute_path, '/');
 
     if (path_char == NULL) {
         *directory = NULL;
@@ -36,7 +45,7 @@ void split_file_path(char** directory, char** filename, const char* full_path)
         return;
     }
 
-    *directory = strndup(full_path, path_char - full_path);
+    *directory = strndup(absolute_path, path_char - absolute_path);
     *filename = strndup(path_char+1, strlen(path_char)-1);
 }
 
