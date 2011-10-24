@@ -26,7 +26,7 @@ static int handler(void* user, const char* section, const char* name, const char
     }
 }
 
-void split_file_path(char** directory, char** filename, char* full_path)
+void split_file_path(char** directory, char** filename, const char* full_path)
 {
     char* path_char;
 
