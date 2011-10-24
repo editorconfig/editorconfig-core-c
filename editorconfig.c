@@ -48,6 +48,9 @@ int main(int argc, char* argv[])
     char* config_file;
     configuration config;
 
+    /* set the config to zero before we use it */
+    memset(&config, 0, sizeof(config));
+
     if (argc != 2) {
         printf("Usage: %s filename\n", argv[0]);
         return 1;
@@ -69,7 +72,13 @@ int main(int argc, char* argv[])
     if (ini_parse(config_file, handler, &config) < 0) {
         return 1;
     }
-    printf("indent_style=%s\ntab_width=%d\n",
-        config.indent_style, config.tab_width);
+
+    if (config.indent_style != NULL)
+    {
+        printf("indent_style=");
+        puts(config.indent_style);
+    }
+
+    printf("tab_width=%d\n", config.tab_width);
     return 0;
 }
