@@ -8,7 +8,7 @@ typedef struct
 {
     const char* filename;
     const char* indent_style;
-    int tab_width;
+    const char* tab_width;
 } configuration;
 
 static int handler(void* user, const char* section, const char* name, const char* value)
@@ -20,7 +20,7 @@ static int handler(void* user, const char* section, const char* name, const char
             config->indent_style = strdup(value);
         }
         else if (strcmp(name, "tab_width") == 0) {
-            config->tab_width = atoi(value);
+            config->tab_width = strdup(value);
         }
     }
 }
@@ -79,6 +79,11 @@ int main(int argc, char* argv[])
         puts(config.indent_style);
     }
 
-    printf("tab_width=%d\n", config.tab_width);
+    if (config.tab_width != NULL)
+    {
+        printf("tab_width=");
+        puts(config.tab_width);
+    }
+
     return 0;
 }
