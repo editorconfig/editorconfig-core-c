@@ -125,8 +125,9 @@ int main(int argc, char* argv[])
     strcpy(config_file, directory);
     strcat(config_file, "/.editorconfig");
 
+    /* If no editorconfig file found then exit */
     if (ini_parse(config_file, handler, &config) < 0) {
-        return 1;
+        return 0;
     }
 
     if (config.indent_style != NULL) {
