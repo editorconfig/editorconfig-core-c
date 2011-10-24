@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
     memset(&config, 0, sizeof(config));
 
     if (argc != 2) {
-        printf("Usage: %s filename\n", argv[0]);
+        fprintf(stderr, "Usage: %s filename\n", argv[0]);
         return 1;
     }
 
@@ -116,7 +116,7 @@ int main(int argc, char* argv[])
 
     split_file_path(&directory, &filename, full_filename);
     if (directory == NULL) {
-        printf("Error: filename must be full file path\n");
+        fprintf(stderr, "Error: filename must be full file path\n");
         return 1;
     }
 
