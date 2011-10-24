@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
 
     config.filename = filename;
 
-    config_file = malloc(strlen(directory) + 14);
+    config_file = malloc(strlen(directory) + sizeof("/.editorconfig")/sizeof(char));
     strcpy(config_file, directory);
     strcat(config_file, "/.editorconfig");
 
