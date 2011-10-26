@@ -27,7 +27,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include "ini.h"
 #include "fnmatch.h"
 
@@ -75,55 +74,6 @@ void split_file_path(char** directory, char** filename, const char* absolute_pat
     *filename = strndup(path_char+1, strlen(path_char)-1);
 }
 
-/*
- * Convert a relative path to an absolute path.
- * 
- * If relative_path is an empty string, returns current directory with a slash
- * (or backslash) appending to its end;
- * if relative_path is already an absolute path, this function just makes a
- * copy of relative_path and returns the pointer;
- * if relative_path is a normal file name, returns the full path of the file.
- * 
- * If any error happens, it returns NULL.
- *
- * The return value is malloced, so you should free it after you do not need
- * the return value.
- *
- * TODO: This function now only supports UNIX style file path. We should also
- * make it support DOS path style.
- */
-char* to_absolute_path(const char* relative_path)
-{
-    long            size;
-    char*           buf;
-    char*           abs_path;
-
-    /* if relative_path is absolute path, return it directly */
-    if (relative_path != NULL && *relative_path == '/')
-        return strdup(relative_path);
-
-    size = pathconf(".", _PC_PATH_MAX);
-
-    if ((buf = (char*) malloc((size_t) size)) == NULL)
-        return NULL;
-
-    if (getcwd(buf, (size_t) size) == NULL) {
-        free(buf);
-        return NULL;
-    }
-
-    strcat(buf, "/");
-    if (relative_path != NULL)
-        strcat(buf, relative_path);
-
-    /* we duplicate buf because buf is usually much longer than the path
-     * length */
-    abs_path = strdup(buf);
-    free(buf);
-
-    return abs_path;
-}
-
 int main(int argc, char* argv[])
 {
     char* full_filename;
@@ -140,7 +90,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    full_filename = to_absolute_path(argv[1]);
+    full_filename = argv[1];
 
     if (full_filename == NULL) {
         fprintf(stderr, "Unable to obtain the full path.\n");
