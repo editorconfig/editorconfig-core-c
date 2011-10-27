@@ -82,3 +82,20 @@ char* strndup(const char* str, size_t n)
 
 #endif /* HAVE_STRNDUP */
 
+/*
+ * replace oldc with newc in the string str
+ */
+char* str_replace(char* str, char oldc, char newc)
+{
+    char*   p;
+
+    if (str == NULL)
+        return NULL;
+
+    for (p = str; *p != '\0'; p++)
+        if (*p == oldc)
+            *p = newc;
+
+    return str;
+}
+

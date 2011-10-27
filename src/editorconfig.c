@@ -146,6 +146,11 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+#ifdef WIN32
+    /* replace all backslashes with slashes on Windows */
+    str_replace(full_filename, '\\', '/');
+#endif
+
     split_file_path(&directory, &filename, full_filename);
     if (directory == NULL) {
         fprintf(stderr, "Error: filename must be full file path\n");

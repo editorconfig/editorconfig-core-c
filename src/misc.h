@@ -34,5 +34,6 @@
 #ifndef HAVE_STRNDUP
 char* strndup(const char* str, size_t n);
 #endif
+char* str_replace(char* str, char oldc, char newc);
 
 #endif /* __MISC_H__ */

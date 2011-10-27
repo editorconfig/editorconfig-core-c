@@ -1,2 +1,4 @@
+#cmakedefine UNIX
+#cmakedefine WIN32
 #cmakedefine HAVE_STRNDUP
 
