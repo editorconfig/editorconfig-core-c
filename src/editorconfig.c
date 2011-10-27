@@ -31,6 +31,7 @@
 #include "misc.h"
 #include "ini.h"
 #include "fnmatch.h"
+#include "editorconfig.h"
 
 typedef struct
 {
@@ -139,7 +140,9 @@ int main(int argc, char* argv[])
     memset(&config, 0, sizeof(config));
 
     if (argc != 2) {
-        fprintf(stderr, "Usage: %s filename\n", argv[0]);
+        fprintf(stderr,"%s Version %d.%d\n", argv[0],
+                editorconfig_VERSION_MAJOR, editorconfig_VERSION_MINOR);
+        fprintf(stderr, "Usage: %s FILENAME\n", argv[0]);
         return 1;
     }
 
