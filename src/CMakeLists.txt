@@ -45,4 +45,5 @@ set(editorcinfig_SRCS
     misc.c
     )
 add_executable(editorconfig ${editorcinfig_SRCS})
+install(TARGETS editorconfig DESTINATION bin)
 
