@@ -111,7 +111,7 @@ char** get_filenames(const char* path, const char* filename) {
     currdir = strdup(path);
     for (i = 0; i < slashes; i++) {
         split_file_path(&currdir, NULL, currdir);
-        files[i] = malloc(strlen(currdir) + strlen(filename));
+        files[i] = malloc(strlen(currdir) + strlen(filename) + 1);
         strcpy(files[i], currdir);
         strcat(files[i], filename);
     }
