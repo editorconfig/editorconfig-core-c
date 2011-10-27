@@ -87,7 +87,8 @@ void split_file_path(char** directory, char** filename,
 /*
  * Return the number of slashes in given filename
  */
-int count_slashes(const char* filename) {
+int count_slashes(const char* filename)
+{
     int slash_count;
     for (slash_count = 0; *filename != '\0'; filename++) {
         if (*filename == '/') {
@@ -101,7 +102,8 @@ int count_slashes(const char* filename) {
  * Return an array of full filenames for files in every directory in and above
  * the given path with the name of the relative filename given.
  */
-char** get_filenames(const char* path, const char* filename) {
+char** get_filenames(const char* path, const char* filename)
+{
     char* currdir;
     char** files;
     int slashes = count_slashes(path);
