@@ -24,6 +24,15 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+# config.h will be generated in src/auto, we should include it.
+include_directories(BEFORE
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}/auto)
+
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
+    ${CMAKE_CURRENT_BINARY_DIR}/auto/config.h)
+
 set(editorcinfig_SRCS
     editorconfig.c
     fnmatch.c
