@@ -31,9 +31,6 @@ include_directories(BEFORE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}/auto)
 
-set (editorconfig_VERSION_MAJOR 0)
-set (editorconfig_VERSION_MINOR 2)
-
 check_function_exists(strdup HAVE_STRDUP)
 check_function_exists(strndup HAVE_STRNDUP)
 
