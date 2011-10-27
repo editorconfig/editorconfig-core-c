@@ -31,6 +31,9 @@
 
 #include <stddef.h>
 
+#ifndef HAVE_STRDUP
+char* strdup(const char *str);
+#endif
 #ifndef HAVE_STRNDUP
 char* strndup(const char* str, size_t n);
 #endif

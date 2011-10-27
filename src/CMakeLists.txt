@@ -31,6 +31,7 @@ include_directories(BEFORE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}/auto)
 
+check_function_exists(strdup HAVE_STRDUP)
 check_function_exists(strndup HAVE_STRNDUP)
 
 configure_file(
