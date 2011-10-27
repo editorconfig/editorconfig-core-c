@@ -41,6 +41,7 @@ set(editorcinfig_SRCS
     editorconfig.c
     fnmatch.c
     ini.c
+    misc.c
     )
 add_executable(editorconfig ${editorcinfig_SRCS})
 
