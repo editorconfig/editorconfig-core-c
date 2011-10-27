@@ -55,6 +55,8 @@ static int handler(void* conf, const char* section, const char* name,
             config->tab_width = strdup(value);
         }
     }
+
+    return 1;
 }
 
 /* 
