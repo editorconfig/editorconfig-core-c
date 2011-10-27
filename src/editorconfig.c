@@ -127,6 +127,15 @@ char** get_filenames(const char* path, const char* filename)
     return files;
 }
 
+static void version(FILE* stream, char* command) {
+    fprintf(stream,"%s Version %d.%d\n", command,
+            editorconfig_VERSION_MAJOR, editorconfig_VERSION_MINOR);
+}
+
+static void usage(FILE* stream, char* command) {
+    fprintf(stream, "Usage: %s FILENAME\n", command);
+}
+
 int main(int argc, char* argv[])
 {
     char* full_filename;
@@ -140,16 +149,22 @@ int main(int argc, char* argv[])
     memset(&config, 0, sizeof(config));
 
     if (argc != 2) {
-        fprintf(stderr,"%s Version %d.%d\n", argv[0],
-                editorconfig_VERSION_MAJOR, editorconfig_VERSION_MINOR);
-        fprintf(stderr, "Usage: %s FILENAME\n", argv[0]);
+        version(stderr, argv[0]);
+        usage(stderr, argv[0]);
         return 1;
+    } else if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-v") == 0) {
+        version(stdout, argv[0]);
+        return 0;
+    } else if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0) {
+        version(stdout, argv[0]);
+        usage(stdout, argv[0]);
+        return 0;
     }
 
     full_filename = argv[1];
 
     if (full_filename == NULL) {
-        fprintf(stderr, "Unable to obtain the full path.\n");
+        fprintf(stderr, "Error: Unable to obtain the full path.\n");
         return 1;
     }
 
