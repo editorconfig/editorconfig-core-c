@@ -116,6 +116,8 @@ char** get_filenames(const char* path, const char* filename) {
         strcat(files[i], filename);
     }
 
+    files[slashes] = NULL;
+
     free(currdir);
     return files;
 }
