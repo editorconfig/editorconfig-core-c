@@ -42,7 +42,8 @@ typedef struct
 /*
  * Accept INI property value and store known values in configuration struct.
  */
-static int handler(void* conf, const char* section, const char* name, const char* value)
+static int handler(void* conf, const char* section, const char* name,
+        const char* value)
 {
     configuration* config = (configuration*)conf;
 
@@ -62,7 +63,8 @@ static int handler(void* conf, const char* section, const char* name, const char
  * If absolute_path does not contain a path separator, set directory and
  * filename to NULL pointers.
  */ 
-void split_file_path(char** directory, char** filename, const char* absolute_path)
+void split_file_path(char** directory, char** filename,
+        const char* absolute_path)
 {
     char* path_char = strrchr(absolute_path, '/');
 
