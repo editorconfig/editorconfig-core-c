@@ -103,11 +103,11 @@ char** get_filenames(const char* path, const char* filename) {
     char* currdir;
     char** files;
     int slashes = count_slashes(path);
+    int i;
 
     files = malloc((slashes+1)*sizeof(char*));
     memset(files, 0, sizeof(files));
 
-    int i;
     currdir = strdup(path);
     for (i = 0; i < slashes; i++) {
         split_file_path(&currdir, NULL, currdir);
