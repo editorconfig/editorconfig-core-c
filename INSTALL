@@ -1,0 +1,37 @@
+1. Install from source
+
+Before install, you need to install cmake <http://www.cmake.org>. Cmake
+installation instruction could be found here
+<http://www.cmake.org/cmake/help/install.html>.
+
+Make sure cmake is in your PATH environment varible. Switch to the source
+directory of editorconfig and execute the following command:
+
+CLI-prompt> cmake .
+
+The 'CLI-prompt>' could be a '$' on bash or '%' on a C Shell, or something like
+'C:\>' on Windows.
+
+If succeeded, the project file will be generated. On UNIX/Linux, this is often a
+Makefile, then you could type "make" to compile editorconfig. But if you are
+using some other compilers, then compilation command would differ. For example,
+if you generate a NMake Makefile and you want to use Microsoft Visual C++ to
+build editorconfig, then build command would be "nmake".
+
+After the compilation succeeds, use the following command to install (require
+root or admin privilege):
+
+CLI-prompt> make install
+
+This command will copy all the file you need to appropriate directories.
+
+
+2. Install from a binary package
+
+Binary packages are not available currently. But don't worry, they will be
+available soon.
+
+
+Trey Hunter and Hong Xu
+2011/10/27
+
