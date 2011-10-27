@@ -24,10 +24,14 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+include(CheckFunctionExists)
+
 # config.h will be generated in src/auto, we should include it.
 include_directories(BEFORE
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}/auto)
+
+check_function_exists(strndup HAVE_STRNDUP)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
