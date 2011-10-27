@@ -31,7 +31,6 @@
 #include "misc.h"
 #include "ini.h"
 #include "fnmatch.h"
-#include "editorconfig.h"
 
 typedef struct
 {
