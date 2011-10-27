@@ -1,4 +1,9 @@
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
+
 #cmakedefine UNIX
 #cmakedefine WIN32
 #cmakedefine HAVE_STRNDUP
+
+#endif /* !__CONFIG_H__ */
 
