@@ -70,8 +70,50 @@ void split_file_path(char** directory, char** filename, const char* absolute_pat
         return;
     }
 
-    *directory = strndup(absolute_path, path_char - absolute_path);
-    *filename = strndup(path_char+1, strlen(path_char)-1);
+    if (directory != NULL) {
+        *directory = strndup(absolute_path, path_char - absolute_path);
+    }
+    if (filename != NULL) {
+        *filename = strndup(path_char+1, strlen(path_char)-1);
+    }
+}
+
+/*
+ * Return the number of slashes in given filename
+ */
+int count_slashes(const char* filename) {
+    int slash_count;
+    for (slash_count = 0; *filename != '\0'; filename++) {
+        if (*filename == '/') {
+            slash_count++;
+        }
+    }
+    return slash_count;
+}
+
+/*
+ * Return an array of full filenames for files in every directory in and above
+ * the given path with the name of the relative filename given.
+ */
+char** get_filenames(const char* path, const char* filename) {
+    char* currdir;
+    char** files;
+    int slashes = count_slashes(path);
+
+    files = malloc((slashes+1)*sizeof(char*));
+    memset(files, 0, sizeof(files));
+
+    int i;
+    currdir = strdup(path);
+    for (i = 0; i < slashes; i++) {
+        split_file_path(&currdir, NULL, currdir);
+        files[i] = malloc(strlen(currdir) + strlen(filename));
+        strcpy(files[i], currdir);
+        strcat(files[i], filename);
+    }
+
+    free(currdir);
+    return files;
 }
 
 int main(int argc, char* argv[])
@@ -79,7 +121,8 @@ int main(int argc, char* argv[])
     char* full_filename;
     char* directory;
     char* filename;
-    char* config_file;
+    char** config_files;
+    char** config_file;
     configuration config;
 
     /* set the config to zero before we use it */
@@ -105,13 +148,9 @@ int main(int argc, char* argv[])
 
     config.filename = filename;
 
-    config_file = malloc(strlen(directory) + sizeof("/.editorconfig")/sizeof(char));
-    strcpy(config_file, directory);
-    strcat(config_file, "/.editorconfig");
-
-    /* If no editorconfig file found then exit */
-    if (ini_parse(config_file, handler, &config) < 0) {
-        return 0;
+    config_files = get_filenames(full_filename, "/.editorconfig");
+    for (config_file = config_files; *config_file != NULL; config_file++) {
+        ini_parse(*config_file, handler, &config);
     }
 
     if (config.indent_style != NULL) {
