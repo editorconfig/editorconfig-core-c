@@ -38,7 +38,7 @@
 #cmakedefine HAVE_STRDUP
 #cmakedefine HAVE_STRNDUP
 
-#endif /* !__CONFIG_H__ */
-
 #define editorconfig_VERSION_MAJOR @editorconfig_VERSION_MAJOR@
 #define editorconfig_VERSION_MINOR @editorconfig_VERSION_MINOR@
+
+#endif /* !__CONFIG_H__ */
