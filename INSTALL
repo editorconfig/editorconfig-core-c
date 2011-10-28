@@ -4,7 +4,7 @@ Before install, you need to install cmake <http://www.cmake.org>. Cmake
 installation instruction could be found here
 <http://www.cmake.org/cmake/help/install.html>.
 
-Make sure cmake is in your PATH environment varible. Switch to the source
+Make sure cmake is in your PATH environment varible. Switch to the root
 directory of editorconfig and execute the following command:
 
 CLI-prompt> cmake .
