@@ -1,4 +1,4 @@
-[Editorconfig][main_site]
+[Editorconfig][]
 ==============
 
 Editorconfig makes it easy to maintain the correct coding style when switching
@@ -32,7 +32,7 @@ for Python files:
 Supported editors
 -----------------
 
-The only editor currently supported is [vim][vim_plugin].  If you want to help
+The only editor currently supported is [vim][].  If you want to help
 add support for your favorite editor, see the Contributing section below.
 
 
@@ -59,9 +59,9 @@ To install the Editorconfig core from source see the `INSTALL` file.
 Getting Help
 ------------
 
-For help with Editorconfig, please write to our [mailing list][mailing_list]
+For help with Editorconfig, please write to our [mailing list][].
 
 
-[main_site]: http://treyhunner.github.com/editorconfig
-[mailing_list]: http://groups.google.com/group/editorconfig
-[vim_plugin]: https://github.com/treyhunner/editorconfig-vim
+[Editorconfig]: http://treyhunner.github.com/editorconfig "Editorconfig Homepage"
+[mailing list]: http://groups.google.com/group/editorconfig "Editorconfig mailing list"
+[vim]: https://github.com/treyhunner/editorconfig-vim "Editorconfig vim plugin"
