@@ -118,12 +118,12 @@ char** get_filenames(const char* path, const char* filename)
     return files;
 }
 
-static void version(FILE* stream, char* command) {
+static void version(FILE* stream, const char* command) {
     fprintf(stream,"%s Version %d.%d\n", command,
             editorconfig_VERSION_MAJOR, editorconfig_VERSION_MINOR);
 }
 
-static void usage(FILE* stream, char* command) {
+static void usage(FILE* stream, const char* command) {
     fprintf(stream, "Usage: %s FILENAME\n", command);
 }
 
