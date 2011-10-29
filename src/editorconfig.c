@@ -35,8 +35,6 @@
 typedef struct
 {
     const char* filename;
-    const char* indent_style;
-    const char* tab_width;
 } configuration;
 
 /*
@@ -47,14 +45,8 @@ static int handler(void* conf, const char* section, const char* name,
 {
     configuration* config = (configuration*)conf;
 
-    if (fnmatch(section, config->filename, FNM_PATHNAME) == 0) {
-        if (strcmp(name, "indent_style") == 0) {
-            config->indent_style = strdup(value);
-        }
-        else if (strcmp(name, "tab_width") == 0) {
-            config->tab_width = strdup(value);
-        }
-    }
+    if (fnmatch(section, config->filename, FNM_PATHNAME) == 0)
+        printf("%s=%s\n", name, value);
 
     return 1;
 }
@@ -183,16 +175,6 @@ int main(int argc, char* argv[])
     config_files = get_filenames(full_filename, "/.editorconfig");
     for (config_file = config_files; *config_file != NULL; config_file++) {
         ini_parse(*config_file, handler, &config);
-    }
-
-    if (config.indent_style != NULL) {
-        printf("indent_style=");
-        puts(config.indent_style);
-    }
-
-    if (config.tab_width != NULL) {
-        printf("tab_width=");
-        puts(config.tab_width);
     }
 
     return 0;
