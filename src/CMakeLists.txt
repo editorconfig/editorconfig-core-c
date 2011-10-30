@@ -38,12 +38,12 @@ configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/auto/config.h)
 
-set(editorcinfig_SRCS
+set(editorconfig_SRCS
     editorconfig.c
     fnmatch.c
     ini.c
     main.c
     misc.c
     )
-add_executable(editorconfig ${editorcinfig_SRCS})
+add_executable(editorconfig ${editorconfig_SRCS})
 install(TARGETS editorconfig DESTINATION bin)
