@@ -24,31 +24,78 @@
  * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <config.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "global.h"
+#include "editorconfig.h"
 #include "misc.h"
 #include "ini.h"
 #include "fnmatch.h"
 
 typedef struct
 {
-    const char* filename;
+    char*       filename;
 } configuration;
 
+typedef struct
+{
+    configuration                   conf;
+
+    editorconfig_name_value*        out_values;
+    int                             current_value_count;
+    int                             max_value_count;
+} handler_first_param;
+
 /*
- * Accept INI property value and store known values in configuration struct.
+ * Accept INI property value and store known values in handler_first_param
+ * struct.
  */
-static int handler(void* conf, const char* section, const char* name,
+static int handler(void* hfp, const char* section, const char* name,
         const char* value)
 {
-    configuration* config = (configuration*)conf;
+#define VALUE_COUNT_INITIAL      10
+#define VALUE_COUNT_INCREASEMENT 10
 
-    if (fnmatch(section, config->filename, FNM_PATHNAME) == 0)
-        printf("%s=%s\n", name, value);
+    handler_first_param* hfparam = (handler_first_param*)hfp;
+
+    if (fnmatch(section, hfparam->conf.filename, FNM_PATHNAME) == 0) {
+
+        /* For the first time we came here, hfparam->out_values is NULL */
+        if (hfparam->out_values == NULL) {
+            hfparam->out_values = (editorconfig_name_value*)malloc(
+                    sizeof(editorconfig_name_value) * 2 * VALUE_COUNT_INITIAL);
+
+            if (hfparam->out_values == NULL)
+                return 0;
+
+            hfparam->max_value_count = VALUE_COUNT_INITIAL;
+            hfparam->current_value_count = 0;
+        }
+
+        /* if the space is not enough, allocate more before add the new name
+         * and value */
+        if (hfparam->current_value_count >= hfparam->max_value_count) {
+            editorconfig_name_value*        new_values;
+            int                             new_max_value_count;
+            
+            new_max_value_count = hfparam->current_value_count +
+                VALUE_COUNT_INCREASEMENT;
+            new_values = (editorconfig_name_value*)realloc(hfparam->out_values,
+                    sizeof(editorconfig_name_value) * 2 * new_max_value_count);
+
+            if (new_values == NULL) /* error occured */
+                return 0;
+
+            hfparam->out_values = new_values;
+            hfparam->max_value_count = new_max_value_count;
+        }
+
+        hfparam->out_values[hfparam->current_value_count].name = strdup(name);
+        hfparam->out_values[hfparam->current_value_count].value = strdup(value);
+        ++ hfparam->current_value_count;
+    }
 
     return 1;
+#undef VALUE_COUNT_INITIAL
+#undef VALUE_COUNT_INCREASEMENT
 }
 
 /* 
@@ -57,14 +104,16 @@ static int handler(void* conf, const char* section, const char* name,
  * If absolute_path does not contain a path separator, set directory and
  * filename to NULL pointers.
  */ 
-void split_file_path(char** directory, char** filename,
+static void split_file_path(char** directory, char** filename,
         const char* absolute_path)
 {
     char* path_char = strrchr(absolute_path, '/');
 
     if (path_char == NULL) {
-        *directory = NULL;
-        *filename = NULL;
+        if (directory)
+            *directory = NULL;
+        if (filename)
+            *filename = NULL;
         return;
     }
 
@@ -79,7 +128,7 @@ void split_file_path(char** directory, char** filename,
 /*
  * Return the number of slashes in given filename
  */
-int count_slashes(const char* filename)
+static int count_slashes(const char* filename)
 {
     int slash_count;
     for (slash_count = 0; *filename != '\0'; filename++) {
@@ -94,7 +143,7 @@ int count_slashes(const char* filename)
  * Return an array of full filenames for files in every directory in and above
  * the given path with the name of the relative filename given.
  */
-char** get_filenames(const char* path, const char* filename)
+static char** get_filenames(const char* path, const char* filename)
 {
     char* currdir;
     char** files;
@@ -118,64 +167,85 @@ char** get_filenames(const char* path, const char* filename)
     return files;
 }
 
-static void version(FILE* stream, const char* command) {
-    fprintf(stream,"%s Version %d.%d\n", command,
-            editorconfig_VERSION_MAJOR, editorconfig_VERSION_MINOR);
-}
-
-static void usage(FILE* stream, const char* command) {
-    fprintf(stream, "Usage: %s FILENAME\n", command);
-}
-
-int main(int argc, char* argv[])
+/* 
+ * See the header file for the use of this function
+ */
+int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
+        char** err_file)
 {
-    char* full_filename;
-    char* directory;
-    char* filename;
-    char** config_files;
-    char** config_file;
-    configuration config;
+    handler_first_param     hfp;
+    char**                  config_file;
+    char**                  config_files;
+    char*                   directory;
+    char*                   filename;
+    int                     err_num;
+    char*                   full_filename2 = strdup(full_filename);
 
-    /* set the config to zero before we use it */
-    memset(&config, 0, sizeof(config));
-
-    if (argc != 2) {
-        version(stderr, argv[0]);
-        usage(stderr, argv[0]);
-        return 1;
-    } else if (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-v") == 0) {
-        version(stdout, argv[0]);
-        return 0;
-    } else if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0) {
-        version(stdout, argv[0]);
-        usage(stdout, argv[0]);
-        return 0;
-    }
-
-    full_filename = argv[1];
-
-    if (full_filename == NULL) {
-        fprintf(stderr, "Error: Unable to obtain the full path.\n");
-        return 1;
-    }
+    memset(&hfp, 0, sizeof(hfp));
 
 #ifdef WIN32
     /* replace all backslashes with slashes on Windows */
-    str_replace(full_filename, '\\', '/');
+    str_replace(full_filename2, '\\', '/');
 #endif
 
-    split_file_path(&directory, &filename, full_filename);
+    split_file_path(&directory, &filename, full_filename2);
     if (directory == NULL) {
-        fprintf(stderr, "Error: filename must be full file path\n");
-        return 1;
+        return -2;
     }
 
-    config.filename = filename;
+    free(directory);
 
-    config_files = get_filenames(full_filename, "/.editorconfig");
+    hfp.conf.filename = filename;
+
+    config_files = get_filenames(full_filename2, "/.editorconfig");
     for (config_file = config_files; *config_file != NULL; config_file++) {
-        ini_parse(*config_file, handler, &config);
+        if ((err_num = ini_parse(*config_file, handler, &hfp)) != 0 &&
+                /* ignore error caused by I/O, maybe caused by non exist file */
+                err_num != -1) {
+            if (err_file)
+                *err_file = strdup(*config_file);
+            free(full_filename2);
+            free(*config_file);
+            free(hfp.conf.filename);
+            return err_num;
+        }
+
+        free(*config_file);
     }
+
+    out->count = hfp.current_value_count;
+    out->name_values = hfp.out_values;
+    out->name_values = realloc(      /* realloc to truncate the unused spaces */
+            out->name_values, sizeof(editorconfig_name_value) * out->count);
+    if (out->name_values == NULL) {
+        free(hfp.conf.filename);
+        return -3;
+    }
+
+    free(hfp.conf.filename);
+    free(config_files);
+    free(full_filename2);
+
+    return 0;
+}
+
+/*
+ * See header file
+ */
+int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo)
+{
+    int         i;
+
+
+    if (epo == NULL)
+        return 0;
+
+    for (i = 0; i < epo->count; ++i) {
+        free(epo->name_values[i].name);
+        free(epo->name_values[i].value);
+    }
+
+    free(epo->name_values);
 
     return 0;
 }
