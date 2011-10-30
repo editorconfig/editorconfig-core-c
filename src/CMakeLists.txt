@@ -52,7 +52,10 @@ set(editorconfig_BINSRCS
 set(editorconfig_LIBSRCS ${editorconfig_BASICSRCS})
 
 # targets
-add_executable(editorconfig ${editorconfig_BINSRCS})
+add_executable(editorconfig_bin ${editorconfig_BINSRCS})
+set_target_properties(editorconfig_bin PROPERTIES
+    OUTPUT_NAME editorconfig
+    VERSION ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR})
 
 add_library(editorconfig_shared SHARED ${editorconfig_LIBSRCS})
 set_target_properties(editorconfig_shared PROPERTIES
@@ -70,7 +73,7 @@ elseif(MSVC)
         OUTPUT_NAME editorconfig)
 endif(MSVC)
 
-install(TARGETS editorconfig editorconfig_shared editorconfig_static
+install(TARGETS editorconfig_bin editorconfig_shared editorconfig_static
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
