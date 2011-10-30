@@ -46,6 +46,12 @@ typedef struct
     int                              count;
 } editorconfig_parsing_out;
 
+/* When included from a user program, EDITORCONFIG_EXPORT may not be defined,
+ * and we define it here*/
+#ifndef EDITORCONFIG_EXPORT
+# define EDITORCONFIG_EXPORT
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -82,6 +88,7 @@ extern "C" {
  *
  * An example is available at main.c in editorconfig source code.
  */
+EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
         char** err_file);
 
@@ -103,6 +110,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
  *
  * An example is available at main.c in editorconfig source code.
  */
+EDITORCONFIG_EXPORT
 int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo);
 #ifdef __cplusplus
 }

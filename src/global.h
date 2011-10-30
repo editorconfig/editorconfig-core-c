@@ -28,6 +28,17 @@
 #define __GLOBAL_H__
 
 #include "config.h"
+
+/* 
+ * Microsoft Visual C++ requires exported functions in shared library to be
+ * defined with __declspec(dllexport) declarator
+ */
+#if defined(editorconfig_shared_EXPORTS)
+# define EDITORCONFIG_EXPORT __declspec(dllexport)
+#else /* editorconfig_shared_EXPORTS */
+# define EDITORCONFIG_EXPORT
+#endif /* editorconfig_shared_EXPORTS */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

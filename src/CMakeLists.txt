@@ -61,8 +61,14 @@ set_target_properties(editorconfig_shared PROPERTIES
 
 add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
 set_target_properties(editorconfig_static PROPERTIES
-    OUTPUT_NAME editorconfig
     VERSION ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR})
+if(MSVC) # For MSVC, make the static library have a different name
+    set_target_properties(editorconfig_static PROPERTIES
+        OUTPUT_NAME editorconfig_static)
+elseif(MSVC)
+    set_target_properties(editorconfig_static PROPERTIES
+        OUTPUT_NAME editorconfig)
+endif(MSVC)
 
 install(TARGETS editorconfig editorconfig_shared editorconfig_static
     RUNTIME DESTINATION bin
