@@ -38,12 +38,36 @@ configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
     ${CMAKE_CURRENT_BINARY_DIR}/auto/config.h)
 
-set(editorconfig_SRCS
+set(editorconfig_BASICSRCS
     editorconfig.c
     fnmatch.c
     ini.c
-    main.c
     misc.c
     )
-add_executable(editorconfig ${editorconfig_SRCS})
-install(TARGETS editorconfig DESTINATION bin)
+
+set(editorconfig_BINSRCS
+    ${editorconfig_BASICSRCS}
+    main.c
+    )
+set(editorconfig_LIBSRCS ${editorconfig_BASICSRCS})
+
+# targets
+add_executable(editorconfig ${editorconfig_BINSRCS})
+
+add_library(editorconfig_shared SHARED ${editorconfig_LIBSRCS})
+set_target_properties(editorconfig_shared PROPERTIES
+    OUTPUT_NAME editorconfig
+    VERSION ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR})
+
+add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
+set_target_properties(editorconfig_static PROPERTIES
+    OUTPUT_NAME editorconfig
+    VERSION ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR})
+
+install(TARGETS editorconfig editorconfig_shared editorconfig_static
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+
+install(FILES editorconfig.h DESTINATION include/editorconfig)
+
