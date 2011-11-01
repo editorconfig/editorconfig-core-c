@@ -30,14 +30,15 @@
 #include "config.h"
 
 /* 
- * Microsoft Visual C++ requires exported functions in shared library to be
- * defined with __declspec(dllexport) declarator
+ * Microsoft Visual C++ and some other Windows C Compilers requires exported
+ * functions in shared library to be defined with __declspec(dllexport)
+ * declarator
  */
-#if defined(editorconfig_shared_EXPORTS)
+#if defined(WIN32) && defined(editorconfig_shared_EXPORTS)
 # define EDITORCONFIG_EXPORT __declspec(dllexport)
-#else /* editorconfig_shared_EXPORTS */
+#else /* WIN32 && editorconfig_shared_EXPORTS */
 # define EDITORCONFIG_EXPORT
-#endif /* editorconfig_shared_EXPORTS */
+#endif /* WIN32 && editorconfig_shared_EXPORTS */
 
 #include <stdio.h>
 #include <stdlib.h>
