@@ -64,6 +64,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+EDITORCONFIG_LOCAL
 char* strdup(const char *str)
 {
     size_t      len;
@@ -113,10 +114,13 @@ char* strdup(const char *str)
  * SUCH DAMAGE.
  */
 
+#include "global.h"
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
+EDITORCONFIG_LOCAL
 char* strndup(const char* str, size_t n)
 {
     size_t      len;
@@ -137,6 +141,7 @@ char* strndup(const char* str, size_t n)
 /*
  * replace oldc with newc in the string str
  */
+EDITORCONFIG_LOCAL
 char* str_replace(char* str, char oldc, char newc)
 {
     char*   p;

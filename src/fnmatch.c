@@ -33,6 +33,8 @@
  * $Id: fnmatch.c,v 1.3 1997/08/19 02:34:30 jdp Exp $
  */
 
+#include "global.h"
+
 #if defined(LIBC_SCCS) && !defined(lint)
 static char sccsid[] = "@(#)fnmatch.c	8.2 (Berkeley) 4/16/94";
 #endif /* LIBC_SCCS and not lint */
@@ -52,8 +54,8 @@ static char sccsid[] = "@(#)fnmatch.c	8.2 (Berkeley) 4/16/94";
 
 static const char *rangematch(const char *, char, int);
 
-int
-fnmatch(const char *pattern, const char *string, int flags)
+EDITORCONFIG_LOCAL
+int fnmatch(const char *pattern, const char *string, int flags)
 {
 	const char *stringstart;
 	char c, test;

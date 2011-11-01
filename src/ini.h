@@ -35,6 +35,8 @@ http://code.google.com/p/inih/
 #ifndef __INI_H__
 #define __INI_H__
 
+#include "global.h"
+
 /* Make this header file easier to include in C++ code */
 #ifdef __cplusplus
 extern "C" {
@@ -54,6 +56,7 @@ extern "C" {
    Returns 0 on success, line number of first error on parse error (doesn't
    stop on first error), or -1 on file open error.
 */
+EDITORCONFIG_LOCAL
 int ini_parse(const char* filename,
               int (*handler)(void* user, const char* section,
                              const char* name, const char* value),
@@ -61,6 +64,7 @@ int ini_parse(const char* filename,
 
 /* Same as ini_parse(), but takes a FILE* instead of filename. This doesn't
    close the file when it's finished -- the caller must do that. */
+EDITORCONFIG_LOCAL
 int ini_parse_file(FILE* file,
                    int (*handler)(void* user, const char* section,
                                   const char* name, const char* value),
