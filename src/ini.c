@@ -32,6 +32,8 @@ http://code.google.com/p/inih/
 
 */
 
+#include "global.h"
+
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
@@ -81,6 +83,7 @@ static char* strncpy0(char* dest, const char* src, size_t size)
 }
 
 /* See documentation in header file. */
+EDITORCONFIG_LOCAL
 int ini_parse_file(FILE* file,
                    int (*handler)(void*, const char*, const char*,
                                   const char*),
@@ -159,6 +162,7 @@ int ini_parse_file(FILE* file,
 }
 
 /* See documentation in header file. */
+EDITORCONFIG_LOCAL
 int ini_parse(const char* filename,
               int (*handler)(void*, const char*, const char*, const char*),
               void* user)

@@ -27,16 +27,19 @@
 #ifndef __MISC_H__
 #define __MISC_H__
 
-#include <config.h>
+#include "global.h"
 
 #include <stddef.h>
 
 #ifndef HAVE_STRDUP
+EDITORCONFIG_LOCAL
 char* strdup(const char *str);
 #endif
 #ifndef HAVE_STRNDUP
+EDITORCONFIG_LOCAL
 char* strndup(const char* str, size_t n);
 #endif
+EDITORCONFIG_LOCAL
 char* str_replace(char* str, char oldc, char newc);
 
 #endif /* __MISC_H__ */

@@ -29,19 +29,42 @@
 
 #include "config.h"
 
-/* 
- * Microsoft Visual C++ requires exported functions in shared library to be
- * defined with __declspec(dllexport) declarator
- */
-#if defined(editorconfig_shared_EXPORTS)
-# define EDITORCONFIG_EXPORT __declspec(dllexport)
-#else /* editorconfig_shared_EXPORTS */
-# define EDITORCONFIG_EXPORT
-#endif /* editorconfig_shared_EXPORTS */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+/* 
+ * Microsoft Visual C++ and some other Windows C Compilers requires exported
+ * functions in shared library to be defined with __declspec(dllexport)
+ * declarator. Also, gcc >= 4 supports hiding symbols that do not need to be
+ * exported.
+ */
+#ifdef editorconfig_shared_EXPORTS /* We are building shared lib if defined */ 
+# ifdef WIN32
+#  ifdef __GNUC__
+#   define EDITORCONFIG_EXPORT  __attribute__ ((dllexport))
+#  else /* __GNUC__ */
+#   define EDITORCONFIG_EXPORT __declspec(dllexport)
+#  endif /* __GNUC__ */
+# else /* WIN32 */
+#  if defined(__GNUC__) && __GNUC__ >= 4
+#   define EDITORCONFIG_EXPORT __attribute__ ((visibility ("default")))
+#   define EDITORCONFIG_LOCAL __attribute__ ((visibility ("hidden")))
+#  endif /* __GNUC__ && __GNUC >= 4 */
+# endif /* WIN32 */
+#endif /* editorconfig_shared_EXPORTS */
+
+/*
+ * For other cases, just define EDITORCONFIG_EXPORT and EDITORCONFIG_LOCAL, to
+ * make compilation successful
+ */
+#ifndef EDITORCONFIG_EXPORT
+# define EDITORCONFIG_EXPORT
+#endif
+#ifndef EDITORCONFIG_LOCAL
+# define EDITORCONFIG_LOCAL
+#endif
+
 
 #endif /* !__GLOBAL_H__ */
 

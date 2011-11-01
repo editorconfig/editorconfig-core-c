@@ -55,23 +55,28 @@ set(editorconfig_LIBSRCS ${editorconfig_BASICSRCS})
 add_executable(editorconfig_bin ${editorconfig_BINSRCS})
 set_target_properties(editorconfig_bin PROPERTIES
     OUTPUT_NAME editorconfig
-    VERSION ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR})
+    VERSION
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
 
 add_library(editorconfig_shared SHARED ${editorconfig_LIBSRCS})
 set_target_properties(editorconfig_shared PROPERTIES
     OUTPUT_NAME editorconfig
-    VERSION ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR})
+    SOVERSION 0
+    VERSION
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
 
 add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
 set_target_properties(editorconfig_static PROPERTIES
-    VERSION ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR})
-if(MSVC) # For MSVC, make the static library have a different name
+    VERSION
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
+# For Windows, make the static library have a different name with shared library
+if(${WIN32})
     set_target_properties(editorconfig_static PROPERTIES
         OUTPUT_NAME editorconfig_static)
-elseif(MSVC)
+else(${WIN32})
     set_target_properties(editorconfig_static PROPERTIES
         OUTPUT_NAME editorconfig)
-endif(MSVC)
+endif(${WIN32})
 
 install(TARGETS editorconfig_bin editorconfig_shared editorconfig_static
     RUNTIME DESTINATION bin

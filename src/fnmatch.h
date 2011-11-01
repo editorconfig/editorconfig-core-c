@@ -35,6 +35,8 @@
 #ifndef	_FNMATCH_H_
 #define	_FNMATCH_H_
 
+#include "global.h"
+
 #define	FNM_NOMATCH	1	/* Match failed. */
 
 #define	FNM_NOESCAPE	0x01	/* Disable backslash escaping. */
@@ -49,6 +51,7 @@
 #define const	/* empty */
 #endif
 
+EDITORCONFIG_LOCAL
 int	 fnmatch(const char *, const char *, int);
 
 #endif /* !_FNMATCH_H_ */
