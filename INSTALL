@@ -1,27 +1,25 @@
-1. Install from source
+Installing from source
+======================
 
-Before install, you need to install cmake <http://www.cmake.org>. Cmake
-installation instruction could be found here
-<http://www.cmake.org/cmake/help/install.html>.
+Before install, you need to install [cmake][]. Cmake installation instruction
+could be found here: <http://www.cmake.org/cmake/help/install.html>.
 
-Make sure cmake is in your PATH environment varible. Switch to the root
+Make sure cmake is in your PATH environment variable. Switch to the root
 directory of editorconfig and execute the following command:
 
-CLI-prompt> cmake .
+    cmake .
 
-The 'CLI-prompt>' could be a '$' on bash or '%' on a C Shell, or something like
-'C:\>' on Windows.
-
-If succeeded, the project file will be generated. On UNIX/Linux, this is often a
-Makefile, then you could type "make" to compile editorconfig. But if you are
-using some other compilers, then compilation command would differ. For example,
-if you generate a NMake Makefile and you want to use Microsoft Visual C++ to
-build editorconfig, then build command would be "nmake".
+If successful, the project file will be generated. On UNIX/Linux with gcc, the
+project file is often a Makefile, in which case you can type "make" to compile
+editorconfig.  If you are using a different compiler or platform the
+compilation command may differ. For example, if you generate a NMake Makefile
+and you want to use Microsoft Visual C++ to build editorconfig, then the build
+command would be "nmake".
 
 After the compilation succeeds, use the following command to install (require
 root or admin privilege):
 
-CLI-prompt> make install
+    make install
 
 This command will copy all the file you need to corresponding directories:
 editorconfig libraries will be copied to PREFIX/lib and executables will be
@@ -33,12 +31,18 @@ that source files could be linked to the libraries and executables depending on
 these libraries could be executed properly.
 
 
-2. Install from a binary package
+Installing from a binary package
+================================
 
 Binary packages are not available currently. But don't worry, they will be
 available soon.
 
 
-Trey Hunter and Hong Xu
-2011/11/2
+[cmake]: http://www.cmake.org
+
+
+--
+Trey Hunner and Hong Xu
+
+2011-11-02
 
