@@ -23,7 +23,14 @@ root or admin privilege):
 
 CLI-prompt> make install
 
-This command will copy all the file you need to appropriate directories.
+This command will copy all the file you need to corresponding directories:
+editorconfig libraries will be copied to PREFIX/lib and executables will be
+copied to PREFIX/bin.
+
+Note that you have to use ldconfig or change LD_LIBRARY_PATH to specify the
+PREFIX/lib as one of the library searching directory on UNIX/Linux to make sure
+that source files could be linked to the libraries and executables depending on
+these libraries could be executed properly.
 
 
 2. Install from a binary package
@@ -33,5 +40,5 @@ available soon.
 
 
 Trey Hunter and Hong Xu
-2011/10/27
+2011/11/2
 
