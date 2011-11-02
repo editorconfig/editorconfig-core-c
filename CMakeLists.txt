@@ -28,7 +28,7 @@ set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 2)
 set (editorconfig_VERSION_SUBMINOR 0)
 
-project(editorconfig)
+project(editorconfig C)
 cmake_minimum_required(VERSION 2.4.0)
 
 add_subdirectory(src)
