@@ -24,25 +24,40 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+/*!
+ * @file editorconfig/editorconfig.h
+ * @brief Header file of EditorConfig.
+ *
+ * @version 0.2.0
+ */
+
 #ifndef __EDITORCONFIG_EDITORCONFIG_H__
 #define __EDITORCONFIG_EDITORCONFIG_H__
 
+/*!
+ * @brief A structure containing a name and its corresponding value.
+ * @headerfile editorconfig/editorconfig.h
+ */
 typedef struct
 {
+    /*! EditorConfig config item's name. */ 
     char*       name;
+    /*! EditorConfig config item's value. */ 
     char*       value;
 } editorconfig_name_value;
 
 
-/* 
- * editorconfig_parsing_out is a structure that contains the parsing result.
- * 
- * name_values is the names and values of the result, and count is the total
- * count of name_values.
+/*!
+ * @brief A structure that contains the parsing result.
+ * @headerfile editorconfig/editorconfig.h
  */
 typedef struct
 {
+    /*! Pointer to a list of editorconfig_name_value structures containing
+     * names and values of the parsed result */
     editorconfig_name_value*         name_values;
+    /*! The total count of name_values structures pointed by name_values
+     * pointer */
     int                              count;
 } editorconfig_parsing_out;
 
@@ -56,59 +71,49 @@ typedef struct
 extern "C" {
 #endif
 
-/*
- * editorconfig_parse
- *
- * Parse editorconfig files corresponding to the file path given by
+/*!
+ * @brief Parse editorconfig files corresponding to the file path given by
  * full_filename, and put the result to "out".
  *
- * params:
+ * An example is available at src/bin/main.c in editorconfig source code.
  *
- * full_filename: the full path of a file that is edited by the editor for which
- * the parsing result is.
+ * @param full_filename The full path of a file that is edited by the editor
+ * for which the parsing result is.
  *
- * out: the parsing result will be filled in out, which is a
+ * @param out The parsing result will be filled in out, which is a
  * editorconfig_parsing_out structure. This structure needs to be cleared by
  * editorconfig_parsing_out_clear if this function succeeds.
  *
- * err_file: when a parsing error occured, this will point to a file that caused
- * the parsing error.
+ * @param err_file When a parsing error occured, this will point to a file
+ * that caused the parsing error.
  * 
- * return value:
+ * @retval 0 Everything is OK;
  *
- * Returns 0 if everything is OK;
+ * @retval -2 The full_filename is not a full path name;
  *
- * Returns -2 if the full_filename is not a full path name;
+ * @retval -3 A memory error occurs;
  *
- * Returns -3 if a memory error occurs;
- *
- * Returns a positive value if a parsing error occurs. The return value would be
- * the line number of parsing error. If err_file is not NULL, err_file will also
- * be filled with the file path that caused the parsing error.
- *
- * An example is available at main.c in editorconfig source code.
+ * @retval >0 A parsing error occurs. The return value would be the line number
+ * of parsing error. If err_file is not NULL, err_file will also be filled with
+ * the file path that caused the parsing error.
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
         char** err_file);
 
-/*
- * editorconfig_parsing_out_clear
- *
- * clear the editorconfig_parsing_out structure after a success call of
+/*!
+ * @brief Clear the editorconfig_parsing_out structure after a success call of
  * editorconfig_parse.
  *
- * params:
+ * An example is available at src/bin/main.c in editorconfig source code.
  *
- * epo: the editorconfig_parsing_out structure to be cleared.
+ * @param epo The editorconfig_parsing_out structure to be cleared.
  *
- * return value:
+ * @retval zero Everything is OK
+ * @retval non-zero Some error occured.
  *
- * Returns 0 if everything is OK, and returns a nonzero value if some error
- * occured. Currently this function always returns 0, but please make a return
+ * @note Currently this function always returns 0, but please make a return
  * value checking to make the code compatible with future versions.
- *
- * An example is available at main.c in editorconfig source code.
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo);
