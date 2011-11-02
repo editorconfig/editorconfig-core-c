@@ -24,22 +24,29 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include(CheckFunctionExists)
+set(editorconfig_LIBSRCS
+    editorconfig.c
+    fnmatch.c
+    ini.c
+    misc.c
+    )
 
-# config.h will be generated in src/auto, we should include it.
-include_directories(BEFORE
-    ${CMAKE_CURRENT_BINARY_DIR}/auto)
+add_library(editorconfig_shared SHARED ${editorconfig_LIBSRCS})
+set_target_properties(editorconfig_shared PROPERTIES
+    OUTPUT_NAME editorconfig
+    SOVERSION 0
+    VERSION
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
 
-check_function_exists(strdup HAVE_STRDUP)
-check_function_exists(strndup HAVE_STRNDUP)
+add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
+set_target_properties(editorconfig_static PROPERTIES
+    OUTPUT_NAME editorconfig_static
+    VERSION
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
 
-configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/auto/config.h)
+install(TARGETS editorconfig_shared editorconfig_static
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
 
-include_directories(BEFORE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-add_subdirectory(lib)
-add_subdirectory(bin)
+install(FILES editorconfig.h DESTINATION include/editorconfig)
 

@@ -24,8 +24,11 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "global.h"
-#include "editorconfig.h"
+#include "config.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <editorconfig/editorconfig.h>
 
 static void version(FILE* stream, const char* command) {
     fprintf(stream,"%s Version %d.%d\n", command,

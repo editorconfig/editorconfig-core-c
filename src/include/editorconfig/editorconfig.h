@@ -24,8 +24,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __EDITORCONFIG_H__
-#define __EDITORCONFIG_H__
+#ifndef __EDITORCONFIG_EDITORCONFIG_H__
+#define __EDITORCONFIG_EDITORCONFIG_H__
 
 typedef struct
 {
@@ -116,5 +116,5 @@ int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo);
 }
 #endif
 
-#endif /* !__EDITORCONFIG_H__ */
+#endif /* !__EDITORCONFIG_EDITORCONFIG_H__ */
 

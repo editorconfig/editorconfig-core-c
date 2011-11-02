@@ -24,22 +24,19 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include(CheckFunctionExists)
+link_directories(${CMAKE_CURRENT_BINARY_DIR}/../lib)
 
-# config.h will be generated in src/auto, we should include it.
-include_directories(BEFORE
-    ${CMAKE_CURRENT_BINARY_DIR}/auto)
+set(editorconfig_BINSRCS
+    main.c)
 
-check_function_exists(strdup HAVE_STRDUP)
-check_function_exists(strndup HAVE_STRNDUP)
+# targets
+add_executable(editorconfig_bin ${editorconfig_BINSRCS})
+target_link_libraries(editorconfig_bin editorconfig_static)
+set_target_properties(editorconfig_bin PROPERTIES
+    OUTPUT_NAME editorconfig
+    VERSION
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
 
-configure_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
-    ${CMAKE_CURRENT_BINARY_DIR}/auto/config.h)
-
-include_directories(BEFORE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
-add_subdirectory(lib)
-add_subdirectory(bin)
+install(TARGETS editorconfig_bin
+    RUNTIME DESTINATION bin)
 
