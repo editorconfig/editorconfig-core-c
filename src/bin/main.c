@@ -31,8 +31,14 @@
 #include <editorconfig/editorconfig.h>
 
 static void version(FILE* stream, const char* command) {
-    fprintf(stream,"%s Version %d.%d\n", command,
-            editorconfig_VERSION_MAJOR, editorconfig_VERSION_MINOR);
+    int     major;
+    int     minor;
+    int     subminor;
+
+    editorconfig_get_version(&major, &minor, &subminor);
+
+    fprintf(stream,"%s Version %d.%d.%d\n", command,
+            major, minor, subminor);
 }
 
 static void usage(FILE* stream, const char* command) {

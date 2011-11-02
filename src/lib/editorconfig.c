@@ -251,3 +251,17 @@ int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo)
 
     return 0;
 }
+
+/*
+ * See header file
+ */
+EDITORCONFIG_EXPORT
+void editorconfig_get_version(int* major, int* minor, int* subminor)
+{
+    if (major)
+        *major = editorconfig_VERSION_MAJOR;
+    if (minor)
+        *minor = editorconfig_VERSION_MINOR;
+    if (subminor)
+        *subminor = editorconfig_VERSION_SUBMINOR;
+}

@@ -117,6 +117,26 @@ int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo);
+
+/*!
+ * @brief Get the version number of EditorConfig.
+ *
+ * An example is available at src/bin/main.c in EditorConfig source code.
+ *
+ * @param major If not null, the integer pointed by major will be filled with
+ * the major version of EditorConfig.
+ *
+ * @param minor If not null, the integer pointed by minor will be filled with
+ * the minor version of EditorConfig.
+ *
+ * @param subminor If not null, the integer pointed by subminor will be filled
+ * with the subminor version of EditorConfig.
+ *
+ * @return None.
+ */
+EDITORCONFIG_EXPORT
+void editorconfig_get_version(int* major, int* minor, int* subminor);
+
 #ifdef __cplusplus
 }
 #endif
