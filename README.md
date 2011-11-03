@@ -61,7 +61,6 @@ Getting Help
 
 For help with EditorConfig, please write to our [mailing list][].
 
-
-[EditorConfig]: http://treyhunner.github.com/editorconfig "EditorConfig Homepage"
+[EditorConfig]: http://editorconfig.github.com/editorconfig "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
-[vim]: https://github.com/treyhunner/editorconfig-vim "EditorConfig vim plugin"
+[vim]: https://github.com/editorconfig/editorconfig-vim "EditorConfig vim plugin"
