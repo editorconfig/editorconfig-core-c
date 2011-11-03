@@ -86,6 +86,7 @@ static char* find_last_char_or_comment(const char* s, char c)
     }
     return last_char;
 }
+
 /* Version of strncpy that ensures dest (size bytes) is null-terminated. */
 static char* strncpy0(char* dest, const char* src, size_t size)
 {
