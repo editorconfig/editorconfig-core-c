@@ -24,27 +24,5 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-set(editorconfig_LIBSRCS
-    editorconfig.c
-    fnmatch.c
-    ini.c
-    misc.c
-    )
-
-add_library(editorconfig_shared SHARED ${editorconfig_LIBSRCS})
-set_target_properties(editorconfig_shared PROPERTIES
-    OUTPUT_NAME editorconfig
-    SOVERSION 0
-    VERSION
-    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
-
-add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
-set_target_properties(editorconfig_static PROPERTIES
-    OUTPUT_NAME editorconfig_static
-    VERSION
-    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
-
-install(TARGETS editorconfig_shared editorconfig_static
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib)
+install(FILES editorconfig/editorconfig.h DESTINATION include/editorconfig)
 
