@@ -66,7 +66,7 @@ want to import and use the EditorConfig library directly.  If you do use the
 EditorConfig core as a C library, check the [documentation][] for help.
 
 
-[EditorConfig]: http://editorconfig.github.com/editorconfig "EditorConfig Homepage"
+[EditorConfig]: http://editorconfig.github.com "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [vim]: https://github.com/editorconfig/editorconfig-vim "EditorConfig vim plugin"
-[documentation]: http://editorconfig.github.com/editorconfig/core-docs/ "EditorConfig Core documentation"
+[documentation]: http://editorconfig.github.com/core-docs/ "EditorConfig Core documentation"
