@@ -61,6 +61,12 @@ Getting Help
 
 For help with EditorConfig, please write to our [mailing list][].
 
+If you are writing a plugin a language that can import C libraries, you may
+want to import and use the EditorConfig library directly.  If you do use the
+EditorConfig core as a C library, check the [documentation][] for help.
+
+
 [EditorConfig]: http://editorconfig.github.com/editorconfig "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [vim]: https://github.com/editorconfig/editorconfig-vim "EditorConfig vim plugin"
+[documentation]: http://editorconfig.github.com/editorconfig/core-docs/ "EditorConfig Core documentation"
