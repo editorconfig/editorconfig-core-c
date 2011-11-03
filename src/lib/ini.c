@@ -74,6 +74,18 @@ static char* find_char_or_comment(const char* s, char c)
     return (char*)s;
 }
 
+static char* find_last_char_or_comment(const char* s, char c)
+{
+    char* last_char = s;
+    int was_whitespace = 0;
+    while (*s && !(was_whitespace && *s == ';')) {
+        if (*s == c)
+            last_char = s;
+        was_whitespace = isspace(*s);
+        s++;
+    }
+    return last_char;
+}
 /* Version of strncpy that ensures dest (size bytes) is null-terminated. */
 static char* strncpy0(char* dest, const char* src, size_t size)
 {
@@ -120,7 +132,7 @@ int ini_parse_file(FILE* file,
         }
         else if (*start == '[') {
             /* A "[section]" line */
-            end = find_char_or_comment(start + 1, ']');
+            end = find_last_char_or_comment(start + 1, ']');
             if (*end == ']') {
                 *end = '\0';
                 strncpy0(section, start + 1, sizeof(section));
