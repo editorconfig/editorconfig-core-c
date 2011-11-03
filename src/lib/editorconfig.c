@@ -45,6 +45,22 @@ typedef struct
 } handler_first_param;
 
 /*
+ * Find the editorconfig_name_value from name in a editorconfig_name_value
+ * array.
+ */
+static int find_name_value_from_name(const editorconfig_name_value* env,
+        int count, const char* name)
+{
+    int         i;
+
+    for (i = 0; i < count; ++i)
+        if (!strcmp(env->name, name)) /* found */
+            return i;
+
+    return -1;
+}
+
+/*
  * Accept INI property value and store known values in handler_first_param
  * struct.
  */
@@ -57,6 +73,7 @@ static int handler(void* hfp, const char* section, const char* name,
     handler_first_param* hfparam = (handler_first_param*)hfp;
 
     if (fnmatch(section, hfparam->conf.filename, FNM_PATHNAME) == 0) {
+        int         name_value_pos;
 
         /* For the first time we came here, hfparam->out_values is NULL */
         if (hfparam->out_values == NULL) {
@@ -68,6 +85,15 @@ static int handler(void* hfp, const char* section, const char* name,
 
             hfparam->max_value_count = VALUE_COUNT_INITIAL;
             hfparam->current_value_count = 0;
+        }
+
+        name_value_pos = find_name_value_from_name(
+                hfparam->out_values, hfparam->current_value_count, name);
+
+        if (name_value_pos >= 0) { /* current name has already been used */
+            free(hfparam->out_values[name_value_pos].value);
+            hfparam->out_values[name_value_pos].value = strdup(value);
+            return 1;
         }
 
         /* if the space is not enough, allocate more before add the new name
