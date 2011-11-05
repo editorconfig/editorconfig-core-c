@@ -38,7 +38,7 @@
  * @brief A structure containing a name and its corresponding value.
  * @headerfile editorconfig/editorconfig.h
  */
-typedef struct
+typedef struct ec_name_value
 {
     /*! EditorConfig config item's name. */ 
     char*       name;
@@ -51,7 +51,7 @@ typedef struct
  * @brief A structure that contains the parsing result.
  * @headerfile editorconfig/editorconfig.h
  */
-typedef struct
+typedef struct ec_parsing_out
 {
     /*! Pointer to a list of editorconfig_name_value structures containing
      * names and values of the parsed result */
