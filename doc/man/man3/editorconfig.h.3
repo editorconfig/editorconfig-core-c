@@ -1,4 +1,4 @@
-.TH "editorconfig.h" 3 "Thu Nov 3 2011" "EditorConfig" \" -*- nroff -*-
+.TH "editorconfig.h" 3 "Sat Nov 5 2011" "EditorConfig" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -25,11 +25,11 @@ Header file of EditorConfig.
 
 .in +1c
 .ti -1c
-.RI "int \fBeditorconfig_parse\fP (const char *full_filename, \fBeditorconfig_parsing_out\fP *out, char **err_file)"
+.RI "int \fBeditorconfig_parse\fP (const char *full_filename, struct \fBeditorconfig_parsing_out\fP *out, char **err_file)"
 .br
 .RI "\fIParse editorconfig files corresponding to the file path given by full_filename, and put the result to 'out'. \fP"
 .ti -1c
-.RI "int \fBeditorconfig_parsing_out_clear\fP (\fBeditorconfig_parsing_out\fP *epo)"
+.RI "int \fBeditorconfig_parsing_out_clear\fP (struct \fBeditorconfig_parsing_out\fP *epo)"
 .br
 .RI "\fIClear the \fBeditorconfig_parsing_out\fP structure after a success call of editorconfig_parse. \fP"
 .ti -1c
@@ -68,7 +68,7 @@ None.
 .RE
 .PP
 
-.SS "int editorconfig_parse (const char *full_filename, \fBeditorconfig_parsing_out\fP *out, char **err_file)"
+.SS "int editorconfig_parse (const char *full_filename, struct \fBeditorconfig_parsing_out\fP *out, char **err_file)"
 .PP
 Parse editorconfig files corresponding to the file path given by full_filename, and put the result to 'out'. An example is available at src/bin/main.c in editorconfig source code.
 .PP
@@ -93,7 +93,7 @@ Parse editorconfig files corresponding to the file path given by full_filename, 
 .RE
 .PP
 
-.SS "int editorconfig_parsing_out_clear (\fBeditorconfig_parsing_out\fP *epo)"
+.SS "int editorconfig_parsing_out_clear (struct \fBeditorconfig_parsing_out\fP *epo)"
 .PP
 Clear the \fBeditorconfig_parsing_out\fP structure after a success call of editorconfig_parse. An example is available at src/bin/main.c in editorconfig source code.
 .PP
