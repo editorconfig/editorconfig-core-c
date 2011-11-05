@@ -24,9 +24,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+set(EC_MANPAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
+set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
+
 install(FILES
-    man3/editorconfig.h.3
-    man3/editorconfig_name_value.3
-    man3/editorconfig_parsing_out.3
+    ${EC_MANPAGE3_DIR}/editorconfig.h.3
+    ${EC_MANPAGE3_DIR}/editorconfig_name_value.3
+    ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
     DESTINATION share/man/man3)
 
