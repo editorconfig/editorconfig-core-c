@@ -24,13 +24,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-set (editorconfig_VERSION_MAJOR 0)
-set (editorconfig_VERSION_MINOR 2)
-set (editorconfig_VERSION_SUBMINOR 0)
-
-project(editorconfig C)
-cmake_minimum_required(VERSION 2.4.0)
-
-add_subdirectory(src)
-add_subdirectory(man)
+install(FILES
+    man3/editorconfig.h.3
+    man3/editorconfig_name_value.3
+    man3/editorconfig_parsing_out.3
+    DESTINATION share/man/man3)
 
