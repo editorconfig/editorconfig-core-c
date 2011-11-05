@@ -34,11 +34,21 @@
 #ifndef __EDITORCONFIG_EDITORCONFIG_H__
 #define __EDITORCONFIG_EDITORCONFIG_H__
 
+/* When included from a user program, EDITORCONFIG_EXPORT may not be defined,
+ * and we define it here*/
+#ifndef EDITORCONFIG_EXPORT
+# define EDITORCONFIG_EXPORT
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*!
  * @brief A structure containing a name and its corresponding value.
  * @headerfile editorconfig/editorconfig.h
  */
-typedef struct ec_name_value
+typedef struct editorconfig_name_value
 {
     /*! EditorConfig config item's name. */ 
     char*       name;
@@ -51,7 +61,7 @@ typedef struct ec_name_value
  * @brief A structure that contains the parsing result.
  * @headerfile editorconfig/editorconfig.h
  */
-typedef struct ec_parsing_out
+typedef struct editorconfig_parsing_out
 {
     /*! Pointer to a list of editorconfig_name_value structures containing
      * names and values of the parsed result */
@@ -60,16 +70,6 @@ typedef struct ec_parsing_out
      * pointer */
     int                              count;
 } editorconfig_parsing_out;
-
-/* When included from a user program, EDITORCONFIG_EXPORT may not be defined,
- * and we define it here*/
-#ifndef EDITORCONFIG_EXPORT
-# define EDITORCONFIG_EXPORT
-#endif
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*!
  * @brief Parse editorconfig files corresponding to the file path given by
