@@ -29,5 +29,8 @@
 
 #include <editorconfig/editorconfig.h>
 
+typedef struct editorconfig_parsing_out editorconfig_parsing_out;
+typedef struct editorconfig_name_value editorconfig_name_value;
+
 #endif /* !__EDITORCONFIG_H__ */
 

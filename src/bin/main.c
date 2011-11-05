@@ -49,7 +49,7 @@ int main(int argc, const char* argv[])
 {
     char*                           full_filename;
     char*                           err_file;
-    editorconfig_parsing_out        epo;
+    struct editorconfig_parsing_out epo;
     int                             err_num;
     int                             i;
 

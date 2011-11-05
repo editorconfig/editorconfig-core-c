@@ -48,28 +48,28 @@ extern "C" {
  * @brief A structure containing a name and its corresponding value.
  * @headerfile editorconfig/editorconfig.h
  */
-typedef struct editorconfig_name_value
+struct editorconfig_name_value
 {
     /*! EditorConfig config item's name. */ 
     char*       name;
     /*! EditorConfig config item's value. */ 
     char*       value;
-} editorconfig_name_value;
+};
 
 
 /*!
  * @brief A structure that contains the parsing result.
  * @headerfile editorconfig/editorconfig.h
  */
-typedef struct editorconfig_parsing_out
+struct editorconfig_parsing_out
 {
     /*! Pointer to a list of editorconfig_name_value structures containing
      * names and values of the parsed result */
-    editorconfig_name_value*         name_values;
+    struct editorconfig_name_value*  name_values;
     /*! The total count of name_values structures pointed by name_values
      * pointer */
     int                              count;
-} editorconfig_parsing_out;
+};
 
 /*!
  * @brief Parse editorconfig files corresponding to the file path given by
@@ -98,8 +98,8 @@ typedef struct editorconfig_parsing_out
  * the file path that caused the parsing error.
  */
 EDITORCONFIG_EXPORT
-int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
-        char** err_file);
+int editorconfig_parse(const char* full_filename,
+        struct editorconfig_parsing_out* out, char** err_file);
 
 /*!
  * @brief Clear the editorconfig_parsing_out structure after a success call of
@@ -116,7 +116,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
  * value checking to make the code compatible with future versions.
  */
 EDITORCONFIG_EXPORT
-int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo);
+int editorconfig_parsing_out_clear(struct editorconfig_parsing_out* epo);
 
 /*!
  * @brief Get the version number of EditorConfig.
