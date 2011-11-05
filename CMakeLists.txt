@@ -32,5 +32,5 @@ project(editorconfig C)
 cmake_minimum_required(VERSION 2.4.0)
 
 add_subdirectory(src)
-add_subdirectory(man)
+add_subdirectory(doc)
 
