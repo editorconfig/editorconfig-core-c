@@ -28,7 +28,7 @@
 #include "editorconfig.h"
 #include "misc.h"
 #include "ini.h"
-#include "fnmatch.h"
+#include "ec_fnmatch.h"
 
 typedef struct
 {
@@ -72,7 +72,7 @@ static int handler(void* hfp, const char* section, const char* name,
 
     handler_first_param* hfparam = (handler_first_param*)hfp;
 
-    if (fnmatch(section, hfparam->conf.filename, FNM_PATHNAME) == 0) {
+    if (ec_fnmatch(section, hfparam->conf.filename, EC_FNM_PATHNAME) == 0) {
         int         name_value_pos;
 
         /* For the first time we came here, hfparam->out_values is NULL */

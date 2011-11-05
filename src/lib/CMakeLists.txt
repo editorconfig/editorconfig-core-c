@@ -26,7 +26,7 @@
 
 set(editorconfig_LIBSRCS
     editorconfig.c
-    fnmatch.c
+    ec_fnmatch.c
     ini.c
     misc.c
     )
