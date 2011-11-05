@@ -77,4 +77,4 @@ license.
 [EditorConfig]: http://editorconfig.github.com "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [vim]: https://github.com/editorconfig/editorconfig-vim "EditorConfig vim plugin"
-[documentation]: http://editorconfig.github.com/core-docs/ "EditorConfig Core documentation"
+[documentation]: http://editorconfig.github.com/core-docs/ "EditorConfig Core C API documentation"
