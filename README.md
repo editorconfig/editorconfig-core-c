@@ -66,6 +66,14 @@ want to import and use the EditorConfig library directly.  If you do use the
 EditorConfig core as a C library, check the [documentation][] for help.
 
 
+License
+-------
+
+Unless otherwise stated, all files are distributed under the Simplified BSD
+license.  The inih and fnmatch libraries are distributed under the New BSD
+license.
+
+
 [EditorConfig]: http://editorconfig.github.com "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [vim]: https://github.com/editorconfig/editorconfig-vim "EditorConfig vim plugin"
