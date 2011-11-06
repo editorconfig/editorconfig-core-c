@@ -30,7 +30,8 @@
 #include <string.h>
 #include <editorconfig/editorconfig.h>
 
-static void version(FILE* stream, const char* command) {
+static void version(FILE* stream, const char* command)
+{
     int     major;
     int     minor;
     int     subminor;
@@ -41,7 +42,8 @@ static void version(FILE* stream, const char* command) {
             major, minor, subminor);
 }
 
-static void usage(FILE* stream, const char* command) {
+static void usage(FILE* stream, const char* command)
+{
     fprintf(stream, "Usage: %s FILENAME\n", command);
 }
 
