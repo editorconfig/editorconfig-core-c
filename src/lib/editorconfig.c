@@ -197,7 +197,8 @@ static char** get_filenames(const char* path, const char* filename)
  * See the header file for the use of this function
  */
 EDITORCONFIG_EXPORT
-int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
+int editorconfig_parse(const char* full_filename,
+        struct editorconfig_parsing_out* out,
         char** err_file)
 {
     handler_first_param     hfp;
@@ -260,7 +261,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_parsing_out* out,
  * See header file
  */
 EDITORCONFIG_EXPORT
-int editorconfig_parsing_out_clear(editorconfig_parsing_out* epo)
+int editorconfig_parsing_out_clear(struct editorconfig_parsing_out* epo)
 {
     int         i;
 
