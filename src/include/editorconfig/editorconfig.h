@@ -112,7 +112,7 @@ int editorconfig_parse(const char* full_filename,
  * standard.
  *
  * @retval non-NULL The parsing result of editorconfig files does not conform
- * to the standard. The return value contains the error message.
+ * to the standard. The return value is a pointer to the error message.
  */
 EDITORCONFIG_EXPORT
 const char* editorconfig_is_standard_conformed(
