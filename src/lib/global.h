@@ -29,10 +29,6 @@
 
 #include "config.h"
 
-#ifdef MSVC
-# define _CRT_SECURE_NO_WARNINGS 1
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -42,6 +42,10 @@
 
 #cmakedefine MSVC
 
+#ifdef MSVC
+# define _CRT_SECURE_NO_WARNINGS 1
+#endif
+
 #define editorconfig_VERSION_MAJOR @editorconfig_VERSION_MAJOR@
 #define editorconfig_VERSION_MINOR @editorconfig_VERSION_MINOR@
 #define editorconfig_VERSION_SUBMINOR @editorconfig_VERSION_SUBMINOR@
