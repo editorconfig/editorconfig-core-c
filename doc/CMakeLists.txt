@@ -30,6 +30,7 @@ set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 install(FILES
     ${EC_MANPAGE3_DIR}/editorconfig.h.3
     ${EC_MANPAGE3_DIR}/editorconfig_get_version.3
+    ${EC_MANPAGE3_DIR}/editorconfig_is_standard_conformed.3
     ${EC_MANPAGE3_DIR}/editorconfig_name_value.3
     ${EC_MANPAGE3_DIR}/editorconfig_parse.3
     ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
