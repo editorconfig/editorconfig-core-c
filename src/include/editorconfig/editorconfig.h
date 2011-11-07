@@ -102,6 +102,23 @@ int editorconfig_parse(const char* full_filename,
         struct editorconfig_parsing_out* out, char** err_file);
 
 /*!
+ * @brief Check whether the parsing result of editorconfig files conforms to
+ * the standard.
+ *
+ * @param epo The editorconfig_parsing_out structure containing the parsing
+ * result to be checked.
+ *
+ * @retval NULL The parsing result of editorconfig files conforms to the
+ * standard.
+ *
+ * @retval non-NULL The parsing result of editorconfig files does not conform
+ * to the standard. The return value contains the error message.
+ */
+EDITORCONFIG_EXPORT
+const char* editorconfig_is_standard_conformed(
+        const struct editorconfig_parsing_out* epo);
+
+/*!
  * @brief Clear the editorconfig_parsing_out structure after a success call of
  * editorconfig_parse.
  *

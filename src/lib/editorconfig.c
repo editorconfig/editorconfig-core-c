@@ -261,6 +261,65 @@ int editorconfig_parse(const char* full_filename,
  * See header file
  */
 EDITORCONFIG_EXPORT
+const char* editorconfig_is_standard_conformed(
+        const struct editorconfig_parsing_out* epo)
+{
+    int                         i;
+    editorconfig_name_value*    nv;
+    _Bool                       indent_style_present = 0;
+    const char*                 indent_style_value = NULL;
+    _Bool                       tab_width_present = 0;
+    _Bool                       indent_size_present = 0;
+
+    nv = epo->name_values;
+    for (i = 0; i < epo->count; ++i) {
+        if (!strcmp(nv->name, "indent_style")) {
+            indent_style_present = 1;
+
+            indent_style_value = nv->value;
+
+            /* if indent_style is set to an invalid value */
+            if (strcmp(indent_style_value, "space") &&
+                    strcmp(indent_style_value, "tab"))
+                return "indent_style is set to neither \'space\' nor \'tab\'.";
+        } else if (!strcmp(nv->name, "tab_width")) {
+            tab_width_present = 1;
+
+            if (atoi(nv->value) <= 0)
+                return "tab_width is not a positive number.";
+        } else if (!strcmp(nv->name, "indent_size")) {
+            indent_size_present = 1;
+
+            if (atoi(nv->value) <= 0)
+                return "indent_size is not a positive number.";
+        } else /* unknown option */
+            return "Unknown option.";
+
+        ++ nv;
+    }
+
+    if (tab_width_present && !indent_style_present)
+        return "indent_style is not present but tab_width is present.";
+
+    if (indent_size_present && !indent_style_present)
+        return "indent_style is not present but indent_size is present.";
+
+    if (tab_width_present && !strcmp(indent_style_value, "tab"))
+        return
+            "tab_width is not specified while indent_style is set to \'tab\'.";
+
+    if (indent_size_present && !strcmp(indent_style_value, "space"))
+        return
+            "indent_size is not specified "
+            "while indent_style is set to \'space\'.";
+
+    return NULL;
+}
+
+/*
+ * See header file
+ */
+EDITORCONFIG_EXPORT
 int editorconfig_parsing_out_clear(struct editorconfig_parsing_out* epo)
 {
     int         i;

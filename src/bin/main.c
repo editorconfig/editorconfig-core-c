@@ -44,7 +44,13 @@ static void version(FILE* stream, const char* command)
 
 static void usage(FILE* stream, const char* command)
 {
-    fprintf(stream, "Usage: %s FILENAME\n", command);
+    fprintf(stream, "Usage: %s [-c] FILENAME\n", command);
+
+    fprintf(stream, "\n");
+    fprintf(stream, "-c                 Check standard conformation before"
+            " print the parsing result\n");
+    fprintf(stream, "-h OR --help       Print this help message.\n");
+    fprintf(stream, "--version          Display version information.\n");
 }
 
 int main(int argc, const char* argv[])
@@ -55,25 +61,37 @@ int main(int argc, const char* argv[])
     int                             err_num;
     int                             i;
 
-    if (argc != 2) {
+    int                             should_check_conformtion = 0;
+
+    if (argc <= 1) {
         version(stderr, argv[0]);
         usage(stderr, argv[0]);
         return 1;
-    } else if (strcmp(argv[1], "--version") == 0 ||
-            strcmp(argv[1], "-v") == 0) {
-        version(stdout, argv[0]);
-        return 0;
-    } else if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0) {
-        version(stdout, argv[0]);
-        usage(stdout, argv[0]);
-        return 0;
     }
+    
+    for (i = 1; i < argc; ++i) {
 
-    full_filename = strdup(argv[1]);
-
-    if (full_filename == NULL) {
-        fprintf(stderr, "Error: Unable to obtain the full path.\n");
-        return 1;
+        if (strcmp(argv[i], "--version") == 0 ||
+                strcmp(argv[i], "-v") == 0) {
+            version(stdout, argv[0]);
+            return 0;
+        } else if (strcmp(argv[i], "--help") == 0 ||
+                strcmp(argv[i], "-h") == 0) {
+            version(stdout, argv[0]);
+            usage(stdout, argv[0]);
+            return 0;
+        } else if (strcmp(argv[i], "-c") == 0)
+            should_check_conformtion = 1;
+        else if (i == argc - 1) {
+            full_filename = strdup(argv[i]);
+            if (full_filename == NULL) {
+                fprintf(stderr, "Error: Unable to obtain the full path.\n");
+                return 1;
+            }
+        } else {
+            usage(stderr, argv[0]);
+            return 1;
+        }
     }
 
     if ((err_num = editorconfig_parse(full_filename, &epo, &err_file)) != 0) {
@@ -88,6 +106,14 @@ int main(int argc, const char* argv[])
         return 1;
     }
 
+    /* if we should check the result, check the parsing result */
+    if (should_check_conformtion) {
+        const char*     errmsg;
+        if ((errmsg = editorconfig_is_standard_conformed(&epo)) == NULL)
+            printf("Standard conformed.\n");
+        else
+            printf("Standard not conformed: %s\n", errmsg);
+    }
     /* print the result */
     for (i = 0; i < epo.count; ++i)
         printf("%s=%s\n", epo.name_values[i].name, epo.name_values[i].value);
