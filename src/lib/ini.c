@@ -76,7 +76,7 @@ static char* find_char_or_comment(const char* s, char c)
 
 static char* find_last_char_or_comment(const char* s, char c)
 {
-    char* last_char = s;
+    const char* last_char = s;
     int was_whitespace = 0;
     while (*s && !(was_whitespace && *s == ';')) {
         if (*s == c)
@@ -84,7 +84,7 @@ static char* find_last_char_or_comment(const char* s, char c)
         was_whitespace = isspace(*s);
         s++;
     }
-    return last_char;
+    return (char*)last_char;
 }
 
 /* Version of strncpy that ensures dest (size bytes) is null-terminated. */
