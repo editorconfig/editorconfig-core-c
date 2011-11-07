@@ -38,6 +38,8 @@
 #cmakedefine HAVE_STRDUP
 #cmakedefine HAVE_STRNDUP
 
+#cmakedefine HAVE__BOOL
+
 #define editorconfig_VERSION_MAJOR @editorconfig_VERSION_MAJOR@
 #define editorconfig_VERSION_MINOR @editorconfig_VERSION_MINOR@
 #define editorconfig_VERSION_SUBMINOR @editorconfig_VERSION_SUBMINOR@

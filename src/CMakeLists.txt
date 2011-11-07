@@ -25,6 +25,7 @@
 #
 
 include(CheckFunctionExists)
+include(CheckTypeSize)
 
 # config.h will be generated in src/auto, we should include it.
 include_directories(BEFORE
@@ -32,6 +33,8 @@ include_directories(BEFORE
 
 check_function_exists(strdup HAVE_STRDUP)
 check_function_exists(strndup HAVE_STRNDUP)
+
+check_type_size(_Bool HAVE__BOOL)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
