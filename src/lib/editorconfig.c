@@ -144,7 +144,8 @@ static void split_file_path(char** directory, char** filename,
     }
 
     if (directory != NULL) {
-        *directory = strndup(absolute_path, path_char - absolute_path);
+        *directory = strndup(absolute_path,
+                (size_t)(path_char - absolute_path));
     }
     if (filename != NULL) {
         *filename = strndup(path_char+1, strlen(path_char)-1);
