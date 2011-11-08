@@ -40,7 +40,15 @@
 
 #cmakedefine HAVE__BOOL
 
+#cmakedefine CMAKE_COMPILER_IS_GNUCC
 #cmakedefine MSVC
+
+/* For gcc, we define _GNU_SOURCE to use gcc extensions */
+#ifdef CMAKE_COMPILER_IS_GNUCC
+# ifndef _GNU_SOURCE
+#  define _GNU_SOURCE
+# endif /* _GNU_SOURCE */
+#endif /* CMAKE_COMPILER_IS_GNUCC */
 
 #ifdef MSVC
 # define _CRT_SECURE_NO_WARNINGS 1
