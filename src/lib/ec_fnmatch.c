@@ -35,10 +35,6 @@
 
 #include "global.h"
 
-#if defined(LIBC_SCCS) && !defined(lint)
-static char sccsid[] = "@(#)fnmatch.c	8.2 (Berkeley) 4/16/94";
-#endif /* LIBC_SCCS and not lint */
-
 /*
  * Function fnmatch() as specified in POSIX 1003.2-1992, section B.6.
  * Compares a filename or pathname to a pattern.
@@ -50,6 +46,9 @@ static char sccsid[] = "@(#)fnmatch.c	8.2 (Berkeley) 4/16/94";
 
 #include "ec_fnmatch.h"
 
+#ifdef EOS
+# undef EOS
+#endif
 #define	EOS	'\0'
 
 static const char *rangematch(const char *, char, int);
