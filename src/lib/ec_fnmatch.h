@@ -47,7 +47,7 @@
 #define EC_FNM_PREFIX_DIRS	0x20	/* Directory prefixes of pattern match too. */
 
 /* Make this compile successfully with "gcc -traditional" */
-#ifndef __STDC__
+#if defined(__GNUC__) && !defined(__STDC__)
 #define const	/* empty */
 #endif
 
