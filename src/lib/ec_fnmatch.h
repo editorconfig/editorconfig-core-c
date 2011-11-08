@@ -46,11 +46,6 @@
 #define	EC_FNM_CASEFOLD	0x10	/* Case insensitive search. */
 #define EC_FNM_PREFIX_DIRS	0x20	/* Directory prefixes of pattern match too. */
 
-/* Make this compile successfully with "gcc -traditional" */
-#if defined(__GNUC__) && !defined(__STDC__)
-#define const	/* empty */
-#endif
-
 EDITORCONFIG_LOCAL
 int	 ec_fnmatch(const char *, const char *, int);
 
