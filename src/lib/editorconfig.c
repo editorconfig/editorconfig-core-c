@@ -299,7 +299,13 @@ const char* editorconfig_is_standard_conformed(
 
             if (atoi(nv->value) <= 0)
                 return "indent_size is not a positive number.";
-        } else /* unknown option */
+        } else if (!strcmp(nv->name, "end_of_line")) {
+            /* end_of_line only accepts "lf", "cr", "crlf" */
+            if (strcmp(nv->value, "lf") &&
+                    strcmp(nv->value, "cr") &&
+                    strcmp(nv->value, "crlf"))
+                return "end_of_line contains invalid value.";
+        }else /* unknown option */
             return "Unknown option.";
 
         ++ nv;
