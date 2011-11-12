@@ -74,6 +74,7 @@ static int handler(void* hfp, const char* section, const char* name,
 
     if (ec_fnmatch(section, hfparam->conf.filename, EC_FNM_PATHNAME) == 0) {
         int         name_value_pos;
+        char*       tmpname;
 
         /* For the first time we came here, hfparam->out_values is NULL */
         if (hfparam->out_values == NULL) {
@@ -114,9 +115,13 @@ static int handler(void* hfp, const char* section, const char* name,
             hfparam->max_value_count = new_max_value_count;
         }
 
-        hfparam->out_values[hfparam->current_value_count].name = ec_strlwr(
-                strdup(name));
+        tmpname = ec_strlwr(strdup(name));
+        hfparam->out_values[hfparam->current_value_count].name = tmpname;
         hfparam->out_values[hfparam->current_value_count].value = strdup(value);
+        /* lowercase the value when the name is one of the following */
+        if (!strcmp(tmpname, "end_of_line") ||
+                !strcmp(tmpname, "indent_style"))
+            ec_strlwr(hfparam->out_values[hfparam->current_value_count].value);
         ++ hfparam->current_value_count;
     }
 
