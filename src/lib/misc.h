@@ -41,5 +41,11 @@ char* strndup(const char* str, size_t n);
 #endif
 EDITORCONFIG_LOCAL
 char* str_replace(char* str, char oldc, char newc);
+#ifdef HAVE_STRLWR
+# define ec_strlwr strlwr
+#else
+EDITORCONFIG_LOCAL
+char* ec_strlwr(char* str);
+#endif
 
 #endif /* __MISC_H__ */

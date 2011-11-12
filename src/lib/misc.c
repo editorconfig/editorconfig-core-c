@@ -156,3 +156,22 @@ char* str_replace(char* str, char oldc, char newc)
     return str;
 }
 
+#ifndef HAVE_STRLWR
+
+#include <ctype.h>
+/*
+ * convert the string to lowercase
+ */
+EDITORCONFIG_LOCAL
+char* ec_strlwr(char* str)
+{
+    char*       p;
+
+    for (p = str; *p; ++p)
+        *p = (char)tolower(*p);
+
+    return str;
+}
+
+#endif /* !HAVE_STRLWR */
+

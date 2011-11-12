@@ -114,7 +114,8 @@ static int handler(void* hfp, const char* section, const char* name,
             hfparam->max_value_count = new_max_value_count;
         }
 
-        hfparam->out_values[hfparam->current_value_count].name = strdup(name);
+        hfparam->out_values[hfparam->current_value_count].name = ec_strlwr(
+                strdup(name));
         hfparam->out_values[hfparam->current_value_count].value = strdup(value);
         ++ hfparam->current_value_count;
     }

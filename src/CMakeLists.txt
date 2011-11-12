@@ -33,6 +33,7 @@ include_directories(BEFORE
 
 check_function_exists(strdup HAVE_STRDUP)
 check_function_exists(strndup HAVE_STRNDUP)
+check_function_exists(strlwr HAVE_STRLWR)
 
 check_type_size(_Bool HAVE__BOOL)
 
