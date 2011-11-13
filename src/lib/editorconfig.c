@@ -30,6 +30,11 @@
 #include "ini.h"
 #include "ec_fnmatch.h"
 
+typedef struct
+{
+    char*       filename;
+} configuration;
+
 /* could be used to fast locate these properties in an
  * array_editorconfig_name_value */
 typedef struct
@@ -37,6 +42,22 @@ typedef struct
     editorconfig_name_value*        indent_size;
     editorconfig_name_value*        tab_width;
 } special_property_name_value_pointers;
+
+typedef struct
+{
+    editorconfig_name_value*                name_values;
+    int                                     current_value_count;
+    int                                     max_value_count;
+    special_property_name_value_pointers    spnvp;
+} array_editorconfig_name_value;
+
+typedef struct
+{
+    configuration                   conf;
+
+    array_editorconfig_name_value   array_name_value;
+} handler_first_param;
+
 /*
  * Set the name and value of a editorconfig_name_value structure
  */
@@ -75,26 +96,11 @@ static int find_name_value_from_name(const editorconfig_name_value* env,
     return -1;
 }
 
-typedef struct
-{
-    char*       filename;
-} configuration;
-
-typedef struct
-{
-    editorconfig_name_value*                name_values;
-    int                                     current_value_count;
-    int                                     max_value_count;
-    special_property_name_value_pointers    spnvp;
-} array_editorconfig_name_value;
-
 /* initialize array_editorconfig_name_value */
 static void array_editorconfig_name_value_init(
         array_editorconfig_name_value* aenv)
 {
-    aenv->name_values = NULL;
-    aenv->max_value_count = 0;
-    aenv->current_value_count = 0;
+    memset(aenv, 0, sizeof(array_editorconfig_name_value));
 }
 
 static int array_editorconfig_name_value_add(
@@ -160,13 +166,6 @@ static int array_editorconfig_name_value_add(
 #undef VALUE_COUNT_INITIAL
 #undef VALUE_COUNT_INCREASEMENT
 }
-
-typedef struct
-{
-    configuration                   conf;
-
-    array_editorconfig_name_value   array_name_value;
-} handler_first_param;
 
 /*
  * Accept INI property value and store known values in handler_first_param
