@@ -42,7 +42,7 @@ http://code.google.com/p/inih/
 
 #define MAX_LINE 200
 #define MAX_SECTION 50
-#define MAX_NAME 50
+#define MAX_NAME MAX_PROPERTY_NAME
 
 /* Strip whitespace chars off end of given string, in place. Return s. */
 static char* rstrip(char* s)

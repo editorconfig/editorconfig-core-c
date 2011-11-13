@@ -77,6 +77,8 @@ int ini_parse_file(FILE* file,
 #define INI_ALLOW_MULTILINE 1
 #endif
 
+#define MAX_PROPERTY_NAME 50
+
 #ifdef __cplusplus
 }
 #endif

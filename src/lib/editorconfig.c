@@ -54,10 +54,26 @@ static int find_name_value_from_name(const editorconfig_name_value* env,
     int         i;
 
     for (i = 0; i < count; ++i)
-        if (!strcmp(env->name, name)) /* found */
+        if (!strcmp(env[i].name, name)) /* found */
             return i;
 
     return -1;
+}
+
+/*
+ * Set the name and value of a editorconfig_name_value structure
+ */
+static void set_name_value(editorconfig_name_value* nv, const char* name,
+        const char* value)
+{
+    if (name)
+        nv->name = strdup(name);
+    if (value)
+        nv->value = strdup(value);
+    /* lowercase the value when the name is one of the following */
+    if (!strcmp(nv->name, "end_of_line") ||
+            !strcmp(nv->name, "indent_style"))
+        ec_strlwr(nv->value);
 }
 
 /*
@@ -74,7 +90,12 @@ static int handler(void* hfp, const char* section, const char* name,
 
     if (ec_fnmatch(section, hfparam->conf.filename, EC_FNM_PATHNAME) == 0) {
         int         name_value_pos;
-        char*       tmpname;
+        /* always use name_lwr but not name, since property names are case
+         * insensitive */
+        char        name_lwr[MAX_PROPERTY_NAME];
+
+        /* name_lwr is the lowercase property name */
+        ec_strlwr(strcpy(name_lwr, name));
 
         /* For the first time we came here, hfparam->out_values is NULL */
         if (hfparam->out_values == NULL) {
@@ -89,11 +110,12 @@ static int handler(void* hfp, const char* section, const char* name,
         }
 
         name_value_pos = find_name_value_from_name(
-                hfparam->out_values, hfparam->current_value_count, name);
+                hfparam->out_values, hfparam->current_value_count, name_lwr);
 
         if (name_value_pos >= 0) { /* current name has already been used */
             free(hfparam->out_values[name_value_pos].value);
-            hfparam->out_values[name_value_pos].value = strdup(value);
+            set_name_value(&hfparam->out_values[name_value_pos],
+                    (const char*)NULL, value);
             return 1;
         }
 
@@ -115,13 +137,8 @@ static int handler(void* hfp, const char* section, const char* name,
             hfparam->max_value_count = new_max_value_count;
         }
 
-        tmpname = ec_strlwr(strdup(name));
-        hfparam->out_values[hfparam->current_value_count].name = tmpname;
-        hfparam->out_values[hfparam->current_value_count].value = strdup(value);
-        /* lowercase the value when the name is one of the following */
-        if (!strcmp(tmpname, "end_of_line") ||
-                !strcmp(tmpname, "indent_style"))
-            ec_strlwr(hfparam->out_values[hfparam->current_value_count].value);
+        set_name_value(&hfparam->out_values[hfparam->current_value_count],
+                name_lwr, value);
         ++ hfparam->current_value_count;
     }
 
