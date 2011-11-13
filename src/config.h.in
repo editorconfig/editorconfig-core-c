@@ -40,6 +40,12 @@
 
 #cmakedefine HAVE__BOOL
 
+#cmakedefine HAVE_CONST
+
+#ifndef HAVE_CONST
+# define const
+#endif
+
 #cmakedefine CMAKE_COMPILER_IS_GNUCC
 #cmakedefine MSVC
 

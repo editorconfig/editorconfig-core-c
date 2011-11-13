@@ -36,6 +36,7 @@ check_function_exists(strndup HAVE_STRNDUP)
 check_function_exists(strlwr HAVE_STRLWR)
 
 check_type_size(_Bool HAVE__BOOL)
+check_type_size("const char*" HAVE_CONST)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/config.h.in
