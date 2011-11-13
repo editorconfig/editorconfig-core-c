@@ -30,11 +30,18 @@
 #include "ini.h"
 #include "ec_fnmatch.h"
 
+/* could be used to fast locate these properties in an
+ * array_editorconfig_name_value */
+typedef struct
+{
+    editorconfig_name_value*        indent_size;
+    editorconfig_name_value*        tab_width;
+} special_property_name_value_pointers;
 /*
  * Set the name and value of a editorconfig_name_value structure
  */
 static void set_name_value(editorconfig_name_value* nv, const char* name,
-        const char* value)
+        const char* value, special_property_name_value_pointers* spnvp)
 {
     if (name)
         nv->name = strdup(name);
@@ -44,6 +51,12 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
     if (!strcmp(nv->name, "end_of_line") ||
             !strcmp(nv->name, "indent_style"))
         ec_strlwr(nv->value);
+
+    /* set speical pointers */
+    if (!strcmp(nv->name, "indent_size"))
+        spnvp->indent_size = nv;
+    else if (!strcmp(nv->name, "tab_width"))
+        spnvp->tab_width = nv;
 }
 
 /*
@@ -69,9 +82,10 @@ typedef struct
 
 typedef struct
 {
-    editorconfig_name_value*        name_values;
-    int                             current_value_count;
-    int                             max_value_count;
+    editorconfig_name_value*                name_values;
+    int                                     current_value_count;
+    int                                     max_value_count;
+    special_property_name_value_pointers    spnvp;
 } array_editorconfig_name_value;
 
 /* initialize array_editorconfig_name_value */
@@ -115,7 +129,7 @@ static int array_editorconfig_name_value_add(
     if (name_value_pos >= 0) { /* current name has already been used */
         free(aenv->name_values[name_value_pos].value);
         set_name_value(&aenv->name_values[name_value_pos],
-                (const char*)NULL, value);
+                (const char*)NULL, value, &aenv->spnvp);
         return 0;
     }
 
@@ -139,7 +153,7 @@ static int array_editorconfig_name_value_add(
     }
 
     set_name_value(&aenv->name_values[aenv->current_value_count],
-            name_lwr, value);
+            name_lwr, value, &aenv->spnvp);
     ++ aenv->current_value_count;
 
     return 0;
@@ -292,6 +306,14 @@ int editorconfig_parse(const char* full_filename,
 
         free(*config_file);
     }
+
+    /* value proprocessing */
+
+    /* set tab_width to indent_size if indent_size is specified */
+    if (hfp.array_name_value.spnvp.indent_size &&
+            !hfp.array_name_value.spnvp.tab_width)
+        array_editorconfig_name_value_add(&hfp.array_name_value, "tab_width",
+                hfp.array_name_value.spnvp.indent_size->value);
 
     out->count = hfp.array_name_value.current_value_count;
     out->name_values = hfp.array_name_value.name_values;
