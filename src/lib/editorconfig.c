@@ -71,7 +71,7 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
     /* lowercase the value when the name is one of the following */
     if (!strcmp(nv->name, "end_of_line") ||
             !strcmp(nv->name, "indent_style"))
-        ec_strlwr(nv->value);
+        strlwr(nv->value);
 
     /* set speical pointers */
     if (!strcmp(nv->name, "indent_size"))
@@ -127,7 +127,7 @@ static int array_editorconfig_name_value_add(
 
 
     /* name_lwr is the lowercase property name */
-    ec_strlwr(strcpy(name_lwr, name));
+    strlwr(strcpy(name_lwr, name));
 
     name_value_pos = find_name_value_from_name(
             aenv->name_values, aenv->current_value_count, name_lwr);

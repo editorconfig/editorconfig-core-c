@@ -33,19 +33,20 @@
 
 #ifndef HAVE_STRDUP
 EDITORCONFIG_LOCAL
-char* strdup(const char *str);
+char* ec_strdup(const char *str);
+# define strdup ec_strdup
 #endif
 #ifndef HAVE_STRNDUP
 EDITORCONFIG_LOCAL
-char* strndup(const char* str, size_t n);
+char* ec_strndup(const char* str, size_t n);
+# define strndup ec_strndup
 #endif
 EDITORCONFIG_LOCAL
 char* str_replace(char* str, char oldc, char newc);
-#ifdef HAVE_STRLWR
-# define ec_strlwr strlwr
-#else
+#ifndef HAVE_STRLWR
 EDITORCONFIG_LOCAL
 char* ec_strlwr(char* str);
+# define strlwr ec_strlwr
 #endif
 
 #endif /* __MISC_H__ */

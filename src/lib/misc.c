@@ -65,7 +65,7 @@
 #include <string.h>
 
 EDITORCONFIG_LOCAL
-char* strdup(const char *str)
+char* ec_strdup(const char *str)
 {
     size_t      len;
     char*       copy;
@@ -121,7 +121,7 @@ char* strdup(const char *str)
 #include <string.h>
 
 EDITORCONFIG_LOCAL
-char* strndup(const char* str, size_t n)
+char* ec_strndup(const char* str, size_t n)
 {
     size_t      len;
     char*       copy;
