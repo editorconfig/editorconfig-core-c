@@ -171,7 +171,7 @@ static int array_editorconfig_name_value_add(
  * Accept INI property value and store known values in handler_first_param
  * struct.
  */
-static int handler(void* hfp, const char* section, const char* name,
+static int ini_handler(void* hfp, const char* section, const char* name,
         const char* value)
 {
 
@@ -292,7 +292,7 @@ int editorconfig_parse(const char* full_filename,
 
     config_files = get_filenames(full_filename2, "/.editorconfig");
     for (config_file = config_files; *config_file != NULL; config_file++) {
-        if ((err_num = ini_parse(*config_file, handler, &hfp)) != 0 &&
+        if ((err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
                 /* ignore error caused by I/O, maybe caused by non exist file */
                 err_num != -1) {
             if (err_file)
