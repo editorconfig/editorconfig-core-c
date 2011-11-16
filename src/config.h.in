@@ -37,6 +37,7 @@
 
 #cmakedefine HAVE_STRDUP
 #cmakedefine HAVE_STRNDUP
+#cmakedefine HAVE_STRLWR
 
 #cmakedefine HAVE__BOOL
 
