@@ -168,7 +168,7 @@ char* ec_strlwr(char* str)
     char*       p;
 
     for (p = str; *p; ++p)
-        *p = (char)tolower(*p);
+        *p = (char)tolower((unsigned char)*p);
 
     return str;
 }
