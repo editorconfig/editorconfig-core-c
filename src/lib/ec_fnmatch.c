@@ -160,7 +160,7 @@ rangematch(const char *pattern, char test, int flags)
      * consistency with the regular expression syntax.
      * J.T. Conklin (conklin@ngai.kaleida.com)
      */
-    if ( (negate = (*pattern == '!' || *pattern == '^')) )
+    if ((negate = (*pattern == '!' || *pattern == '^')) != 0)
         ++pattern;
 
     if (flags & EC_FNM_CASEFOLD)
