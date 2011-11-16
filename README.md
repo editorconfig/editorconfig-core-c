@@ -4,36 +4,9 @@
 EditorConfig makes it easy to maintain the correct coding style when switching
 between different text editors and between different projects.  The
 EditorConfig project maintains a file format and plugins for various text
-editors which allow this file format to be read and used by those editors.
-
-
-The File Format
----------------
-
-EditorConfig files use an INI file format with filename globs as section names.
-EditorConfig files should be named `.editorconfig` and should be placed in or
-above the directory of the files they will affect.  Here is an example
-EditorConfig file that tells text editors to use hard tab indentation for
-JavaScript files, 2 space indentation for HTML files and 4 space indentation
-for Python files:
-
-    [*.js]
-    indent_style = tab
-
-    [*.html]
-    indent_style = space
-    tab_width = 2
-
-    [*.py]
-    indent_style = space
-    tab_width = 4
-
-
-Supported editors
------------------
-
-The only editor currently supported is [vim][].  If you want to help
-add support for your favorite editor, see the Contributing section below.
+editors which allow this file format to be read and used by those editors.  For
+information on the file format and supported text editors, see the
+[EditorConfig website][EditorConfig].
 
 
 Contributing
@@ -59,7 +32,7 @@ To install the EditorConfig core from source see the `INSTALL` file.
 Getting Help
 ------------
 
-For help with EditorConfig, please write to our [mailing list][].
+For help with the EditorConfig core code, please write to our [mailing list][].
 
 If you are writing a plugin a language that can import C libraries, you may
 want to import and use the EditorConfig library directly.  If you do use the
