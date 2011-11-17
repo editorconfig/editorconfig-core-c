@@ -31,6 +31,9 @@
  *
  * From FreeBSD fnmatch.c 1.11
  * $Id: fnmatch.c,v 1.3 1997/08/19 02:34:30 jdp Exp $
+ *
+ * Copyright(C) 2011 EditorConfig Team.
+ * Modified by EditorConfig Team for use in EditorConfig project.
  */
 
 #include "global.h"
