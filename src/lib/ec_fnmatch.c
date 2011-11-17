@@ -58,6 +58,10 @@ int ec_fnmatch(const char *pattern, const char *string, int flags)
 {
     const char *stringstart;
     char c, test;
+    /* When multi stars presents, should_fnm_pathname will be set to 0
+     * regardless of whether EC_FNM_PATHNAME is set into flags. Otherwise, the
+     * value equals to flags & EC_FNM_PATHNAME */
+    _Bool should_fnm_pathname = 0;
 
     for (stringstart = string;;)
         switch (c = *pattern++) {
@@ -78,24 +82,29 @@ int ec_fnmatch(const char *pattern, const char *string, int flags)
             break;
         case '*':
             c = *pattern;
+
+            /* see the comments above the declaration of should_fnm_pathname */
+            should_fnm_pathname = (_Bool)((c != '*') &&
+                    (flags & EC_FNM_PATHNAME));
+
             /* Collapse multiple stars. */
             while (c == '*')
                 c = *++pattern;
 
             if (*string == '.' && (flags & EC_FNM_PERIOD) &&
                     (string == stringstart ||
-                     ((flags & EC_FNM_PATHNAME) && *(string - 1) == '/')))
+                     (should_fnm_pathname && *(string - 1) == '/')))
                 return (EC_FNM_NOMATCH);
 
             /* Optimize for pattern with * at end or before /. */
             if (c == EOS)
-                if (flags & EC_FNM_PATHNAME)
+                if (should_fnm_pathname)
                     return ((flags & EC_FNM_LEADING_DIR) ||
                             strchr(string, '/') == NULL ?
                             0 : EC_FNM_NOMATCH);
                 else
                     return (0);
-            else if (c == '/' && flags & EC_FNM_PATHNAME) {
+            else if (c == '/' && should_fnm_pathname) {
                 if ((string = strchr(string, '/')) == NULL)
                     return (EC_FNM_NOMATCH);
                 break;
@@ -105,7 +114,7 @@ int ec_fnmatch(const char *pattern, const char *string, int flags)
             while ((test = *string) != EOS) {
                 if (!ec_fnmatch(pattern, string, flags & ~EC_FNM_PERIOD))
                     return (0);
-                if (test == '/' && flags & EC_FNM_PATHNAME)
+                if (test == '/' && should_fnm_pathname)
                     break;
                 ++string;
             }
