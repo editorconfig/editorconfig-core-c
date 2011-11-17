@@ -53,7 +53,7 @@
 
 static const char *rangematch(const char *, char, int);
 
-    EDITORCONFIG_LOCAL
+EDITORCONFIG_LOCAL
 int ec_fnmatch(const char *pattern, const char *string, int flags)
 {
     const char *stringstart;
