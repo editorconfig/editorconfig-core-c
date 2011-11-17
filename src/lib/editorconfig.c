@@ -30,11 +30,6 @@
 #include "ini.h"
 #include "ec_fnmatch.h"
 
-typedef struct
-{
-    char*       filename;
-} configuration;
-
 /* could be used to fast locate these properties in an
  * array_editorconfig_name_value */
 typedef struct
@@ -53,8 +48,7 @@ typedef struct
 
 typedef struct
 {
-    configuration                   conf;
-
+    char*                           full_filename;
     array_editorconfig_name_value   array_name_value;
 } handler_first_param;
 
@@ -174,10 +168,13 @@ static int array_editorconfig_name_value_add(
 static int ini_handler(void* hfp, const char* section, const char* name,
         const char* value)
 {
-
     handler_first_param* hfparam = (handler_first_param*)hfp;
+    /* prepend ** to pattern */
+    char                 pattern[MAX_SECTION_NAME + 2] = "**";
 
-    if (ec_fnmatch(section, hfparam->conf.filename, EC_FNM_PATHNAME) == 0) {
+    strcat(pattern, section);
+
+    if (ec_fnmatch(pattern, hfparam->full_filename, EC_FNM_PATHNAME) == 0) {
         if (array_editorconfig_name_value_add(&hfparam->array_name_value, name,
                 value))
             return 0;
@@ -270,36 +267,34 @@ int editorconfig_parse(const char* full_filename,
     char*                   directory;
     char*                   filename;
     int                     err_num;
-    char*                   full_filename2 = strdup(full_filename);
 
     memset(&hfp, 0, sizeof(hfp));
 
+    hfp.full_filename = strdup(full_filename);
+
 #ifdef WIN32
     /* replace all backslashes with slashes on Windows */
-    str_replace(full_filename2, '\\', '/');
+    str_replace(hfp.full_filename, '\\', '/');
 #endif
 
-    split_file_path(&directory, &filename, full_filename2);
+    split_file_path(&directory, &filename, hfp.full_filename);
     if (directory == NULL) {
         return -2;
     }
 
     free(directory);
 
-    hfp.conf.filename = filename;
-
     array_editorconfig_name_value_init(&hfp.array_name_value);
 
-    config_files = get_filenames(full_filename2, "/.editorconfig");
+    config_files = get_filenames(hfp.full_filename, "/.editorconfig");
     for (config_file = config_files; *config_file != NULL; config_file++) {
         if ((err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
                 /* ignore error caused by I/O, maybe caused by non exist file */
                 err_num != -1) {
             if (err_file)
                 *err_file = strdup(*config_file);
-            free(full_filename2);
             free(*config_file);
-            free(hfp.conf.filename);
+            free(hfp.full_filename);
             return err_num;
         }
 
@@ -319,13 +314,12 @@ int editorconfig_parse(const char* full_filename,
     out->name_values = realloc(      /* realloc to truncate the unused spaces */
             out->name_values, sizeof(editorconfig_name_value) * out->count);
     if (out->name_values == NULL) {
-        free(hfp.conf.filename);
+        free(hfp.full_filename);
         return -3;
     }
 
-    free(hfp.conf.filename);
+    free(hfp.full_filename);
     free(config_files);
-    free(full_filename2);
 
     return 0;
 }
