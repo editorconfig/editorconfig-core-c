@@ -49,6 +49,7 @@ typedef struct
 typedef struct
 {
     char*                           full_filename;
+    char*                           editorconfig_file_dir;
     array_editorconfig_name_value   array_name_value;
 } handler_first_param;
 
@@ -170,8 +171,19 @@ static int ini_handler(void* hfp, const char* section, const char* name,
 {
     handler_first_param* hfparam = (handler_first_param*)hfp;
     /* prepend ** to pattern */
-    char                 pattern[MAX_SECTION_NAME + 2] = "**";
+    char*                pattern;
 
+    /* pattern would be: /dir/of/editorconfig/file/[double_star]/[section] if
+     * section does not start with '/', or /dir/of/editorconfig/file[section]
+     * if section starts with a '/' */
+    pattern = (char*)malloc(
+            strlen(hfparam->editorconfig_file_dir) * sizeof(char) +
+            sizeof("/**") + strlen(section) * sizeof(char));
+    if (!pattern)
+        return 0;
+    strcpy(pattern, hfparam->editorconfig_file_dir);
+    if (*section != '/')
+        strcat(pattern, "/**");
     strcat(pattern, section);
 
     if (ec_fnmatch(pattern, hfparam->full_filename, EC_FNM_PATHNAME) == 0) {
@@ -288,6 +300,7 @@ int editorconfig_parse(const char* full_filename,
 
     config_files = get_filenames(hfp.full_filename, "/.editorconfig");
     for (config_file = config_files; *config_file != NULL; config_file++) {
+        split_file_path(&hfp.editorconfig_file_dir, NULL, *config_file);
         if ((err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
                 /* ignore error caused by I/O, maybe caused by non exist file */
                 err_num != -1) {
@@ -295,9 +308,11 @@ int editorconfig_parse(const char* full_filename,
                 *err_file = strdup(*config_file);
             free(*config_file);
             free(hfp.full_filename);
+            free(hfp.editorconfig_file_dir);
             return err_num;
         }
 
+        free(hfp.editorconfig_file_dir);
         free(*config_file);
     }
 
