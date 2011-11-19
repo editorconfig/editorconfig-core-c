@@ -247,6 +247,7 @@ static int count_slashes(const char* filename)
 static char** get_filenames(const char* path, const char* filename)
 {
     char* currdir;
+    char* currdir1;
     char** files;
     int slashes = count_slashes(path);
     int i;
@@ -256,15 +257,18 @@ static char** get_filenames(const char* path, const char* filename)
 
     currdir = strdup(path);
     for (i = 0; i < slashes; i++) {
-        split_file_path(&currdir, NULL, currdir);
+        currdir1 = currdir;
+        split_file_path(&currdir, NULL, currdir1);
+        free(currdir1);
         files[i] = malloc(strlen(currdir) + strlen(filename) + 1);
         strcpy(files[i], currdir);
         strcat(files[i], filename);
     }
 
+    free(currdir);
+
     files[slashes] = NULL;
 
-    free(currdir);
     return files;
 }
 
