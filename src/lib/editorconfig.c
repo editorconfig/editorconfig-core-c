@@ -188,10 +188,13 @@ static int ini_handler(void* hfp, const char* section, const char* name,
 
     if (ec_fnmatch(pattern, hfparam->full_filename, EC_FNM_PATHNAME) == 0) {
         if (array_editorconfig_name_value_add(&hfparam->array_name_value, name,
-                value))
+                value)) {
+            free(pattern);
             return 0;
+        }
     }
 
+    free(pattern);
     return 1;
 }
 
