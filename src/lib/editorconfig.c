@@ -256,7 +256,7 @@ static char** get_filenames(const char* path, const char* filename)
     memset(files, 0, sizeof(files));
 
     currdir = strdup(path);
-    for (i = 0; i < slashes; i++) {
+    for (i = slashes - 1; i >= 0; --i) {
         currdir1 = currdir;
         split_file_path(&currdir, NULL, currdir1);
         free(currdir1);
