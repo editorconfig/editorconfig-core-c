@@ -260,8 +260,9 @@ static char** get_filenames(const char* path, const char* filename)
         currdir1 = currdir;
         split_file_path(&currdir, NULL, currdir1);
         free(currdir1);
-        files[i] = malloc(strlen(currdir) + strlen(filename) + 1);
+        files[i] = malloc(strlen(currdir) + strlen(filename) + 2);
         strcpy(files[i], currdir);
+        strcat(files[i], "/");
         strcat(files[i], filename);
     }
 
@@ -272,20 +273,46 @@ static char** get_filenames(const char* path, const char* filename)
     return files;
 }
 
+/*
+ * See the header file for the use of this function
+ */
+EDITORCONFIG_EXPORT
+void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info)
+{
+    memset(info, 0, sizeof(struct editorconfig_parsing_info));
+}
+
 /* 
  * See the header file for the use of this function
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename,
         struct editorconfig_parsing_out* out,
-        char** err_file)
+        struct editorconfig_parsing_info* info)
 {
-    handler_first_param     hfp;
-    char**                  config_file;
-    char**                  config_files;
-    char*                   directory;
-    char*                   filename;
-    int                     err_num;
+    handler_first_param                 hfp;
+    char**                              config_file;
+    char**                              config_files;
+    char*                               directory;
+    char*                               filename;
+    int                                 err_num;
+    struct editorconfig_parsing_info    epi;
+    struct editorconfig_parsing_info*   info1;
+
+    /* set epi */
+    if (info)
+        info1 = info;
+    else {
+        editorconfig_init_parsing_info(&epi);
+        info1 = &epi;
+    }
+
+    info1->err_file = NULL;
+
+    /* if info1->conf_file_name is NULL, we set ".editorconfig" as the default
+     * conf file name */
+    if (!info1->conf_file_name)
+        info1->conf_file_name = ".editorconfig";
 
     memset(&hfp, 0, sizeof(hfp));
 
@@ -305,14 +332,14 @@ int editorconfig_parse(const char* full_filename,
 
     array_editorconfig_name_value_init(&hfp.array_name_value);
 
-    config_files = get_filenames(hfp.full_filename, "/.editorconfig");
+    config_files = get_filenames(hfp.full_filename, info1->conf_file_name);
     for (config_file = config_files; *config_file != NULL; config_file++) {
         split_file_path(&hfp.editorconfig_file_dir, NULL, *config_file);
         if ((err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
                 /* ignore error caused by I/O, maybe caused by non exist file */
                 err_num != -1) {
-            if (err_file)
-                *err_file = strdup(*config_file);
+            if (info1->err_file)
+                info1->err_file = strdup(*config_file);
             free(*config_file);
             free(hfp.full_filename);
             free(hfp.editorconfig_file_dir);

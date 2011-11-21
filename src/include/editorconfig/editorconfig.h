@@ -72,6 +72,35 @@ struct editorconfig_parsing_out
 };
 
 /*!
+ * @brief A structure that contains the parsing information which should be
+ * provided before parsing.
+ * @headerfile editorconfig/editorconfig.h
+ */
+struct editorconfig_parsing_info
+{
+    /*!
+     * The file name of EditorConfig conf file. If this pointer is set to NULL,
+     * the file name is set to ".editorconfig" by default.
+     */
+    const char*                 conf_file_name;
+    /*!
+     * When a parsing error occured, this will point to a file that caused the
+     * parsing error.
+     */
+    char*                       err_file;
+};
+/*!
+ * @brief Initialize an editorconfig_parsing_info structure with default values.
+ * @headerfile editorconfig/editorconfig.h
+ *
+ * @param info The editorconfig_parsing_info structure to be initialized.
+ *
+ * @return None.
+ */
+EDITORCONFIG_EXPORT
+void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info);
+
+/*!
  * @brief Parse editorconfig files corresponding to the file path given by
  * full_filename, and put the result to "out".
  *
@@ -84,9 +113,13 @@ struct editorconfig_parsing_out
  * editorconfig_parsing_out structure. This structure needs to be cleared by
  * editorconfig_parsing_out_clear if this function succeeds.
  *
- * @param err_file When a parsing error occured, this will point to a file
- * that caused the parsing error.
- * 
+ * @param info The parsing information to be used and returned from this
+ * function. Could be NULL if you want to use the default value and you do not
+ * want to get any information back; if you want to use the default value and
+ * you also want the output information, you could use
+ * editorconfig_init_parsing_info to initialize an editorconfig_parsing_info
+ * structure and pass the address as this parameter.
+ *
  * @retval 0 Everything is OK;
  *
  * @retval -2 The full_filename is not a full path name;
@@ -99,7 +132,8 @@ struct editorconfig_parsing_out
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename,
-        struct editorconfig_parsing_out* out, char** err_file);
+        struct editorconfig_parsing_out* out,
+        struct editorconfig_parsing_info* info);
 
 /*!
  * @brief Check whether the parsing result of editorconfig files conforms to

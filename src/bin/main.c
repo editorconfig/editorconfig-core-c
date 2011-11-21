@@ -45,24 +45,30 @@ static void version(FILE* stream, const char* command)
 
 static void usage(FILE* stream, const char* command)
 {
-    fprintf(stream, "Usage: %s [-c] FILENAME\n", command);
+    fprintf(stream, "Usage: %s [OPTIONS] FILENAME\n", command);
 
     fprintf(stream, "\n");
+    fprintf(stream, "-f                 Sepcify a conf file name other than"
+            " the default value \".editorconfig\".\n");
     fprintf(stream, "-c                 Check standard conformation before"
-            " print the parsing result\n");
+            " print the parsing result.\n");
     fprintf(stream, "-h OR --help       Print this help message.\n");
     fprintf(stream, "--version          Display version information.\n");
 }
 
 int main(int argc, const char* argv[])
 {
-    char*                           full_filename;
-    char*                           err_file;
-    struct editorconfig_parsing_out epo;
-    int                             err_num;
-    int                             i;
+    char*                               full_filename;
+    char*                               err_file;
+    struct editorconfig_parsing_out     epo;
+    int                                 err_num;
+    int                                 i;
+    struct editorconfig_parsing_info    epi;
 
-    int                             should_check_conformtion = 0;
+    int                                 should_check_conformtion = 0;
+    _Bool                               f_flag = 0;
+
+    editorconfig_init_parsing_info(&epi);
 
     if (argc <= 1) {
         version(stderr, argv[0]);
@@ -72,7 +78,10 @@ int main(int argc, const char* argv[])
     
     for (i = 1; i < argc; ++i) {
 
-        if (strcmp(argv[i], "--version") == 0 ||
+        if (f_flag) {
+            f_flag = 0;
+            epi.conf_file_name = argv[i];
+        } else if (strcmp(argv[i], "--version") == 0 ||
                 strcmp(argv[i], "-v") == 0) {
             version(stdout, argv[0]);
             return 0;
@@ -83,6 +92,8 @@ int main(int argc, const char* argv[])
             return 0;
         } else if (strcmp(argv[i], "-c") == 0)
             should_check_conformtion = 1;
+        else if (strcmp(argv[i], "-f") == 0)
+            f_flag = 1;
         else if (i == argc - 1) {
             full_filename = strdup(argv[i]);
             if (full_filename == NULL) {
@@ -95,11 +106,12 @@ int main(int argc, const char* argv[])
         }
     }
 
-    if ((err_num = editorconfig_parse(full_filename, &epo, &err_file)) != 0) {
+    if ((err_num = editorconfig_parse(full_filename, &epo, &epi))
+            != 0) {
         if (err_num > 0)
-            fprintf(stderr, "Error when parsing file \"%s\".\n", err_file);
+            fprintf(stderr, "Error when parsing file \"%s\".\n", epi.err_file);
         else if (err_num == -1)
-            fprintf(stderr, "Failed to open file \"%s\".\n", err_file);
+            fprintf(stderr, "Failed to open file \"%s\".\n", epi.err_file);
         else if (err_num == -2)
             fprintf(stderr, "Input file must be a full path name.\n");
         else if (err_num == -3)
