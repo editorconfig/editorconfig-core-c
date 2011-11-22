@@ -1,4 +1,4 @@
-.TH "editorconfig.h" 3 "Sat Nov 5 2011" "EditorConfig" \" -*- nroff -*-
+.TH "editorconfig.h" 3 "Tue Nov 22 2011" "EditorConfig" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -20,14 +20,26 @@ Header file of EditorConfig.
 .RI "struct \fBeditorconfig_parsing_out\fP"
 .br
 .RI "\fIA structure that contains the parsing result. \fP"
+.ti -1c
+.RI "struct \fBeditorconfig_parsing_info\fP"
+.br
+.RI "\fIA structure that contains the parsing information which should be provided before parsing. \fP"
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "int \fBeditorconfig_parse\fP (const char *full_filename, struct \fBeditorconfig_parsing_out\fP *out, char **err_file)"
+.RI "void \fBeditorconfig_init_parsing_info\fP (struct \fBeditorconfig_parsing_info\fP *info)"
+.br
+.RI "\fIInitialize an \fBeditorconfig_parsing_info\fP structure with default values. \fP"
+.ti -1c
+.RI "int \fBeditorconfig_parse\fP (const char *full_filename, struct \fBeditorconfig_parsing_out\fP *out, struct \fBeditorconfig_parsing_info\fP *info)"
 .br
 .RI "\fIParse editorconfig files corresponding to the file path given by full_filename, and put the result to 'out'. \fP"
+.ti -1c
+.RI "const char * \fBeditorconfig_is_standard_conformed\fP (const struct \fBeditorconfig_parsing_out\fP *epo)"
+.br
+.RI "\fICheck whether the parsing result of editorconfig files conforms to the standard. \fP"
 .ti -1c
 .RI "int \fBeditorconfig_parsing_out_clear\fP (struct \fBeditorconfig_parsing_out\fP *epo)"
 .br
@@ -68,7 +80,35 @@ None.
 .RE
 .PP
 
-.SS "int editorconfig_parse (const char *full_filename, struct \fBeditorconfig_parsing_out\fP *out, char **err_file)"
+.SS "void editorconfig_init_parsing_info (struct \fBeditorconfig_parsing_info\fP *info)"
+.PP
+Initialize an \fBeditorconfig_parsing_info\fP structure with default values. \fBParameters:\fP
+.RS 4
+\fIinfo\fP The \fBeditorconfig_parsing_info\fP structure to be initialized.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+None. 
+.RE
+.PP
+
+.SS "const char* editorconfig_is_standard_conformed (const struct \fBeditorconfig_parsing_out\fP *epo)"
+.PP
+Check whether the parsing result of editorconfig files conforms to the standard. \fBParameters:\fP
+.RS 4
+\fIepo\fP The \fBeditorconfig_parsing_out\fP structure containing the parsing result to be checked.
+.RE
+.PP
+\fBReturn values:\fP
+.RS 4
+\fINULL\fP The parsing result of editorconfig files conforms to the standard.
+.br
+\fInon-NULL\fP The parsing result of editorconfig files does not conform to the standard. The return value is a pointer to the error message. 
+.RE
+.PP
+
+.SS "int editorconfig_parse (const char *full_filename, struct \fBeditorconfig_parsing_out\fP *out, struct \fBeditorconfig_parsing_info\fP *info)"
 .PP
 Parse editorconfig files corresponding to the file path given by full_filename, and put the result to 'out'. An example is available at src/bin/main.c in editorconfig source code.
 .PP
@@ -78,7 +118,7 @@ Parse editorconfig files corresponding to the file path given by full_filename, 
 .br
 \fIout\fP The parsing result will be filled in out, which is a \fBeditorconfig_parsing_out\fP structure. This structure needs to be cleared by editorconfig_parsing_out_clear if this function succeeds.
 .br
-\fIerr_file\fP When a parsing error occured, this will point to a file that caused the parsing error.
+\fIinfo\fP The parsing information to be used and returned from this function. Could be NULL if you want to use the default value and you do not want to get any information back; if you want to use the default value and you also want the output information, you could use editorconfig_init_parsing_info to initialize an \fBeditorconfig_parsing_info\fP structure and pass the address as this parameter.
 .RE
 .PP
 \fBReturn values:\fP
