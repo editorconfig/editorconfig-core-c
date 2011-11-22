@@ -64,7 +64,7 @@ int main(int argc, const char* argv[])
     int                                 i;
     struct editorconfig_parsing_info    epi;
 
-    int                                 should_check_conformtion = 0;
+    _Bool                               should_check_conformtion = 0;
     _Bool                               f_flag = 0;
 
     editorconfig_init_parsing_info(&epi);
