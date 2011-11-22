@@ -59,7 +59,6 @@ static void usage(FILE* stream, const char* command)
 int main(int argc, const char* argv[])
 {
     char*                               full_filename;
-    char*                               err_file;
     struct editorconfig_parsing_out     epo;
     int                                 err_num;
     int                                 i;
