@@ -1,5 +1,6 @@
 Unless otherwise stated, all files are distributed under the Simplified BSD
-license included below.  The inih and fnmatch libraries are distributed under
+license included below.  The inih(src/lib/ini.c and src/lib/ini.h) and fnmatch
+(src/lib/ec_fnmatch.c and src/lib/ec_fnmatch.h) libraries are distributed under
 the New BSD license.
 
 Copyright (c) 2011 EditorConfig Team
