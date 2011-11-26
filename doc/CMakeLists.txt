@@ -35,6 +35,8 @@ if(DOXYGEN_FOUND)
         OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
         COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
         MAIN_DEPENDENCY
+        ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+        DEPENDS
         ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
