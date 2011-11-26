@@ -24,17 +24,23 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-find_program(DOXYGEN_EXECUTABLE doxygen)
+find_package(Doxygen)
 
-if(DOXYGEN_EXECUTABLE)
+if(DOXYGEN_FOUND)
+
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+        ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
     add_custom_command(
-        OUTPUT html/index.html
-        COMMAND doxygen Doxyfile
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
+        COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
         MAIN_DEPENDENCY
-        ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h)
-    ADD_CUSTOM_TARGET(doc ALL DEPENDS html/index.html)
+        ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-    set(EC_MANPAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
+    add_custom_target(doc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
+
+    set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
     set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 
     install(FILES
@@ -48,5 +54,5 @@ if(DOXYGEN_EXECUTABLE)
         ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
         ${EC_MANPAGE3_DIR}/editorconfig_parsing_out_clear.3
         DESTINATION share/man/man3)
-endif(DOXYGEN_EXECUTABLE)
+endif(DOXYGEN_FOUND)
 
