@@ -59,7 +59,6 @@ struct editorconfig_name_value
 
 /*!
  * @brief A structure that contains the parsing result.
- * @headerfile editorconfig/editorconfig.h
  */
 struct editorconfig_parsing_out
 {
@@ -74,7 +73,6 @@ struct editorconfig_parsing_out
 /*!
  * @brief A structure that contains the parsing information which should be
  * provided before parsing.
- * @headerfile editorconfig/editorconfig.h
  */
 struct editorconfig_parsing_info
 {
@@ -91,7 +89,6 @@ struct editorconfig_parsing_info
 };
 /*!
  * @brief Initialize an editorconfig_parsing_info structure with default values.
- * @headerfile editorconfig/editorconfig.h
  *
  * @param info The editorconfig_parsing_info structure to be initialized.
  *
