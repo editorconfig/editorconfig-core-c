@@ -24,6 +24,17 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+find_program(DOXYGEN_EXECUTABLE doxygen)
+
+if(DOXYGEN_EXECUTABLE)
+    add_custom_command(
+        OUTPUT html/index.html
+        COMMAND doxygen Doxyfile
+        MAIN_DEPENDENCY
+        ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h)
+    ADD_CUSTOM_TARGET(doc ALL DEPENDS html/index.html)
+endif(DOXYGEN_EXECUTABLE)
+
 set(EC_MANPAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
 set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 
