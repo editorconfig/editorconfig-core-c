@@ -33,20 +33,20 @@ if(DOXYGEN_EXECUTABLE)
         MAIN_DEPENDENCY
         ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h)
     ADD_CUSTOM_TARGET(doc ALL DEPENDS html/index.html)
+
+    set(EC_MANPAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
+    set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
+
+    install(FILES
+        ${EC_MANPAGE3_DIR}/editorconfig_get_version.3
+        ${EC_MANPAGE3_DIR}/editorconfig.h.3
+        ${EC_MANPAGE3_DIR}/editorconfig_init_parsing_info.3
+        ${EC_MANPAGE3_DIR}/editorconfig_is_standard_conformed.3
+        ${EC_MANPAGE3_DIR}/editorconfig_name_value.3
+        ${EC_MANPAGE3_DIR}/editorconfig_parse.3
+        ${EC_MANPAGE3_DIR}/editorconfig_parsing_info.3
+        ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
+        ${EC_MANPAGE3_DIR}/editorconfig_parsing_out_clear.3
+        DESTINATION share/man/man3)
 endif(DOXYGEN_EXECUTABLE)
-
-set(EC_MANPAGE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/man)
-set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
-
-install(FILES
-    ${EC_MANPAGE3_DIR}/editorconfig_get_version.3
-    ${EC_MANPAGE3_DIR}/editorconfig.h.3
-    ${EC_MANPAGE3_DIR}/editorconfig_init_parsing_info.3
-    ${EC_MANPAGE3_DIR}/editorconfig_is_standard_conformed.3
-    ${EC_MANPAGE3_DIR}/editorconfig_name_value.3
-    ${EC_MANPAGE3_DIR}/editorconfig_parse.3
-    ${EC_MANPAGE3_DIR}/editorconfig_parsing_info.3
-    ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
-    ${EC_MANPAGE3_DIR}/editorconfig_parsing_out_clear.3
-    DESTINATION share/man/man3)
 
