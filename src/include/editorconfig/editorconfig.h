@@ -27,14 +27,14 @@
  * @mainpage EditorConfig Core Documentation
  *
  * This is the documentation of EditorConfig Core. In this documentation, you
- * could find the document of the @ref editorconfig_command and the document of
+ * could find the document of the @ref editorconfig and the document of
  * @link editorconfig.h
  * EditorConfig Core C APIs
  * @endlink.
  */
 
 /*!
- * @page editorconfig_command EditorConfig Command
+ * @page editorconfig EditorConfig Command
  *
  * @section usage Usage of the `editorconfig` command line tool
  *
