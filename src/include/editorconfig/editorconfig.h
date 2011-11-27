@@ -28,6 +28,7 @@
  * @file editorconfig/editorconfig.h
  * @brief Header file of EditorConfig.
  *
+ * @author EditorConfig Team
  * @version 0.2.0
  */
 
@@ -47,6 +48,7 @@ extern "C" {
 /*!
  * @brief A structure containing a name and its corresponding value.
  * @headerfile editorconfig/editorconfig.h
+ * @author EditorConfig Team
  */
 struct editorconfig_name_value
 {
@@ -59,6 +61,7 @@ struct editorconfig_name_value
 
 /*!
  * @brief A structure that contains the parsing result.
+ * @author EditorConfig Team
  */
 struct editorconfig_parsing_out
 {
@@ -73,6 +76,7 @@ struct editorconfig_parsing_out
 /*!
  * @brief A structure that contains the parsing information which should be
  * provided before parsing.
+ * @author EditorConfig Team
  */
 struct editorconfig_parsing_info
 {
