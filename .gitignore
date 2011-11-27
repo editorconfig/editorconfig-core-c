@@ -1,5 +1,7 @@
 CMakeCache.txt
 CMakeFiles
+Doxyfile
+Doxyfile_cmd
 Makefile
 auto
 cmake_install.cmake
