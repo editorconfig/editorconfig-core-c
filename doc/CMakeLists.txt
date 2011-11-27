@@ -24,62 +24,71 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-find_package(Doxygen)
+option(BUILD_DOCUMENTATION
+    "Use Doxygen to create the HTML and man page documentation" ON)
 
-if(DOXYGEN_FOUND)
+if(BUILD_DOCUMENTATION)
 
-    # Generating the major part of the doc. Although it generate
-    # editorconfig.3, we discard that file
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
-        ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    find_package(Doxygen)
 
-    add_custom_command(
-        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
-        COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
-        MAIN_DEPENDENCY
-        ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
-        DEPENDS
-        ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    if(DOXYGEN_FOUND)
 
-    # Generating man page of editorconfig command. Although we have other .1s
-    # other than editorconfig.1, we ignore them
-    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
-        ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd)
+        # Generating the major part of the doc. Although it generates
+        # editorconfig.3, we discard that file
+        configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+            ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
-    add_custom_command(
-        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1
-        COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd"
-        MAIN_DEPENDENCY
-        ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
-        DEPENDS
-        ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+        add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
+            COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+            MAIN_DEPENDENCY
+            ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+            DEPENDS
+            ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-    add_custom_target(doc ALL DEPENDS
-        ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
-        ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1)
+        # Generating man page of editorconfig command. Although we have other
+        # .1s other than editorconfig.1, we ignore them
+        configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
+            ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd)
 
-    # install man pages
-    set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
-    set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
+        add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1
+            COMMAND
+            ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd"
+            MAIN_DEPENDENCY
+            ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
+            DEPENDS
+            ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-    install(FILES
-        ${EC_MANPAGE3_DIR}/editorconfig_get_version.3
-        ${EC_MANPAGE3_DIR}/editorconfig.h.3
-        ${EC_MANPAGE3_DIR}/editorconfig_init_parsing_info.3
-        ${EC_MANPAGE3_DIR}/editorconfig_is_standard_conformed.3
-        ${EC_MANPAGE3_DIR}/editorconfig_name_value.3
-        ${EC_MANPAGE3_DIR}/editorconfig_parse.3
-        ${EC_MANPAGE3_DIR}/editorconfig_parsing_info.3
-        ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
-        ${EC_MANPAGE3_DIR}/editorconfig_parsing_out_clear.3
-        DESTINATION share/man/man3)
+        add_custom_target(doc ALL DEPENDS
+            ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
+            ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1)
 
-    set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
+        # install man pages
+        set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
+        set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 
-    install(FILES
-        ${EC_MANPAGE1_DIR}/editorconfig.1
-        DESTINATION share/man/man1)
-endif(DOXYGEN_FOUND)
+        install(FILES
+            ${EC_MANPAGE3_DIR}/editorconfig_get_version.3
+            ${EC_MANPAGE3_DIR}/editorconfig.h.3
+            ${EC_MANPAGE3_DIR}/editorconfig_init_parsing_info.3
+            ${EC_MANPAGE3_DIR}/editorconfig_is_standard_conformed.3
+            ${EC_MANPAGE3_DIR}/editorconfig_name_value.3
+            ${EC_MANPAGE3_DIR}/editorconfig_parse.3
+            ${EC_MANPAGE3_DIR}/editorconfig_parsing_info.3
+            ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
+            ${EC_MANPAGE3_DIR}/editorconfig_parsing_out_clear.3
+            DESTINATION share/man/man3)
 
+        set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
+
+        install(FILES
+            ${EC_MANPAGE1_DIR}/editorconfig.1
+            DESTINATION share/man/man1)
+    else(DOXYGEN_FOUND)
+        message(WARNING
+            "Doxygen is not found. Documentation will not be generated.")
+    endif(DOXYGEN_FOUND)
+endif(BUILD_DOCUMENTATION)
