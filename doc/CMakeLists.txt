@@ -87,6 +87,11 @@ if(BUILD_DOCUMENTATION)
         install(FILES
             ${EC_MANPAGE1_DIR}/editorconfig.1
             DESTINATION share/man/man1)
+
+        # "make clean" should also clean generated docs
+        set_directory_properties(PROPERTIES
+            ADDITIONAL_MAKE_CLEAN_FILES "html;man")
+
     else(DOXYGEN_FOUND)
         message(WARNING
             "Doxygen is not found. Documentation will not be generated.")
