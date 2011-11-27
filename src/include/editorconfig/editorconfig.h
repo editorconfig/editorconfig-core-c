@@ -26,7 +26,29 @@
 /*!
  * @mainpage EditorConfig Core Documentation
  *
- * This is the documentation of EditorConfig Core.
+ * This is the documentation of EditorConfig Core. In this documentation, you
+ * could find the document of the @ref editorconfig_command and the document of
+ * @link editorconfig.h
+ * EditorConfig Core C APIs
+ * @endlink.
+ */
+
+/*!
+ * @page editorconfig_command EditorConfig Command
+ *
+ * @section usage Usage of the `editorconfig` command line tool
+ *
+ * Usage: editorconfig <em>[OPTIONS]</em> FILENAME
+ *
+ * <em>-f</em>        Sepcify a conf file name other than the default value
+ *  ".editorconfig".
+ *
+ * <em>-c</em>        Check standard conformation before print the parsing
+ *  result.
+ *
+ * <em>-h</em> OR <em>--help</em>   Print this help message.
+ *
+ * <em>--version</em> Display version information.
  */
 
 /*!
