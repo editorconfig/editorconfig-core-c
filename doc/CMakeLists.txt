@@ -28,6 +28,8 @@ find_package(Doxygen)
 
 if(DOXYGEN_FOUND)
 
+    # Generating the major part of the doc. Although it generate
+    # editorconfig_command.3, we discard that file
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
         ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
@@ -40,8 +42,25 @@ if(DOXYGEN_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-    add_custom_target(doc ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/html/index.html)
+    # Generating man page of editorconfig command. Although we have other .1s
+    # other than editorconfig_command.1, we ignore them
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
+        ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd)
 
+    add_custom_command(
+        OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig_command.1
+        COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd"
+        MAIN_DEPENDENCY
+        ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
+        DEPENDS
+        ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+    add_custom_target(doc ALL DEPENDS
+        ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
+        ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig_command.1)
+
+    # install man pages
     set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
     set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 
@@ -56,5 +75,12 @@ if(DOXYGEN_FOUND)
         ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
         ${EC_MANPAGE3_DIR}/editorconfig_parsing_out_clear.3
         DESTINATION share/man/man3)
+
+    set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
+
+    install(FILES
+        ${EC_MANPAGE1_DIR}/editorconfig_command.1
+        DESTINATION share/man/man1
+        RENAME editorconfig.1)
 endif(DOXYGEN_FOUND)
 
