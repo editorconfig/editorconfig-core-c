@@ -47,7 +47,6 @@ extern "C" {
 
 /*!
  * @brief A structure containing a name and its corresponding value.
- * @headerfile editorconfig/editorconfig.h
  * @author EditorConfig Team
  */
 struct editorconfig_name_value
