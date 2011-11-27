@@ -144,7 +144,7 @@ void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info);
  * function. Could be NULL if you want to use the default value and you do not
  * want to get any information back; if you want to use the default value and
  * you also want the output information, you could use
- * editorconfig_init_parsing_info to initialize an editorconfig_parsing_info
+ * editorconfig_init_parsing_info() to initialize an editorconfig_parsing_info
  * structure and pass the address as this parameter.
  *
  * @retval 0 Everything is OK;
@@ -181,7 +181,7 @@ const char* editorconfig_is_standard_conformed(
 
 /*!
  * @brief Clear the editorconfig_parsing_out structure after a success call of
- * editorconfig_parse.
+ * editorconfig_parse().
  *
  * An example is available at src/bin/main.c in editorconfig source code.
  *
