@@ -23,6 +23,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+/*!
+ * @mainpage EditorConfig Core Documentation
+ *
+ * This is the documentation of EditorConfig Core.
+ */
 
 /*!
  * @file editorconfig/editorconfig.h
