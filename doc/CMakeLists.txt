@@ -97,9 +97,7 @@ if(BUILD_DOCUMENTATION)
             "Install the generated html documentation" OFF)
 
         if(INSTALL_HTML_DOC)
-            file(GLOB_RECURSE html_docs "${CMAKE_CURRENT_BINARY_DIR}/html/*")
-            install(FILES
-                ${html_docs}
+            install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
                 DESTINATION share/doc/editorconfig)
         endif(INSTALL_HTML_DOC)
 
