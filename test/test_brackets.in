@@ -1,0 +1,4 @@
+; test [ and ]
+
+[[ban]*.c]
+indent_style=space

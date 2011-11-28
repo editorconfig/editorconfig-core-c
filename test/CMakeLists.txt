@@ -39,3 +39,9 @@ add_test(test_question ${editorconfig_cmd} -f test_question.in
 set_tests_properties(test_question
     PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
+# test [ and ]
+add_test(test_brackets ${editorconfig_cmd} -f test_brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/banana.c")
+set_tests_properties(test_brackets
+    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
+
