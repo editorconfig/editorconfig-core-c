@@ -9,12 +9,30 @@ directory of editorconfig and execute the following command:
 
     cmake .
 
-If successful, the project file will be generated. On UNIX/Linux with gcc, the
-project file is often a Makefile, in which case you can type "make" to compile
-editorconfig.  If you are using a different compiler or platform the
-compilation command may differ. For example, if you generate a NMake Makefile
-and you want to use Microsoft Visual C++ to build editorconfig, then the build
-command would be "nmake".
+If successful, the project file will be generated. There are various options
+could be used when generating the project file:
+
+    -DBUILD_DOCUMENTATION=[ON|OFF]          Default: ON
+    If this option is on and doxygen is found, the html documentation and
+    man pages will be generated.
+    e.g. cmake -DBUILD_DOCUMENTATION=OFF .
+
+    -DINSTALL_HTML_DOC=[ON|OFF]             Default: OFF
+    If this option is on and BUILD_DOCUMENTATION is on, html documentation
+    will be installed when execute "make install" or something similar.
+    e.g. cmake -DINSTALL_HTML_DOC=ON .
+
+    -DDOXYGEN_EXECUTABLE=/path/to/doxygen
+    If doxygen could not be found automatically and you need to generate
+    documentation, try to set this option to the path to doxygen.
+    e.g. cmake -DDOXYGEN_EXECUTABLE=/opt/doxygen/bin/doxygen .
+
+
+On UNIX/Linux with gcc, the project file is often a Makefile, in which case you
+can type "make" to compile editorconfig.  If you are using a different compiler
+or platform the compilation command may differ. For example, if you generate an
+NMake Makefile and you want to use Microsoft Visual C++ to build editorconfig,
+then the build command would be "nmake".
 
 After the compilation succeeds, use the following command to install (require
 root or admin privilege):
