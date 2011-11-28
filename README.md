@@ -47,7 +47,6 @@ license.  The inih and fnmatch libraries are distributed under the New BSD
 license.
 
 
-[EditorConfig]: http://editorconfig.github.com "EditorConfig Homepage"
+[EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
-[vim]: https://github.com/editorconfig/editorconfig-vim "EditorConfig vim plugin"
-[documentation]: http://editorconfig.github.com/core-docs/ "EditorConfig Core C API documentation"
+[documentation]: http://editorconfig.org/core-docs/ "EditorConfig Core C API documentation"

@@ -23,11 +23,39 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+/*!
+ * @mainpage EditorConfig Core Documentation
+ *
+ * This is the documentation of EditorConfig Core. In this documentation, you
+ * could find the document of the @ref editorconfig and the document of
+ * @link editorconfig.h
+ * EditorConfig Core C APIs
+ * @endlink.
+ */
+
+/*!
+ * @page editorconfig EditorConfig Command
+ *
+ * @section usage Usage of the `editorconfig` command line tool
+ *
+ * Usage: editorconfig <em>[OPTIONS]</em> FILENAME
+ *
+ * <em>-f</em>        Sepcify a conf file name other than the default value
+ *  ".editorconfig".
+ *
+ * <em>-c</em>        Check standard conformation before print the parsing
+ *  result.
+ *
+ * <em>-h</em> OR <em>--help</em>   Print this help message.
+ *
+ * <em>--version</em> Display version information.
+ */
 
 /*!
  * @file editorconfig/editorconfig.h
  * @brief Header file of EditorConfig.
  *
+ * @author EditorConfig Team
  * @version 0.2.0
  */
 
@@ -46,7 +74,7 @@ extern "C" {
 
 /*!
  * @brief A structure containing a name and its corresponding value.
- * @headerfile editorconfig/editorconfig.h
+ * @author EditorConfig Team
  */
 struct editorconfig_name_value
 {
@@ -59,7 +87,7 @@ struct editorconfig_name_value
 
 /*!
  * @brief A structure that contains the parsing result.
- * @headerfile editorconfig/editorconfig.h
+ * @author EditorConfig Team
  */
 struct editorconfig_parsing_out
 {
@@ -74,7 +102,7 @@ struct editorconfig_parsing_out
 /*!
  * @brief A structure that contains the parsing information which should be
  * provided before parsing.
- * @headerfile editorconfig/editorconfig.h
+ * @author EditorConfig Team
  */
 struct editorconfig_parsing_info
 {
@@ -91,7 +119,6 @@ struct editorconfig_parsing_info
 };
 /*!
  * @brief Initialize an editorconfig_parsing_info structure with default values.
- * @headerfile editorconfig/editorconfig.h
  *
  * @param info The editorconfig_parsing_info structure to be initialized.
  *
@@ -117,7 +144,7 @@ void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info);
  * function. Could be NULL if you want to use the default value and you do not
  * want to get any information back; if you want to use the default value and
  * you also want the output information, you could use
- * editorconfig_init_parsing_info to initialize an editorconfig_parsing_info
+ * editorconfig_init_parsing_info() to initialize an editorconfig_parsing_info
  * structure and pass the address as this parameter.
  *
  * @retval 0 Everything is OK;
@@ -154,7 +181,7 @@ const char* editorconfig_is_standard_conformed(
 
 /*!
  * @brief Clear the editorconfig_parsing_out structure after a success call of
- * editorconfig_parse.
+ * editorconfig_parse().
  *
  * An example is available at src/bin/main.c in editorconfig source code.
  *

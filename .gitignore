@@ -1,7 +1,9 @@
 CMakeCache.txt
 CMakeFiles
+Doxyfile
+Doxyfile_cmd
 Makefile
-cmake_install.cmake
-install_manifest.txt
-editorconfig
 auto
+cmake_install.cmake
+editorconfig
+install_manifest.txt

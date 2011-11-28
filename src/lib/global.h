@@ -66,10 +66,5 @@
 # define EDITORCONFIG_LOCAL
 #endif
 
-/* _Bool type */
-#ifndef HAVE__BOOL
-# define _Bool signed char
-#endif
-
 #endif /* !__GLOBAL_H__ */
 

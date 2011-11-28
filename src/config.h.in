@@ -62,6 +62,11 @@
 # pragma warning(disable: 4996)
 #endif
 
+/* _Bool type */
+#ifndef HAVE__BOOL
+# define _Bool signed char
+#endif
+
 #define editorconfig_VERSION_MAJOR @editorconfig_VERSION_MAJOR@
 #define editorconfig_VERSION_MINOR @editorconfig_VERSION_MINOR@
 #define editorconfig_VERSION_SUBMINOR @editorconfig_VERSION_SUBMINOR@
