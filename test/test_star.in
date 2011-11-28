@@ -1,0 +1,5 @@
+; test *
+
+[*.c]
+indent_style = space
+

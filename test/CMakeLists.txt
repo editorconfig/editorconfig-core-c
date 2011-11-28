@@ -24,17 +24,18 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-set (editorconfig_VERSION_MAJOR 0)
-set (editorconfig_VERSION_MINOR 2)
-set (editorconfig_VERSION_SUBMINOR 0)
 
-project(editorconfig C)
-cmake_minimum_required(VERSION 2.4.0)
+set(editorconfig_cmd "${PROJECT_BINARY_DIR}/src/bin/editorconfig")
 
-# Enable testing. Type "make test" to run tests
-enable_testing()
+# test *
+add_test(test_star ${editorconfig_cmd} -f test_star.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
+set_tests_properties(test_star
+    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
-add_subdirectory(src)
-add_subdirectory(doc)
-add_subdirectory(test)
+# test ?
+add_test(test_question ${editorconfig_cmd} -f test_question.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
+set_tests_properties(test_question
+    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 

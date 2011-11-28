@@ -92,6 +92,15 @@ if(BUILD_DOCUMENTATION)
         set_directory_properties(PROPERTIES
             ADDITIONAL_MAKE_CLEAN_FILES "html;man")
 
+        # Whether to install the html documentation
+        option(INSTALL_HTML_DOC
+            "Install the generated html documentation" OFF)
+
+        if(INSTALL_HTML_DOC)
+            install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
+                DESTINATION share/doc/editorconfig)
+        endif(INSTALL_HTML_DOC)
+
     else(DOXYGEN_FOUND)
         message(WARNING
             "Doxygen is not found. Documentation will not be generated.")
