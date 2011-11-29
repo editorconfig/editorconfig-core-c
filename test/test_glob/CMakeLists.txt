@@ -43,3 +43,15 @@ add_test(test_brackets ${editorconfig_cmd} -f test_brackets.in
 set_tests_properties(test_brackets
     PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
+# test [! ]
+add_test(test_ne_brackets ${editorconfig_cmd} -f test_ne_brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/pag.c")
+set_tests_properties(test_ne_brackets
+    PROPERTIES PASS_REGULAR_EXPRESSION "^something=anything[ \t\n\r]*$")
+
+# test [! ]  2
+add_test(test_ne_brackets_2 ${editorconfig_cmd} -f test_ne_brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/nag.c")
+set_tests_properties(test_ne_brackets_2
+    PROPERTIES FAIL_REGULAR_EXPRESSION "^something=anything[ \t\n\r]*$")
+
