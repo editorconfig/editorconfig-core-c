@@ -162,6 +162,19 @@ static int array_editorconfig_name_value_add(
 #undef VALUE_COUNT_INCREASEMENT
 }
 
+static void array_editorconfig_name_value_clear(
+        array_editorconfig_name_value* aenv)
+{
+    int             i;
+
+    for (i = 0; i < aenv->current_value_count; ++i) {
+        free(aenv->name_values[i].name);
+        free(aenv->name_values[i].value);
+    }
+
+    free(aenv->name_values);
+}
+
 /*
  * Accept INI property value and store known values in handler_first_param
  * struct.
@@ -172,6 +185,14 @@ static int ini_handler(void* hfp, const char* section, const char* name,
     handler_first_param* hfparam = (handler_first_param*)hfp;
     /* prepend ** to pattern */
     char*                pattern;
+
+    /* root = true, clear all previous values */
+    if (*section == '\0' && !strcasecmp(name, "root") &&
+            !strcasecmp(value, "true")) {
+        array_editorconfig_name_value_clear(&hfparam->array_name_value);
+        array_editorconfig_name_value_init(&hfparam->array_name_value);
+        return 1;
+    }
 
     /* pattern would be: /dir/of/editorconfig/file/[double_star]/[section] if
      * section does not start with '/', or /dir/of/editorconfig/file[section]
