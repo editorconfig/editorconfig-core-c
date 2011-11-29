@@ -25,7 +25,21 @@
 #
 
 
-set(editorconfig_cmd "${PROJECT_BINARY_DIR}/src/bin/editorconfig")
+# test *
+add_test(test_star ${editorconfig_cmd} -f test_star.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
+set_tests_properties(test_star
+    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
-add_subdirectory(test_glob)
+# test ?
+add_test(test_question ${editorconfig_cmd} -f test_question.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
+set_tests_properties(test_question
+    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
+
+# test [ and ]
+add_test(test_brackets ${editorconfig_cmd} -f test_brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/banana.c")
+set_tests_properties(test_brackets
+    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
