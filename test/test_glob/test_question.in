@@ -1,5 +1,7 @@
 ; test ?
 
+root=true
+
 [som?.c]
 indent_style=space
 
