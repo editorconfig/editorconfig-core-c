@@ -172,14 +172,14 @@ void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info);
  * editorconfig_init_parsing_info() to initialize an editorconfig_parsing_info
  * structure and pass the address as this parameter.
  *
- * @retval 0 Everything is OK;
+ * @retval 0 Everything is OK.
  *
- * @retval -2 The full_filename is not a full path name;
+ * @retval -2 The full_filename is not a full path name.
  *
- * @retval -3 A memory error occurs;
+ * @retval -3 A memory error occurs.
  *
  * @retval -4 The required version specified in editorconfig_parsing_info is
- * greater than the current version;
+ * greater than the current version.
  *
  * @retval >0 A parsing error occurs. The return value would be the line number
  * of parsing error. If err_file is not NULL, err_file will also be filled with
@@ -215,7 +215,7 @@ const char* editorconfig_is_standard_conformed(
  *
  * @param epo The editorconfig_parsing_out structure to be cleared.
  *
- * @retval zero Everything is OK
+ * @retval zero Everything is OK.
  * @retval non-zero Some error occured.
  *
  * @note Currently this function always returns 0, but please make a return
