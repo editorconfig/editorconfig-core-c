@@ -40,15 +40,19 @@
  *
  * Usage: editorconfig <em>[OPTIONS]</em> FILENAME
  *
- * <em>-f</em>        Sepcify a conf file name other than the default value
+ * <pre>
+ *
+ * <em>-f</em>             Sepcify a conf file name other than the default value
  *  ".editorconfig".
  *
- * <em>-c</em>        Check standard conformation before print the parsing
+ * <em>-c</em>             Check standard conformation before print the parsing
  *  result.
  *
  * <em>-h</em> OR <em>--help</em>   Print this help message.
  *
- * <em>--version</em> Display version information.
+ * <em>--version</em>      Display version information.
+ *
+ * </pre>
  */
 
 /*!
