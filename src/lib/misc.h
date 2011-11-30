@@ -32,10 +32,14 @@
 #include <stddef.h>
 
 #ifndef HAVE_STRCASECMP
+# ifdef HAVE_STRICMP
+#  define strcasecmp stricmp
+# else /* HAVE_STRICMP */
 EDITORCONFIG_LOCAL
 int ec_strcasecmp(const char *s1, const char *s2);
 # define strcasecmp ec_strcasecmp
-#endif
+# endif /* HAVE_STRICMP */
+#endif /* !HAVE_STRCASECMP */
 #ifndef HAVE_STRDUP
 EDITORCONFIG_LOCAL
 char* ec_strdup(const char *str);
