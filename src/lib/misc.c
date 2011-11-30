@@ -27,7 +27,7 @@
 
 #include "misc.h"
 
-#ifndef HAVE_STRCASECMP
+#if !defined(HAVE_STRCASECMP) && !defined(HAVE_STRICMP)
 /*
  * strcasecmp function from FreeBSD
  *
@@ -76,7 +76,7 @@ int ec_strcasecmp(const char *s1, const char *s2)
             return (0);
     return (tolower(*us1) - tolower(*--us2));
 }
-#endif /* !HAVE_STRCASECMP */
+#endif /* !HAVE_STRCASECMP && !HAVE_STRICMP */
 
 #ifndef HAVE_STRDUP
 /*
