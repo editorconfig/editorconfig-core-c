@@ -45,6 +45,9 @@
  * <em>-f</em>             Sepcify a conf file name other than the default value
  *  ".editorconfig".
  *
+ * <em>-b</em>             Sepcify a version to act like. Usually used for
+ * testing compatibility for editor plugin developers.
+ *
  * <em>-c</em>             Check standard conformation before print the parsing
  *  result.
  *
@@ -88,6 +91,19 @@ struct editorconfig_name_value
     char*       value;
 };
 
+/*!
+ * @brief A structure that descripts version number.
+ * @author EditorConfig Team
+ */
+struct editorconfig_version
+{
+    /*! major version */
+    int                     major;
+    /*! minor version */
+    int                     minor;
+    /*! subminor version */
+    int                     subminor;
+};
 
 /*!
  * @brief A structure that contains the parsing result.
@@ -120,6 +136,11 @@ struct editorconfig_parsing_info
      * parsing error.
      */
     char*                       err_file;
+    /*!
+     * version number it should act as. Set this to 0.0.0 to act like the
+     * current version.
+     */
+    struct editorconfig_version ver;
 };
 /*!
  * @brief Initialize an editorconfig_parsing_info structure with default values.
@@ -156,6 +177,9 @@ void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info);
  * @retval -2 The full_filename is not a full path name;
  *
  * @retval -3 A memory error occurs;
+ *
+ * @retval -4 The required version specified in editorconfig_parsing_info is
+ * greater than the current version;
  *
  * @retval >0 A parsing error occurs. The return value would be the line number
  * of parsing error. If err_file is not NULL, err_file will also be filled with

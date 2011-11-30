@@ -295,6 +295,34 @@ static char** get_filenames(const char* path, const char* filename)
 }
 
 /*
+ * version number comparison
+ */
+static int editorconfig_compare_version(
+        const struct editorconfig_version* v0,
+        const struct editorconfig_version* v1)
+{
+    /* compare major */
+    if (v0->major > v1->major)
+        return 1;
+    else if (v0->major < v1->major)
+        return -1;
+
+    /* compare minor */
+    if (v0->minor > v1->minor)
+        return 1;
+    else if (v0->minor < v1->minor)
+        return -1;
+
+    /* compare subminor */
+    if (v0->subminor > v1->subminor)
+        return 1;
+    else if (v0->subminor < v1->subminor)
+        return -1;
+
+    return 0;
+}
+
+/*
  * See the header file for the use of this function
  */
 EDITORCONFIG_EXPORT
@@ -319,6 +347,7 @@ int editorconfig_parse(const char* full_filename,
     int                                 err_num;
     struct editorconfig_parsing_info    epi;
     struct editorconfig_parsing_info*   info1;
+    struct editorconfig_version         cur_ver;
 
     /* set epi */
     if (info)
@@ -327,6 +356,19 @@ int editorconfig_parse(const char* full_filename,
         editorconfig_init_parsing_info(&epi);
         info1 = &epi;
     }
+
+    /* get current version */
+    editorconfig_get_version(&cur_ver.major, &cur_ver.minor,
+            &cur_ver.subminor);
+
+    /* if version is set to 0.0.0, we set it to current version */
+    if (info1->ver.major == 0 &&
+            info1->ver.minor == 0 &&
+            info1->ver.subminor == 0)
+        info1->ver = cur_ver;
+
+    if (editorconfig_compare_version(&info1->ver, &cur_ver) > 0)
+        return -4;
 
     info1->err_file = NULL;
 

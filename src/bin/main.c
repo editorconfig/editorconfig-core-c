@@ -50,6 +50,8 @@ static void usage(FILE* stream, const char* command)
     fprintf(stream, "\n");
     fprintf(stream, "-f                 Sepcify a conf file name other than"
             " the default value \".editorconfig\".\n");
+    fprintf(stream, "-b                 Sepcify a version to act like. Usually "
+            "used for testing compatibility for editor plugin developers.");
     fprintf(stream, "-c                 Check standard conformation before"
             " print the parsing result.\n");
     fprintf(stream, "-h OR --help       Print this help message.\n");
@@ -66,6 +68,7 @@ int main(int argc, const char* argv[])
 
     _Bool                               should_check_conformtion = 0;
     _Bool                               f_flag = 0;
+    _Bool                               b_flag = 0;
 
     editorconfig_init_parsing_info(&epi);
 
@@ -77,7 +80,41 @@ int main(int argc, const char* argv[])
     
     for (i = 1; i < argc; ++i) {
 
-        if (f_flag) {
+        if (b_flag) {
+            char*             pos;
+            int               ver;
+            int               ver_pos = 0;
+            char*             argvi = strdup(argv[i]);
+
+            b_flag = 0;
+
+            /* convert the argument -b into a version number */
+            pos = strtok(argvi, ".");
+
+            while (pos != NULL) {
+                ver = atoi(pos);
+
+                switch(ver_pos) {
+                case 0:
+                    epi.ver.major = ver;
+                    break;
+                case 1:
+                    epi.ver.minor = ver;
+                    break;
+                case 2:
+                    epi.ver.subminor = ver;
+                    break;
+                default:
+                    fprintf(stderr, "Invalid version number: %s\n", argv[i]);
+                    exit(1);
+                }
+                ++ ver_pos;
+
+                pos = strtok(NULL, ".");
+            }
+
+            free(argvi);
+        } else if (f_flag) {
             f_flag = 0;
             epi.conf_file_name = argv[i];
         } else if (strcmp(argv[i], "--version") == 0 ||
@@ -89,7 +126,9 @@ int main(int argc, const char* argv[])
             version(stdout, argv[0]);
             usage(stdout, argv[0]);
             return 0;
-        } else if (strcmp(argv[i], "-c") == 0)
+        } else if (strcmp(argv[i], "-b") == 0)
+            b_flag = 1;
+        else if (strcmp(argv[i], "-c") == 0)
             should_check_conformtion = 1;
         else if (strcmp(argv[i], "-f") == 0)
             f_flag = 1;
@@ -115,6 +154,9 @@ int main(int argc, const char* argv[])
             fprintf(stderr, "Input file must be a full path name.\n");
         else if (err_num == -3)
             fprintf(stderr, "Memory error.\n");
+        else if (err_num == -4)
+            fprintf(stderr, "Required version is greater than the "
+                    "current version.\n");
         return 1;
     }
 
