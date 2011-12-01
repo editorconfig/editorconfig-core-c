@@ -24,6 +24,12 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+# Suppress the warning from cmake 2.6 or higher (list command no longer ignores
+# empty elements)
+if(NOT "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" LESS 2.6)
+    cmake_policy(SET CMP0007 NEW)
+endif(NOT "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" LESS 2.6)
+
 if(NOT EXISTS "@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt")
     message(FATAL_ERROR
         "Cannot find install manifest: \"@CMAKE_CURRENT_BINARY_DIR@/install_manifest.txt\"")
