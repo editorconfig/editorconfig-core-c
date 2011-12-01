@@ -25,8 +25,8 @@
 #
 
 
-set(editorconfig_cmd "${PROJECT_BINARY_DIR}/src/bin/editorconfig")
-
-add_subdirectory(test_glob)
-add_subdirectory(test_properties)
-
+# test end_of_line
+add_test(test_end_of_line ${editorconfig_cmd} -f test_end_of_line.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
+set_tests_properties(test_end_of_line
+    PROPERTIES PASS_REGULAR_EXPRESSION "^end_of_line=crlf[ \t\n\r]*$")
