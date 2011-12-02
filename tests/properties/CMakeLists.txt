@@ -25,33 +25,8 @@
 #
 
 
-# test *
-add_test(test_star ${editorconfig_cmd} -f test_star.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
-set_tests_properties(test_star
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
-
-# test ?
-add_test(test_question ${editorconfig_cmd} -f test_question.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
-set_tests_properties(test_question
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
-
-# test [ and ]
-add_test(test_brackets ${editorconfig_cmd} -f test_brackets.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/banana.c")
-set_tests_properties(test_brackets
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
-
-# test [! ]
-add_test(test_ne_brackets ${editorconfig_cmd} -f test_ne_brackets.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/pag.c")
-set_tests_properties(test_ne_brackets
-    PROPERTIES PASS_REGULAR_EXPRESSION "^something=anything[ \t\n\r]*$")
-
-# test [! ]  2
-add_test(test_ne_brackets_2 ${editorconfig_cmd} -f test_ne_brackets.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/nag.c")
-set_tests_properties(test_ne_brackets_2
-    PROPERTIES FAIL_REGULAR_EXPRESSION "^something=anything[ \t\n\r]*$")
-
+# test end_of_line
+add_test(end_of_line ${editorconfig_cmd} -f end_of_line.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
+set_tests_properties(end_of_line
+    PROPERTIES PASS_REGULAR_EXPRESSION "^end_of_line=crlf[ \t\n\r]*$")
