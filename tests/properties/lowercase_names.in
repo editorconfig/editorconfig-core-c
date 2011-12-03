@@ -1,0 +1,4 @@
+; test that property names are lowercased
+
+[test.c]
+TestProperty = testvalue

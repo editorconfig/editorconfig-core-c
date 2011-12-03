@@ -37,3 +37,9 @@ add_test(end_of_line ${editorconfig_cmd} -f end_of_line.in
     "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
 set_tests_properties(end_of_line
     PROPERTIES PASS_REGULAR_EXPRESSION "^end_of_line=crlf[ \t\n\r]*$")
+
+# test that all property names are lowercased
+add_test(lowercase_names ${editorconfig_cmd} -f lowercase_names.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
+set_tests_properties(lowercase_names
+    PROPERTIES PASS_REGULAR_EXPRESSION "^testproperty=testvalue[ \t\n\r]*$")
