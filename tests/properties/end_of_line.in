@@ -1,4 +1,0 @@
-; test end_of_line
-
-[test.c]
-end_of_line = CRLF

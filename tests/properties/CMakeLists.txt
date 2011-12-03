@@ -32,11 +32,18 @@ set_tests_properties(tab_width_default
     PROPERTIES PASS_REGULAR_EXPRESSION
     "^indent_style=space[ \t\n\r]+indent_size=4[ \t\n\r]+tab_width=4[\t\n\r]*$")
 
-# test end_of_line
-add_test(end_of_line ${editorconfig_cmd} -f end_of_line.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
-set_tests_properties(end_of_line
-    PROPERTIES PASS_REGULAR_EXPRESSION "^end_of_line=crlf[ \t\n\r]*$")
+# test that same property values are lowercased
+add_test(lowercase_values1 ${editorconfig_cmd} -f lowercase_values.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test1.c")
+set_tests_properties(lowercase_values1
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "^indent_style=space[ \t\n\r]+end_of_line=crlf[ \t\n\r]*$")
+
+# test that same property values are not lowercased
+add_test(lowercase_values2 ${editorconfig_cmd} -f lowercase_values.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test2.c")
+set_tests_properties(lowercase_values2
+    PROPERTIES PASS_REGULAR_EXPRESSION "^test_property=TestValue[ \t\n\r]*$")
 
 # test that all property names are lowercased
 add_test(lowercase_names ${editorconfig_cmd} -f lowercase_names.in
