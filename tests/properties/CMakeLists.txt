@@ -26,10 +26,11 @@
 
 
 # test tab_width default
-add_test(test_tab_width_default ${editorconfig_cmd} -f test_tab_width_default.in
+add_test(tab_width_default ${editorconfig_cmd} -f tab_width_default.in
     "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
-set_tests_properties(test_tab_width_default
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]+indent_size=4[ \t\n\r]+tab_width=4[\t\n\r]*$")
+set_tests_properties(tab_width_default
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "^indent_style=space[ \t\n\r]+indent_size=4[ \t\n\r]+tab_width=4[\t\n\r]*$")
 
 # test end_of_line
 add_test(end_of_line ${editorconfig_cmd} -f end_of_line.in
