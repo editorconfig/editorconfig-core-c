@@ -322,22 +322,11 @@ static int editorconfig_compare_version(
     return 0;
 }
 
-/*
- * See the header file for the use of this function
- */
-EDITORCONFIG_EXPORT
-void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info)
-{
-    memset(info, 0, sizeof(struct editorconfig_parsing_info));
-}
-
 /* 
  * See the header file for the use of this function
  */
 EDITORCONFIG_EXPORT
-int editorconfig_parse(const char* full_filename,
-        struct editorconfig_parsing_out* out,
-        struct editorconfig_parsing_info* info)
+int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 {
     handler_first_param                 hfp;
     char**                              config_file;
@@ -345,37 +334,31 @@ int editorconfig_parse(const char* full_filename,
     char*                               directory;
     char*                               filename;
     int                                 err_num;
-    struct editorconfig_parsing_info    epi;
-    struct editorconfig_parsing_info*   info1;
+    struct editorconfig_handle*         eh = (struct editorconfig_handle*)h;
     struct editorconfig_version         cur_ver;
-
-    /* set epi */
-    if (info)
-        info1 = info;
-    else {
-        editorconfig_init_parsing_info(&epi);
-        info1 = &epi;
-    }
 
     /* get current version */
     editorconfig_get_version(&cur_ver.major, &cur_ver.minor,
             &cur_ver.subminor);
 
     /* if version is set to 0.0.0, we set it to current version */
-    if (info1->ver.major == 0 &&
-            info1->ver.minor == 0 &&
-            info1->ver.subminor == 0)
-        info1->ver = cur_ver;
+    if (eh->ver.major == 0 &&
+            eh->ver.minor == 0 &&
+            eh->ver.subminor == 0)
+        eh->ver = cur_ver;
 
-    if (editorconfig_compare_version(&info1->ver, &cur_ver) > 0)
+    if (editorconfig_compare_version(&eh->ver, &cur_ver) > 0)
         return -4;
 
-    info1->err_file = NULL;
+    if (!eh->err_file) {
+        free(eh->err_file);
+        eh->err_file = NULL;
+    }
 
-    /* if info1->conf_file_name is NULL, we set ".editorconfig" as the default
+    /* if eh->conf_file_name is NULL, we set ".editorconfig" as the default
      * conf file name */
-    if (!info1->conf_file_name)
-        info1->conf_file_name = ".editorconfig";
+    if (!eh->conf_file_name)
+        eh->conf_file_name = ".editorconfig";
 
     memset(&hfp, 0, sizeof(hfp));
 
@@ -395,14 +378,13 @@ int editorconfig_parse(const char* full_filename,
 
     array_editorconfig_name_value_init(&hfp.array_name_value);
 
-    config_files = get_filenames(hfp.full_filename, info1->conf_file_name);
+    config_files = get_filenames(hfp.full_filename, eh->conf_file_name);
     for (config_file = config_files; *config_file != NULL; config_file++) {
         split_file_path(&hfp.editorconfig_file_dir, NULL, *config_file);
         if ((err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
                 /* ignore error caused by I/O, maybe caused by non exist file */
                 err_num != -1) {
-            if (info1->err_file)
-                info1->err_file = strdup(*config_file);
+            eh->err_file = strdup(*config_file);
             free(*config_file);
             free(hfp.full_filename);
             free(hfp.editorconfig_file_dir);
@@ -421,11 +403,12 @@ int editorconfig_parse(const char* full_filename,
         array_editorconfig_name_value_add(&hfp.array_name_value, "tab_width",
                 hfp.array_name_value.spnvp.indent_size->value);
 
-    out->count = hfp.array_name_value.current_value_count;
-    out->name_values = hfp.array_name_value.name_values;
-    out->name_values = realloc(      /* realloc to truncate the unused spaces */
-            out->name_values, sizeof(editorconfig_name_value) * out->count);
-    if (out->name_values == NULL) {
+    eh->name_value_count = hfp.array_name_value.current_value_count;
+    eh->name_values = hfp.array_name_value.name_values;
+    eh->name_values = realloc(      /* realloc to truncate the unused spaces */
+            eh->name_values,
+            sizeof(editorconfig_name_value) * eh->name_value_count);
+    if (eh->name_values == NULL) {
         free(hfp.full_filename);
         return -3;
     }
@@ -441,17 +424,20 @@ int editorconfig_parse(const char* full_filename,
  */
 EDITORCONFIG_EXPORT
 const char* editorconfig_is_standard_conformed(
-        const struct editorconfig_parsing_out* epo)
+        const editorconfig_handle h)
 {
-    int                         i;
-    editorconfig_name_value*    nv;
-    _Bool                       indent_style_present = 0;
-    const char*                 indent_style_value = NULL;
-    _Bool                       tab_width_present = 0;
-    _Bool                       indent_size_present = 0;
+    int                                 i;
+    editorconfig_name_value*            nv;
+    _Bool                               indent_style_present = 0;
+    const char*                         indent_style_value = NULL;
+    _Bool                               tab_width_present = 0;
+    _Bool                               indent_size_present = 0;
+    const struct editorconfig_handle*   eh;
+    
+    eh = (const struct editorconfig_handle*)h;
 
-    nv = epo->name_values;
-    for (i = 0; i < epo->count; ++i) {
+    nv = eh->name_values;
+    for (i = 0; i < eh->name_value_count; ++i) {
         if (!strcmp(nv->name, "indent_style")) {
             indent_style_present = 1;
 
@@ -499,28 +485,6 @@ const char* editorconfig_is_standard_conformed(
             "while indent_style is set to \'space\'.";
 
     return NULL;
-}
-
-/*
- * See header file
- */
-EDITORCONFIG_EXPORT
-int editorconfig_parsing_out_clear(struct editorconfig_parsing_out* epo)
-{
-    int         i;
-
-
-    if (epo == NULL)
-        return 0;
-
-    for (i = 0; i < epo->count; ++i) {
-        free(epo->name_values[i].name);
-        free(epo->name_values[i].value);
-    }
-
-    free(epo->name_values);
-
-    return 0;
 }
 
 /*

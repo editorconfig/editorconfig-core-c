@@ -61,16 +61,16 @@ static void usage(FILE* stream, const char* command)
 int main(int argc, const char* argv[])
 {
     char*                               full_filename;
-    struct editorconfig_parsing_out     epo;
     int                                 err_num;
     int                                 i;
-    struct editorconfig_parsing_info    epi;
+    int                                 name_value_count;
+    editorconfig_handle                 eh;
 
     _Bool                               should_check_conformtion = 0;
     _Bool                               f_flag = 0;
     _Bool                               b_flag = 0;
 
-    editorconfig_init_parsing_info(&epi);
+    eh = editorconfig_handle_init();
 
     if (argc <= 1) {
         version(stderr, argv[0]);
@@ -96,13 +96,13 @@ int main(int argc, const char* argv[])
 
                 switch(ver_pos) {
                 case 0:
-                    epi.ver.major = ver;
+                    editorconfig_handle_set_version(eh, ver, -1, -1);
                     break;
                 case 1:
-                    epi.ver.minor = ver;
+                    editorconfig_handle_set_version(eh, -1, ver, -1);
                     break;
                 case 2:
-                    epi.ver.subminor = ver;
+                    editorconfig_handle_set_version(eh, -1, -1, ver);
                     break;
                 default:
                     fprintf(stderr, "Invalid version number: %s\n", argv[i]);
@@ -116,7 +116,7 @@ int main(int argc, const char* argv[])
             free(argvi);
         } else if (f_flag) {
             f_flag = 0;
-            epi.conf_file_name = argv[i];
+            editorconfig_handle_set_conf_file_name(eh, argv[i]);
         } else if (strcmp(argv[i], "--version") == 0 ||
                 strcmp(argv[i], "-v") == 0) {
             version(stdout, argv[0]);
@@ -144,12 +144,14 @@ int main(int argc, const char* argv[])
         }
     }
 
-    if ((err_num = editorconfig_parse(full_filename, &epo, &epi))
+    if ((err_num = editorconfig_parse(full_filename, eh))
             != 0) {
         if (err_num > 0)
-            fprintf(stderr, "Error when parsing file \"%s\".\n", epi.err_file);
+            fprintf(stderr, "Error when parsing file \"%s\".\n",
+                    editorconfig_handle_get_err_file(eh));
         else if (err_num == -1)
-            fprintf(stderr, "Failed to open file \"%s\".\n", epi.err_file);
+            fprintf(stderr, "Failed to open file \"%s\".\n",
+                    editorconfig_handle_get_err_file(eh));
         else if (err_num == -2)
             fprintf(stderr, "Input file must be a full path name.\n");
         else if (err_num == -3)
@@ -163,17 +165,23 @@ int main(int argc, const char* argv[])
     /* if we should check the result, check the parsing result */
     if (should_check_conformtion) {
         const char*     errmsg;
-        if ((errmsg = editorconfig_is_standard_conformed(&epo)) == NULL)
+        if ((errmsg = editorconfig_is_standard_conformed(eh)) == NULL)
             printf("Standard conformed.\n");
         else
             printf("Standard not conformed: %s\n", errmsg);
     }
     /* print the result */
-    for (i = 0; i < epo.count; ++i)
-        printf("%s=%s\n", epo.name_values[i].name, epo.name_values[i].value);
+    name_value_count = editorconfig_handle_get_name_value_count(eh);
+    for (i = 0; i < name_value_count; ++i) {
+        const char*         name;
+        const char*         value;
 
-    if (editorconfig_parsing_out_clear(&epo) != 0) {
-        fprintf(stderr, "Failed to clear the parsing result.\n");
+        editorconfig_handle_get_name_value(eh, i, &name, &value);
+        printf("%s=%s\n", name, value);
+    }
+
+    if (editorconfig_handle_destroy(eh) != 0) {
+        fprintf(stderr, "Failed to destroy editorconfig_handle.\n");
         return 1;
     }
     return 0;

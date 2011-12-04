@@ -75,100 +75,25 @@
 # define EDITORCONFIG_EXPORT
 #endif
 
+#include <editorconfig/editorconfig_handle.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /*!
- * @brief A structure containing a name and its corresponding value.
- * @author EditorConfig Team
- */
-struct editorconfig_name_value
-{
-    /*! EditorConfig config item's name. */ 
-    char*       name;
-    /*! EditorConfig config item's value. */ 
-    char*       value;
-};
-
-/*!
- * @brief A structure that descripts version number.
- * @author EditorConfig Team
- */
-struct editorconfig_version
-{
-    /*! major version */
-    int                     major;
-    /*! minor version */
-    int                     minor;
-    /*! subminor version */
-    int                     subminor;
-};
-
-/*!
- * @brief A structure that contains the parsing result.
- * @author EditorConfig Team
- */
-struct editorconfig_parsing_out
-{
-    /*! Pointer to a list of editorconfig_name_value structures containing
-     * names and values of the parsed result */
-    struct editorconfig_name_value*  name_values;
-    /*! The total count of name_values structures pointed by name_values
-     * pointer */
-    int                              count;
-};
-
-/*!
- * @brief A structure that contains the parsing information which should be
- * provided before parsing.
- * @author EditorConfig Team
- */
-struct editorconfig_parsing_info
-{
-    /*!
-     * The file name of EditorConfig conf file. If this pointer is set to NULL,
-     * the file name is set to ".editorconfig" by default.
-     */
-    const char*                 conf_file_name;
-    /*!
-     * When a parsing error occured, this will point to a file that caused the
-     * parsing error.
-     */
-    char*                       err_file;
-    /*!
-     * version number it should act as. Set this to 0.0.0 to act like the
-     * current version.
-     */
-    struct editorconfig_version ver;
-};
-/*!
- * @brief Initialize an editorconfig_parsing_info structure with default values.
- *
- * @param info The editorconfig_parsing_info structure to be initialized.
- *
- * @return None.
- */
-EDITORCONFIG_EXPORT
-void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info);
-
-/*!
  * @brief Parse editorconfig files corresponding to the file path given by
- * full_filename, and put the result to "out".
+ * full_filename, and related information is input and output in h.
  *
  * An example is available at src/bin/main.c in editorconfig source code.
  *
  * @param full_filename The full path of a file that is edited by the editor
  * for which the parsing result is.
  *
- * @param out The parsing result will be filled in out, which is a
- * editorconfig_parsing_out structure. This structure needs to be cleared by
- * editorconfig_parsing_out_clear if this function succeeds.
- *
- * @param info The parsing information to be used and returned from this
- * function. Could be NULL if you want to use the default value and you do not
- * want to get any information back; if you want to use the default value and
- * you also want the output information, you could use
+ * @param h The parsing information to be used and returned from this function
+ * (including the parsing result). Could be NULL if you want to use the default
+ * value and you do not want to get any information back; if you want to use
+ * the default value and you also want the output information, you could use
  * editorconfig_init_parsing_info() to initialize an editorconfig_parsing_info
  * structure and pass the address as this parameter.
  *
@@ -178,24 +103,22 @@ void editorconfig_init_parsing_info(struct editorconfig_parsing_info* info);
  *
  * @retval -3 A memory error occurs.
  *
- * @retval -4 The required version specified in editorconfig_parsing_info is
- * greater than the current version.
+ * @retval -4 The required version specified in editorconfig_handle is greater
+ * than the current version.
  *
  * @retval >0 A parsing error occurs. The return value would be the line number
- * of parsing error. If err_file is not NULL, err_file will also be filled with
- * the file path that caused the parsing error.
+ * of parsing error. err_file obtained from h will also be filled with the file
+ * path that caused the parsing error.
  */
 EDITORCONFIG_EXPORT
-int editorconfig_parse(const char* full_filename,
-        struct editorconfig_parsing_out* out,
-        struct editorconfig_parsing_info* info);
+int editorconfig_parse(const char* full_filename, editorconfig_handle h);
 
 /*!
  * @brief Check whether the parsing result of editorconfig files conforms to
  * the standard.
  *
- * @param epo The editorconfig_parsing_out structure containing the parsing
- * result to be checked.
+ * @param h The editorconfig_handle containing the parsing result to be
+ * checked.
  *
  * @retval NULL The parsing result of editorconfig files conforms to the
  * standard.
@@ -204,25 +127,7 @@ int editorconfig_parse(const char* full_filename,
  * to the standard. The return value is a pointer to the error message.
  */
 EDITORCONFIG_EXPORT
-const char* editorconfig_is_standard_conformed(
-        const struct editorconfig_parsing_out* epo);
-
-/*!
- * @brief Clear the editorconfig_parsing_out structure after a success call of
- * editorconfig_parse().
- *
- * An example is available at src/bin/main.c in editorconfig source code.
- *
- * @param epo The editorconfig_parsing_out structure to be cleared.
- *
- * @retval zero Everything is OK.
- * @retval non-zero Some error occured.
- *
- * @note Currently this function always returns 0, but please make a return
- * value checking to make the code compatible with future versions.
- */
-EDITORCONFIG_EXPORT
-int editorconfig_parsing_out_clear(struct editorconfig_parsing_out* epo);
+const char* editorconfig_is_standard_conformed(const editorconfig_handle h);
 
 /*!
  * @brief Get the version number of EditorConfig.
