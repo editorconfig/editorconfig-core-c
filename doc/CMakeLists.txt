@@ -45,6 +45,7 @@ if(BUILD_DOCUMENTATION)
             ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
             DEPENDS
             ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
+            ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig_handle.h
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
         # Generating man page of editorconfig command. Although we have other
@@ -70,17 +71,8 @@ if(BUILD_DOCUMENTATION)
         set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
         set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 
-        install(FILES
-            ${EC_MANPAGE3_DIR}/editorconfig_get_version.3
-            ${EC_MANPAGE3_DIR}/editorconfig.h.3
-            ${EC_MANPAGE3_DIR}/editorconfig_init_parsing_info.3
-            ${EC_MANPAGE3_DIR}/editorconfig_is_standard_conformed.3
-            ${EC_MANPAGE3_DIR}/editorconfig_name_value.3
-            ${EC_MANPAGE3_DIR}/editorconfig_parse.3
-            ${EC_MANPAGE3_DIR}/editorconfig_parsing_info.3
-            ${EC_MANPAGE3_DIR}/editorconfig_parsing_out.3
-            ${EC_MANPAGE3_DIR}/editorconfig_parsing_out_clear.3
-            DESTINATION share/man/man3)
+		file(REMOVE ${EC_MANPAGE3_DIR}/editorconfig.3)
+		install(DIRECTORY ${EC_MANPAGE3_DIR} DESTINATION share/man)
 
         set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
 

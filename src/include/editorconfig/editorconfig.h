@@ -28,9 +28,7 @@
  *
  * This is the documentation of EditorConfig Core. In this documentation, you
  * could find the document of the @ref editorconfig and the document of
- * @link editorconfig.h
- * EditorConfig Core C APIs
- * @endlink.
+ * EditorConfig Core C APIs in editorconfig.h and editorconfig_handle.h.
  */
 
 /*!
@@ -63,7 +61,6 @@
  * @brief Header file of EditorConfig.
  *
  * @author EditorConfig Team
- * @version 0.2.0
  */
 
 #ifndef __EDITORCONFIG_EDITORCONFIG_H__
@@ -90,12 +87,9 @@ extern "C" {
  * @param full_filename The full path of a file that is edited by the editor
  * for which the parsing result is.
  *
- * @param h The parsing information to be used and returned from this function
- * (including the parsing result). Could be NULL if you want to use the default
- * value and you do not want to get any information back; if you want to use
- * the default value and you also want the output information, you could use
- * editorconfig_init_parsing_info() to initialize an editorconfig_parsing_info
- * structure and pass the address as this parameter.
+ * @param h The editorconfig_handle to be used and returned from this function
+ * (including the parsing result). The editorconfig_handle should be created by
+ * editorconfig_handle_init().
  *
  * @retval 0 Everything is OK.
  *
@@ -107,8 +101,9 @@ extern "C" {
  * than the current version.
  *
  * @retval >0 A parsing error occurs. The return value would be the line number
- * of parsing error. err_file obtained from h will also be filled with the file
- * path that caused the parsing error.
+ * of parsing error. err_file obtained from h by calling
+ * editorconfig_handle_get_err_file() will also be filled with the file path
+ * that caused the parsing error.
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename, editorconfig_handle h);
