@@ -24,5 +24,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-install(FILES editorconfig/editorconfig.h DESTINATION include/editorconfig)
+install(FILES
+    editorconfig/editorconfig.h
+    editorconfig/editorconfig_handle.h
+    DESTINATION include/editorconfig)
 
