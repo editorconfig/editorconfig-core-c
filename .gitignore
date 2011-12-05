@@ -1,3 +1,6 @@
+/CPackConfig.cmake
+/CPackSourceConfig.cmake
+/_CPack_Packages
 /cmake_uninstall.cmake
 /doc/Doxyfile
 /doc/Doxyfile_cmd

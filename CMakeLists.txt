@@ -29,7 +29,7 @@ set (editorconfig_VERSION_MINOR 2)
 set (editorconfig_VERSION_SUBMINOR 0)
 
 project(editorconfig C)
-cmake_minimum_required(VERSION 2.4.0)
+cmake_minimum_required(VERSION 2.4.2)
 
 # Enable testing. Type "make test" to run tests
 enable_testing()
@@ -43,6 +43,25 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P
     ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+
+# package target
+set(CPACK_PACKAGE_VENDOR "EditorConfig Team")
+set(CPACK_PACKAGE_VERSION_MAJOR ${editorconfig_VERSION_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${editorconfig_VERSION_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${editorconfig_VERSION_SUBMINOR})
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "editorconfig")
+set(CPACK_MONOLITHIC_INSTALL 1)
+set(CPACK_SET_DESTDIR "ON")
+set(CPACK_SOURCE_GENERATOR "TGZ;TBZ2")
+set(CPACK_PACKAGE_CONTACT "editorconfig@googlegroups.com")
+set(CPACK_NSIS_DISPLAY_NAME "EditorConfig Core")
+set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "editorconfig")
+set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 1)
+set(CPACK_NSIS_CONTACT "http://editorconfig.org")
+include(CPack)
 
 add_subdirectory(src)
 add_subdirectory(doc)
