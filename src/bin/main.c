@@ -58,7 +58,7 @@ static void usage(FILE* stream, const char* command)
 
 int main(int argc, const char* argv[])
 {
-    char*                               full_filename;
+    char*                               full_filename = NULL;
     int                                 err_num;
     int                                 i;
     int                                 name_value_count;
@@ -137,6 +137,11 @@ int main(int argc, const char* argv[])
             usage(stderr, argv[0]);
             return 1;
         }
+    }
+
+    if (!full_filename) { /* No filename is set */ 
+        usage(stderr, argv[0]);
+        return 1;
     }
 
     if ((err_num = editorconfig_parse(full_filename, eh))
