@@ -1,11 +1,11 @@
+/cmake_uninstall.cmake
+/doc/Doxyfile
+/doc/Doxyfile_cmd
+/src/auto
+/src/bin/editorconfig
 CMakeCache.txt
 CMakeFiles
 CTestTestfile.cmake
-Doxyfile
-Doxyfile_cmd
 Makefile
-auto
 cmake_install.cmake
-cmake_uninstall.cmake
-editorconfig
 install_manifest.txt
