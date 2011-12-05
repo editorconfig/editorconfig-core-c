@@ -24,12 +24,13 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+cmake_minimum_required(VERSION 2.4.2)
+
 set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 2)
 set (editorconfig_VERSION_SUBMINOR 0)
 
 project(editorconfig C)
-cmake_minimum_required(VERSION 2.4.2)
 
 # Enable testing. Type "make test" to run tests
 enable_testing()
