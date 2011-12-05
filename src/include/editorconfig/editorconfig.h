@@ -46,9 +46,6 @@
  * <em>-b</em>             Sepcify a version to act like. Usually used for
  * testing compatibility for editor plugin developers.
  *
- * <em>-c</em>             Check standard conformation before print the parsing
- *  result.
- *
  * <em>-h</em> OR <em>--help</em>   Print this help message.
  *
  * <em>--version</em>      Display version information.
@@ -107,22 +104,6 @@ extern "C" {
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename, editorconfig_handle h);
-
-/*!
- * @brief Check whether the parsing result of editorconfig files conforms to
- * the standard.
- *
- * @param h The editorconfig_handle containing the parsing result to be
- * checked.
- *
- * @retval NULL The parsing result of editorconfig files conforms to the
- * standard.
- *
- * @retval non-NULL The parsing result of editorconfig files does not conform
- * to the standard. The return value is a pointer to the error message.
- */
-EDITORCONFIG_EXPORT
-const char* editorconfig_is_standard_conformed(const editorconfig_handle h);
 
 /*!
  * @brief Get the version number of EditorConfig.
