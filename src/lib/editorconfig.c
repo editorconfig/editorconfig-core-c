@@ -334,6 +334,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     char*                               directory;
     char*                               filename;
     int                                 err_num;
+    int                                 i;
     struct editorconfig_handle*         eh = (struct editorconfig_handle*)h;
     struct editorconfig_version         cur_ver;
 
@@ -360,6 +361,17 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     if (!eh->conf_file_name)
         eh->conf_file_name = ".editorconfig";
 
+    if (eh->name_values) {
+        /* free name_values */
+        for (i = 0; i < eh->name_value_count; ++i) {
+            free(eh->name_values[i].name);
+            free(eh->name_values[i].value);
+        }
+        free(eh->name_values);
+
+        eh->name_values = NULL;
+        eh->name_value_count = 0;
+    }
     memset(&hfp, 0, sizeof(hfp));
 
     hfp.full_filename = strdup(full_filename);
