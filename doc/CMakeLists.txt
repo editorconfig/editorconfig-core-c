@@ -71,8 +71,8 @@ if(BUILD_DOCUMENTATION)
         set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
         set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 
-		file(REMOVE ${EC_MANPAGE3_DIR}/editorconfig.3)
-		install(DIRECTORY ${EC_MANPAGE3_DIR} DESTINATION share/man)
+        file(REMOVE ${EC_MANPAGE3_DIR}/editorconfig.3)
+        install(DIRECTORY ${EC_MANPAGE3_DIR} DESTINATION share/man)
 
         set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
 
