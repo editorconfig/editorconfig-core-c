@@ -53,5 +53,5 @@ set_tests_properties(ne_brackets
 add_test(ne_brackets_2 ${editorconfig_cmd} -f ne_brackets.in
     "${CMAKE_CURRENT_SOURCE_DIR}/nag.c")
 set_tests_properties(ne_brackets_2
-    PROPERTIES FAIL_REGULAR_EXPRESSION "^something=anything[ \t\n\r]*$")
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
 
