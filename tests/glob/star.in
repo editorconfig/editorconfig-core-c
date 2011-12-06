@@ -2,6 +2,6 @@
 
 root=true
 
-[*.c]
-indent_style = space
+[a*e.c]
+key=value
 

@@ -3,5 +3,5 @@
 root=true
 
 [som?.c]
-indent_style=space
+key=value
 

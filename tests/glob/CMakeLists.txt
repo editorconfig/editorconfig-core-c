@@ -25,17 +25,46 @@
 #
 
 
-# test *
-add_test(star ${editorconfig_cmd} -f star.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
-set_tests_properties(star
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
+# Tests for *
 
-# test ?
-add_test(question ${editorconfig_cmd} -f question.in
+# matches a single characters
+add_test(star_single ${editorconfig_cmd} -f star.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/ace.c")
+set_tests_properties(star_single
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# matches zero characters
+add_test(star_zero ${editorconfig_cmd} -f star.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/ae.c")
+set_tests_properties(star_zero
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# matches multiple characters
+add_test(star_multiple ${editorconfig_cmd} -f star.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/abcde.c")
+set_tests_properties(star_multiple
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+
+# Tests for ?
+
+# matches a single character
+add_test(question_single ${editorconfig_cmd} -f question.in
     "${CMAKE_CURRENT_SOURCE_DIR}/some.c")
-set_tests_properties(question
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
+set_tests_properties(question_single
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# does not match zero characters
+add_test(question_zero ${editorconfig_cmd} -f question.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/som.c")
+set_tests_properties(question_zero
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# does not match multiple characters
+add_test(question_multiple ${editorconfig_cmd} -f question.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/something.c")
+set_tests_properties(question_multiple
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
 
 
 # Tests for [ and ]
