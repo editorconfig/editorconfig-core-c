@@ -43,6 +43,12 @@ add_test(brackets ${editorconfig_cmd} -f brackets.in
 set_tests_properties(brackets
     PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
+# test [ and ] range
+add_test(brackets_range ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/m3.c")
+set_tests_properties(brackets_range
+    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=tab[ \t\n\r]*$")
+
 # test [! ]
 add_test(ne_brackets ${editorconfig_cmd} -f ne_brackets.in
     "${CMAKE_CURRENT_SOURCE_DIR}/pag.c")
