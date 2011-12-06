@@ -7,6 +7,3 @@ indent_size = 4
 [*.h]
 indent_style = space
 indent_size = 4
-
-[/doc/**]
-indent_style = tab
