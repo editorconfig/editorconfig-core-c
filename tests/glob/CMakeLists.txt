@@ -37,27 +37,66 @@ add_test(question ${editorconfig_cmd} -f question.in
 set_tests_properties(question
     PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
-# test [ and ]
-add_test(brackets ${editorconfig_cmd} -f brackets.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/banana.c")
-set_tests_properties(brackets
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=space[ \t\n\r]*$")
 
-# test [ and ] range
-add_test(brackets_range ${editorconfig_cmd} -f brackets.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/m3.c")
-set_tests_properties(brackets_range
-    PROPERTIES PASS_REGULAR_EXPRESSION "^indent_style=tab[ \t\n\r]*$")
+# Tests for [ and ]
 
-# test [! ]
-add_test(ne_brackets ${editorconfig_cmd} -f ne_brackets.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/pag.c")
-set_tests_properties(ne_brackets
-    PROPERTIES PASS_REGULAR_EXPRESSION "^something=anything[ \t\n\r]*$")
+# character choice
+add_test(brackets_choice ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/a.a")
+set_tests_properties(brackets_choice
+    PROPERTIES PASS_REGULAR_EXPRESSION "^choice=true[ \t\n\r]*$")
 
-# test [! ]  2
-add_test(ne_brackets_2 ${editorconfig_cmd} -f ne_brackets.in
-    "${CMAKE_CURRENT_SOURCE_DIR}/nag.c")
-set_tests_properties(ne_brackets_2
+# character choice 2
+add_test(brackets_choice2 ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/c.a")
+set_tests_properties(brackets_choice2
     PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# negative character choice
+add_test(brackets_nchoice ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/c.b")
+set_tests_properties(brackets_nchoice
+    PROPERTIES PASS_REGULAR_EXPRESSION "^choice=false[ \t\n\r]*$")
+
+# negative character choice 2
+add_test(brackets_nchoice2 ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/a.b")
+set_tests_properties(brackets_nchoice2
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# character range
+add_test(brackets_range ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/f.c")
+set_tests_properties(brackets_range
+    PROPERTIES PASS_REGULAR_EXPRESSION "^range=true[ \t\n\r]*$")
+
+# character range 2
+add_test(brackets_range2 ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/h.c")
+set_tests_properties(brackets_range2
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# negative character range
+add_test(brackets_nrange ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/h.d")
+set_tests_properties(brackets_nrange
+    PROPERTIES PASS_REGULAR_EXPRESSION "^range=false[ \t\n\r]*$")
+
+# negative character range 2
+add_test(brackets_nrange2 ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/f.d")
+set_tests_properties(brackets_nrange2
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# range and choice
+add_test(brackets_range_and_choice ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/e.e")
+set_tests_properties(brackets_range_and_choice
+    PROPERTIES PASS_REGULAR_EXPRESSION "^range_and_choice=true[ \t\n\r]*$")
+
+# character choice with a dash
+add_test(brackets_choice_with_dash ${editorconfig_cmd} -f brackets.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/-.f")
+set_tests_properties(brackets_choice_with_dash
+    PROPERTIES PASS_REGULAR_EXPRESSION "^choice_with_dash=true[ \t\n\r]*$")
 

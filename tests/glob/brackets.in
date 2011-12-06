@@ -2,8 +2,26 @@
 
 root=true
 
-[[ban]*.c]
-indent_style=space
+; Character choice
+[[ab].a]
+choice=true
 
-[[a-z][0-9].c]
-indent_style=tab
+; Negative character choice
+[[!ab].b]
+choice=false
+
+; Character range
+[[d-g].c]
+range=true
+
+; Negative character range
+[[!d-g].d]
+range=false
+
+; Range and choice
+[[abd-g].e]
+range_and_choice=true
+
+; Choice with dash
+[[-ab].f]
+choice_with_dash=true
