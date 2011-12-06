@@ -71,8 +71,12 @@ if(BUILD_DOCUMENTATION)
         set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
         set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
 
-        file(REMOVE ${EC_MANPAGE3_DIR}/editorconfig.3)
-        install(DIRECTORY ${EC_MANPAGE3_DIR} DESTINATION share/man)
+        # Since we cannot avoid generating editorconfig.3 with doxygen, which
+        # is the manpage of the command line interface with a manpage number 3,
+        # we need to exclude it when installing man3.
+        install(DIRECTORY ${EC_MANPAGE3_DIR}
+            DESTINATION share/man
+            PATTERN editorconfig.3 EXCLUDE)
 
         set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
 
