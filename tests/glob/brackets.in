@@ -4,3 +4,6 @@ root=true
 
 [[ban]*.c]
 indent_style=space
+
+[[a-z][0-9].c]
+indent_style=tab
