@@ -416,6 +416,12 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
                 hfp.array_name_value.spnvp.indent_size->value);
 
     eh->name_value_count = hfp.array_name_value.current_value_count;
+
+    if (eh->name_value_count == 0) {  /* no value is set, just return 0. */
+        free(hfp.full_filename);
+        free(config_files);
+        return 0;
+    }
     eh->name_values = hfp.array_name_value.name_values;
     eh->name_values = realloc(      /* realloc to truncate the unused spaces */
             eh->name_values,
