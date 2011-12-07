@@ -194,17 +194,17 @@ static int ini_handler(void* hfp, const char* section, const char* name,
         return 1;
     }
 
-    /* pattern would be: /dir/of/editorconfig/file/[double_star]/[section] if
+    /* pattern would be: /dir/of/editorconfig/file[double_star]/[section] if
      * section does not start with '/', or /dir/of/editorconfig/file[section]
      * if section starts with a '/' */
     pattern = (char*)malloc(
             strlen(hfparam->editorconfig_file_dir) * sizeof(char) +
-            sizeof("/**") + strlen(section) * sizeof(char));
+            sizeof("**/") + strlen(section) * sizeof(char));
     if (!pattern)
         return 0;
     strcpy(pattern, hfparam->editorconfig_file_dir);
     if (*section != '/')
-        strcat(pattern, "/**");
+        strcat(pattern, "**/");
     strcat(pattern, section);
 
     if (ec_fnmatch(pattern, hfparam->full_filename, EC_FNM_PATHNAME) == 0) {
