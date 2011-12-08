@@ -29,4 +29,5 @@ set(editorconfig_cmd "${PROJECT_BINARY_DIR}/src/bin/editorconfig")
 
 add_subdirectory(glob)
 add_subdirectory(properties)
+add_subdirectory(parser)
 

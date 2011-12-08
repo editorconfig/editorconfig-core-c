@@ -1,0 +1,28 @@
+; test comments
+
+[test1.c]
+key=value ; Comment after property is ignored
+
+[test2.c] ; Comment ignored, even with ] character
+key=value
+
+[test3.c]
+; Comment before properties ignored
+key=value
+
+[test4.c]
+key1=value1
+; Comment between properties ignored
+key2=value2
+
+; Semicolon at end of value read as part of value
+[test5.c]
+key=value; not comment
+
+; Escaped semicolon in value
+[test6.c]
+key=value \; not comment
+
+; Escaped semicolon in section name
+[test\;.c]
+key=value
