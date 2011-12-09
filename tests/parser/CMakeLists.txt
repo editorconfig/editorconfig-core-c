@@ -24,6 +24,47 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+# Tests for whitespace parsing
+
+# test no whitespaces in property assignment
+add_test(no_whitespace ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test1.c")
+set_tests_properties(no_whitespace
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test single spaces around equals sign
+add_test(single_spaces_around_equals ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test2.c")
+set_tests_properties(single_spaces_around_equals
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test multiple spaces around equals sign
+add_test(multiple_spaces_around_equals ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test3.c")
+set_tests_properties(multiple_spaces_around_equals
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test spaces before property name
+add_test(spaces_before_property_name ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test4.c")
+set_tests_properties(spaces_before_property_name
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test spaces before after property value
+add_test(spaces_after_property_value ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test5.c")
+set_tests_properties(spaces_after_property_value
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test blank lines between properties
+add_test(blank_lines_between_properties ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test6.c")
+set_tests_properties(blank_lines_between_properties
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "^key1=value1[ \t\n\r]+key2=value2[ \t\n\r]*$")
+
+
+# Tests for comment parsing
 
 # test comments ignored after property name
 add_test(comments_after_property ${editorconfig_cmd} -f comments.in
