@@ -90,20 +90,37 @@ extern "C" {
  *
  * @retval 0 Everything is OK.
  *
- * @retval -2 The full_filename is not a full path name.
- *
- * @retval -3 A memory error occurs.
- *
- * @retval -4 The required version specified in editorconfig_handle is greater
- * than the current version.
- *
- * @retval >0 A parsing error occurs. The return value would be the line number
+ * @retval "Positive Integer" A parsing error occurs. The return value would be the line number
  * of parsing error. err_file obtained from h by calling
  * editorconfig_handle_get_err_file() will also be filled with the file path
  * that caused the parsing error.
+ *
+ * @retval EDITORCONFIG_PARSE_NOT_FULL_PATH The full_filename is not a full
+ * path name.
+ *
+ * @retval EDITORCONFIG_PARSE_MEMORY_ERROR A memory error occurs.
+ *
+ * @retval EDITORCONFIG_PARSE_VERSION_TOO_NEW The required version specified in
+ * editorconfig_handle is greater than the current version.
+ *
  */
 EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename, editorconfig_handle h);
+
+/*!
+ * editorconfig_parse() return value: the full_filename parameter of
+ * editorconfig_parse() is not a full path name
+ */
+#define EDITORCONFIG_PARSE_NOT_FULL_PATH                (-2)
+/*!
+ * editorconfig_parse() return value: a memory error occurs.
+ */
+#define EDITORCONFIG_PARSE_MEMORY_ERROR                 (-3)
+/*!
+ * editorconfig_parse() return value: the required version specified in @ref
+ * editorconfig_handle is greater than the current version.
+ */
+#define EDITORCONFIG_PARSE_VERSION_TOO_NEW              (-4)
 
 /*!
  * @brief Get the version number of EditorConfig.
