@@ -152,11 +152,11 @@ int main(int argc, const char* argv[])
         else if (err_num == -1)
             fprintf(stderr, "Failed to open file \"%s\".\n",
                     editorconfig_handle_get_err_file(eh));
-        else if (err_num == -2)
+        else if (err_num == EDITORCONFIG_PARSE_NOT_FULL_PATH)
             fprintf(stderr, "Input file must be a full path name.\n");
-        else if (err_num == -3)
+        else if (err_num == EDITORCONFIG_PARSE_MEMORY_ERROR)
             fprintf(stderr, "Memory error.\n");
-        else if (err_num == -4)
+        else if (err_num == EDITORCONFIG_PARSE_VERSION_TOO_NEW)
             fprintf(stderr, "Required version is greater than the "
                     "current version.\n");
         return 1;

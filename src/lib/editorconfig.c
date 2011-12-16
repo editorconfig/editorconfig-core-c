@@ -349,7 +349,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
         eh->ver = cur_ver;
 
     if (editorconfig_compare_version(&eh->ver, &cur_ver) > 0)
-        return -4;
+        return EDITORCONFIG_PARSE_VERSION_TOO_NEW;
 
     if (!eh->err_file) {
         free(eh->err_file);
@@ -383,7 +383,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 
     split_file_path(&directory, &filename, hfp.full_filename);
     if (directory == NULL) {
-        return -2;
+        return EDITORCONFIG_PARSE_NOT_FULL_PATH;
     }
 
     free(directory);
@@ -428,7 +428,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
             sizeof(editorconfig_name_value) * eh->name_value_count);
     if (eh->name_values == NULL) {
         free(hfp.full_filename);
-        return -3;
+        return EDITORCONFIG_PARSE_MEMORY_ERROR;
     }
 
     free(hfp.full_filename);
