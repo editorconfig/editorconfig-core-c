@@ -149,9 +149,6 @@ int main(int argc, const char* argv[])
         if (err_num > 0)
             fprintf(stderr, "Error when parsing file \"%s\".\n",
                     editorconfig_handle_get_err_file(eh));
-        else if (err_num == -1)
-            fprintf(stderr, "Failed to open file \"%s\".\n",
-                    editorconfig_handle_get_err_file(eh));
         else if (err_num == EDITORCONFIG_PARSE_NOT_FULL_PATH)
             fprintf(stderr, "Input file must be a full path name.\n");
         else if (err_num == EDITORCONFIG_PARSE_MEMORY_ERROR)
