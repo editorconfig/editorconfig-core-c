@@ -90,10 +90,13 @@ extern "C" {
  *
  * @retval 0 Everything is OK.
  *
- * @retval "Positive Integer" A parsing error occurs. The return value would be the line number
- * of parsing error. err_file obtained from h by calling
+ * @retval "Positive Integer" A parsing error occurs. The return value would be
+ * the line number of parsing error. err_file obtained from h by calling
  * editorconfig_handle_get_err_file() will also be filled with the file path
  * that caused the parsing error.
+ *
+ * @retval "Negative Integer" Some error occured. See below for the reason of
+ * the error for each return value.
  *
  * @retval EDITORCONFIG_PARSE_NOT_FULL_PATH The full_filename is not a full
  * path name.
