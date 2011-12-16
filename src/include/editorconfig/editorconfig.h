@@ -84,9 +84,9 @@ extern "C" {
  * @param full_filename The full path of a file that is edited by the editor
  * for which the parsing result is.
  *
- * @param h The editorconfig_handle to be used and returned from this function
- * (including the parsing result). The editorconfig_handle should be created by
- * editorconfig_handle_init().
+ * @param h The @ref editorconfig_handle to be used and returned from this
+ * function (including the parsing result). The @ref editorconfig_handle should
+ * be created by editorconfig_handle_init().
  *
  * @retval 0 Everything is OK.
  *
@@ -104,7 +104,7 @@ extern "C" {
  * @retval EDITORCONFIG_PARSE_MEMORY_ERROR A memory error occurs.
  *
  * @retval EDITORCONFIG_PARSE_VERSION_TOO_NEW The required version specified in
- * editorconfig_handle is greater than the current version.
+ * @ref editorconfig_handle is greater than the current version.
  *
  */
 EDITORCONFIG_EXPORT
