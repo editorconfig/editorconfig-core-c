@@ -156,6 +156,8 @@ int main(int argc, const char* argv[])
         else if (err_num == EDITORCONFIG_PARSE_VERSION_TOO_NEW)
             fprintf(stderr, "Required version is greater than the "
                     "current version.\n");
+        else
+            fprintf(stderr, "Unknown error.\n");
         return 1;
     }
 
