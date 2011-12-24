@@ -1,0 +1,8 @@
+[test.a]
+key=value
+
+[test.b]
+key1=value1
+
+[test.c]
+key=valueA

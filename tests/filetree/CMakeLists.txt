@@ -25,10 +25,20 @@
 #
 
 
-set(editorconfig_cmd "${PROJECT_BINARY_DIR}/src/bin/editorconfig")
+# Test for EditorConfig file in parent directory
+add_test(parent_directory ${editorconfig_cmd} -f parent_directory.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/parent_directory/test.a")
+set_tests_properties(parent_directory
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
 
-add_subdirectory(glob)
-add_subdirectory(properties)
-add_subdirectory(parser)
-add_subdirectory(filetree)
+# Test for EditorConfig file in parent directory and current directory
+add_test(parent_and_current_dir ${editorconfig_cmd} -f parent_directory.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/parent_directory/test.b")
+set_tests_properties(parent_and_current_dir
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key1=value1[ \t\n\r]+key2=value2[ \t\n\r]*$")
 
+# Test for file in parent directory and overloaded by file in current directory
+add_test(parent_dir_overload ${editorconfig_cmd} -f parent_directory.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/parent_directory/test.c")
+set_tests_properties(parent_dir_overload
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=valueB[ \t\n\r]*$")
