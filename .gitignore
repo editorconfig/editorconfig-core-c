@@ -21,3 +21,5 @@ CTestTestfile.cmake
 /editorconfig*.sh
 /editorconfig*.tar.Z
 /editorconfig*.tar.gz
+/editorconfig*.deb
+/editorconfig*.rpm
