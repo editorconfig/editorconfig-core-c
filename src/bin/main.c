@@ -158,6 +158,9 @@ int main(int argc, const char* argv[])
                     "current version.\n");
         else
             fprintf(stderr, "Unknown error.\n");
+
+        free(full_filename);
+
         return 1;
     }
 
@@ -173,8 +176,12 @@ int main(int argc, const char* argv[])
 
     if (editorconfig_handle_destroy(eh) != 0) {
         fprintf(stderr, "Failed to destroy editorconfig_handle.\n");
+        free(full_filename);
         return 1;
     }
+
+    free(full_filename);
+
     return 0;
 }
 
