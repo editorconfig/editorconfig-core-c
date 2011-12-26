@@ -42,3 +42,9 @@ add_test(parent_dir_overload ${editorconfig_cmd} -f parent_directory.in
     "${CMAKE_CURRENT_SOURCE_DIR}/parent_directory/test.c")
 set_tests_properties(parent_dir_overload
     PROPERTIES PASS_REGULAR_EXPRESSION "^key=valueB[ \t\n\r]*$")
+
+# Test that search stops at root EditorConfig file
+add_test(root_file ${editorconfig_cmd} -f root_file.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/root_file/test.a")
+set_tests_properties(root_file
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
