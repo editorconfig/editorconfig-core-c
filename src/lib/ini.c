@@ -30,6 +30,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Go to the project home page for more info:
 http://code.google.com/p/inih/
 
+Copyright(C) 2011 EditorConfig Team.
+Modified by EditorConfig Team for use in EditorConfig project.
 */
 
 #include "global.h"
@@ -39,6 +41,8 @@ http://code.google.com/p/inih/
 #include <string.h>
 
 #include "ini.h"
+
+#include "misc.h"
 
 #define MAX_LINE 200
 #define MAX_SECTION MAX_SECTION_NAME
@@ -107,6 +111,7 @@ int ini_parse_file(FILE* file,
     char section[MAX_SECTION] = "";
     char prev_name[MAX_NAME] = "";
 
+    char* trimmed_section;
     char* start;
     char* end;
     char* name;
@@ -123,7 +128,9 @@ int ini_parse_file(FILE* file,
         if (*prev_name && *start && start > line) {
             /* Non-black line with leading whitespace, treat as continuation
                of previous name's value (as per Python ConfigParser). */
-            if (!handler(user, section, prev_name, start) && !error)
+            /* trim section before pass it into handler */
+            trimmed_section = str_trim(section, NULL);
+            if (!handler(user, trimmed_section, prev_name, start) && !error)
                 error = lineno;
         }
         else
@@ -161,7 +168,9 @@ int ini_parse_file(FILE* file,
 
                 /* Valid name[=:]value pair found, call handler */
                 strncpy0(prev_name, name, sizeof(prev_name));
-                if (!handler(user, section, name, value) && !error)
+                /* trim section before pass it into handler */
+                trimmed_section = str_trim(section, NULL);
+                if (!handler(user, trimmed_section, name, value) && !error)
                     error = lineno;
             }
             else if (!error) {

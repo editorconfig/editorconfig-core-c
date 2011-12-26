@@ -26,3 +26,11 @@ key=value
 key1=value1
 
 key2=value2
+
+; spaces before section names
+[  test7.c]
+key7 = value7
+
+; spaces after section names
+[test8.c        ]
+key8 = value8
