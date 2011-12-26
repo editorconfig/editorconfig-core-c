@@ -1,5 +1,7 @@
 ; test comments
 
+root = true
+
 [test1.c]
 key=value ; Comment after property is ignored
 

@@ -1,5 +1,7 @@
 ; test whitespace usage
 
+root = true
+
 ; no whitespace
 [test1.c]
 key=value
