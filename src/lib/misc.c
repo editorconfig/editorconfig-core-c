@@ -225,3 +225,35 @@ char* ec_strlwr(char* str)
 
 #endif /* !HAVE_STRLWR */
 
+/*
+ * Trim string: remove white characters on the two sides
+ */
+EDITORCONFIG_LOCAL
+char* str_trim(char* str, const char* white_space_chars)
+{
+    char*          end;
+
+    /* strlen(str) is 0, return it directly */
+    if (*str == '\0')
+        return str;
+
+    /* set the default white space chars if white_space_chars is NULL */
+    if (!white_space_chars)
+        white_space_chars = " \t\r\n\f\v";
+
+    /* Trim leading white spaces */
+    while (strchr(white_space_chars, *str))
+        ++ str;
+
+    if (*str == '\0')
+        return str;
+
+    end = str + strlen(str) - 1;
+
+    while (end > str && strchr(white_space_chars, *end))
+        -- end;
+
+    *(end + 1) = '\0';
+
+    return str;
+}

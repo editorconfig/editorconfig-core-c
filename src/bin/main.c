@@ -144,8 +144,11 @@ int main(int argc, const char* argv[])
         return 1;
     }
 
-    if ((err_num = editorconfig_parse(full_filename, eh))
-            != 0) {
+    err_num = editorconfig_parse(full_filename, eh);
+
+    free(full_filename);
+
+    if (err_num != 0) {
         if (err_num > 0)
             fprintf(stderr, "Error when parsing file \"%s\".\n",
                     editorconfig_handle_get_err_file(eh));
@@ -158,6 +161,7 @@ int main(int argc, const char* argv[])
                     "current version.\n");
         else
             fprintf(stderr, "Unknown error.\n");
+
         return 1;
     }
 
@@ -175,6 +179,7 @@ int main(int argc, const char* argv[])
         fprintf(stderr, "Failed to destroy editorconfig_handle.\n");
         return 1;
     }
+
     return 0;
 }
 

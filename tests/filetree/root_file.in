@@ -1,2 +1,4 @@
+root = true
+
 [test.a]
 key=value

@@ -381,7 +381,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     str_replace(hfp.full_filename, '\\', '/');
 #endif
 
-    split_file_path(&directory, &filename, hfp.full_filename);
+    split_file_path(&directory, NULL, hfp.full_filename);
     if (directory == NULL) {
         return EDITORCONFIG_PARSE_NOT_FULL_PATH;
     }
