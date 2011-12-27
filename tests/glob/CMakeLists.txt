@@ -45,6 +45,12 @@ add_test(star_multiple ${editorconfig_cmd} -f star.in
 set_tests_properties(star_multiple
     PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
 
+# does not match path separator
+add_test(star_over_slash ${editorconfig_cmd} -f star.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/a/e.c")
+set_tests_properties(star_over_slash
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
 
 # Tests for ?
 
