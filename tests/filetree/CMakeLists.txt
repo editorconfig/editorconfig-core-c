@@ -48,3 +48,27 @@ add_test(root_file ${editorconfig_cmd} -f root_file.in
     "${CMAKE_CURRENT_SOURCE_DIR}/root_file/test.a")
 set_tests_properties(root_file
     PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# Tests path separator match
+add_test(path_separator ${editorconfig_cmd} -f path_separator.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/path/separator")
+set_tests_properties(path_separator
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# Tests path separator match below top of path
+add_test(nested_path_separator ${editorconfig_cmd} -f path_separator.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/nested/path/separator")
+set_tests_properties(nested_path_separator
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# Tests path separator match top of path only
+add_test(top_level_path_separator ${editorconfig_cmd} -f path_separator.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/top/of/path")
+set_tests_properties(top_level_path_separator
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# Tests path separator match top of path only
+add_test(top_level_path_separator_neg ${editorconfig_cmd} -f path_separator.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/not/top/of/path")
+set_tests_properties(top_level_path_separator_neg
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")

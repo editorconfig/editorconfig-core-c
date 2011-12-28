@@ -1,0 +1,9 @@
+; test for path separator
+
+root=true
+
+[path/separator]
+key=value
+
+[/top/of/path]
+key=value
