@@ -135,3 +135,12 @@ add_test(brackets_choice_with_dash ${editorconfig_cmd} -f brackets.in
 set_tests_properties(brackets_choice_with_dash
     PROPERTIES PASS_REGULAR_EXPRESSION "^choice_with_dash=true[ \t\n\r]*$")
 
+
+# Tests for **
+
+# matches over path separator
+add_test(star_star_over_separator ${editorconfig_cmd} -f star_star.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/a/e.c")
+set_tests_properties(star_star_over_separator
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
