@@ -332,7 +332,6 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     char**                              config_file;
     char**                              config_files;
     char*                               directory;
-    char*                               filename;
     int                                 err_num;
     int                                 i;
     struct editorconfig_handle*         eh = (struct editorconfig_handle*)h;
