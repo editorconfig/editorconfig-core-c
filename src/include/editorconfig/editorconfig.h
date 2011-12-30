@@ -111,6 +111,19 @@ EDITORCONFIG_EXPORT
 int editorconfig_parse(const char* full_filename, editorconfig_handle h);
 
 /*!
+ * @brief Get the error message from the error number returned by
+ * editorconfig_parse().
+ *
+ * An example is available at src/bin/main.c in editorconfig source code.
+ *
+ * @param err_num The error number that is used to obtain the error message.
+ *
+ * @return The error message corresponding to err_num.
+ */
+EDITORCONFIG_EXPORT
+const char* editorconfig_get_error_msg(int err_num);
+
+/*!
  * editorconfig_parse() return value: the full_filename parameter of
  * editorconfig_parse() is not a full path name
  */
