@@ -322,6 +322,28 @@ static int editorconfig_compare_version(
     return 0;
 }
 
+EDITORCONFIG_EXPORT
+const char* editorconfig_get_error_msg(int err_num)
+{
+    if(err_num > 0)
+        return "Failed to parse file.";
+
+    switch(err_num) {
+    case 0:
+        return "No error occurred.";
+    case EDITORCONFIG_PARSE_NOT_FULL_PATH:
+        return "Input file must be a full path name.";
+    case EDITORCONFIG_PARSE_MEMORY_ERROR:
+        return "Memory error.";
+    case EDITORCONFIG_PARSE_VERSION_TOO_NEW:
+        return "Required version is greater than the current version.";
+    default:
+        return "Unknown error.";
+    }
+
+    return "Unknown error.";
+}
+
 /* 
  * See the header file for the use of this function
  */
@@ -332,7 +354,6 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     char**                              config_file;
     char**                              config_files;
     char*                               directory;
-    char*                               filename;
     int                                 err_num;
     int                                 i;
     struct editorconfig_handle*         eh = (struct editorconfig_handle*)h;

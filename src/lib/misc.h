@@ -58,7 +58,4 @@ char* ec_strlwr(char* str);
 # define strlwr ec_strlwr
 #endif
 
-EDITORCONFIG_LOCAL
-char* str_trim(char* str, const char* white_space_chars);
-
 #endif /* __MISC_H__ */
