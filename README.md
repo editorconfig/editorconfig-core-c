@@ -28,6 +28,8 @@ Installation
 
 To install the EditorConfig core from source see the `INSTALL` file.
 
+Binary installation packages for the EditorConfig core can be found on the [downloads page on Github][downloads].
+
 
 Getting Help
 ------------
@@ -51,3 +53,4 @@ under the New BSD license. See LICENSE file for details.
 [EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [documentation]: http://editorconfig.org/core-docs/ "EditorConfig Core C API documentation"
+[downloads]: https://github.com/editorconfig/editorconfig/downloads
