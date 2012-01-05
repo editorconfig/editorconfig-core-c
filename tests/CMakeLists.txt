@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011 EditorConfig Team
+# Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -25,7 +25,7 @@
 #
 
 
-set(editorconfig_cmd "${PROJECT_BINARY_DIR}/src/bin/editorconfig")
+set(editorconfig_cmd "${PROJECT_BINARY_DIR}/bin/editorconfig")
 
 add_subdirectory(glob)
 add_subdirectory(properties)

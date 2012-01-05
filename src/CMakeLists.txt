@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011 EditorConfig Team
+# Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@ configure_file(
     ${CMAKE_CURRENT_BINARY_DIR}/auto/config.h)
 
 include_directories(BEFORE
-    ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    "${PROJECT_SOURCE_DIR}/include")
 
 # replace all /MD with /MT for msvc
 if(MSVC)
@@ -60,5 +60,4 @@ endif(MSVC)
 
 add_subdirectory(lib)
 add_subdirectory(bin)
-add_subdirectory(include)
 

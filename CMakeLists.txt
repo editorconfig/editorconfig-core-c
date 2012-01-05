@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011 EditorConfig Team
+# Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -74,5 +74,6 @@ include(CPack)
 
 add_subdirectory(src)
 add_subdirectory(doc)
+add_subdirectory(include)
 add_subdirectory(tests)
 

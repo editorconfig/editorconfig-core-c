@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011 EditorConfig Team
+# Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -44,8 +44,8 @@ if(BUILD_DOCUMENTATION)
             MAIN_DEPENDENCY
             ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
             DEPENDS
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig_handle.h
+            ${PROJECT_SOURCE_DIR}/include/editorconfig/editorconfig.h
+            ${PROJECT_SOURCE_DIR}/include/editorconfig/editorconfig_handle.h
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
         # Generating man page of editorconfig command. Although we have other
@@ -60,7 +60,7 @@ if(BUILD_DOCUMENTATION)
             MAIN_DEPENDENCY
             ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
             DEPENDS
-            ${CMAKE_CURRENT_SOURCE_DIR}/../src/include/editorconfig/editorconfig.h
+            ${PROJECT_SOURCE_DIR}/include/editorconfig/editorconfig.h
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
         add_custom_target(doc ALL DEPENDS

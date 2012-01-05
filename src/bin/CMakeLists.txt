@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011 EditorConfig Team
+# Copyright (c) 2011-2012 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -24,7 +24,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-link_directories(${CMAKE_CURRENT_BINARY_DIR}/../lib)
+link_directories(${CMAKE_ARCHIVE_OUTPUT_DIR})
 
 set(editorconfig_BINSRCS
     main.c)
