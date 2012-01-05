@@ -32,6 +32,11 @@ set (editorconfig_VERSION_SUBMINOR 0)
 
 project(editorconfig C)
 
+# set default compilation directory
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
+
 # Enable testing. Type "make test" to run tests
 enable_testing()
 
