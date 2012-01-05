@@ -30,6 +30,9 @@
  *
  * From FreeBSD fnmatch.h 1.7
  * $Id: fnmatch.h,v 1.4 2001/10/04 02:46:21 jdp Exp $
+ *
+ * Copyright(C) 2011-2012 EditorConfig Team.
+ * Modified by EditorConfig Team for use in EditorConfig project.
  */
 
 #ifndef	__EC_FNMATCH_H__
