@@ -46,6 +46,7 @@ set_target_properties(editorconfig_static PROPERTIES
     ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
 
 install(TARGETS editorconfig_shared editorconfig_static
+    RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
 
