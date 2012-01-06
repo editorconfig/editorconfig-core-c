@@ -51,7 +51,7 @@ static void usage(FILE* stream, const char* command)
     fprintf(stream, "-f                 Sepcify a conf file name other than"
             " the default value \".editorconfig\".\n");
     fprintf(stream, "-b                 Sepcify a version to act like. Usually "
-            "used for testing compatibility for editor plugin developers.");
+            "used for testing compatibility for editor plugin developers.\n");
     fprintf(stream, "-h OR --help       Print this help message.\n");
     fprintf(stream, "--version          Display version information.\n");
 }
