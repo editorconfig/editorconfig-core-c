@@ -26,6 +26,22 @@
 
 link_directories(${CMAKE_ARCHIVE_OUTPUT_DIR})
 
+# for gcc, BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL is OFF
+if(CMAKE_COMPILER_IS_GNUCC)
+    set(BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL OFF)
+endif(CMAKE_COMPILER_IS_GNUCC)
+
+option(BUILD_STATICALLY_LINKED_EXE
+    "Link the standard library statically when building the executable.(Only valid for gcc)"
+    ${BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL})
+
+if(CMAKE_COMPILER_IS_GNUCC)
+    if(BUILD_STATICALLY_LINKED_EXE)
+        # Add -static for linker if we want a statically linked executable
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+    endif(BUILD_STATICALLY_LINKED_EXE)
+endif(CMAKE_COMPILER_IS_GNUCC)
+
 set(editorconfig_BINSRCS
     main.c)
 
