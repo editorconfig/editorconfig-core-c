@@ -17,6 +17,11 @@ could be used when generating the project file:
     man pages will be generated.
     e.g. cmake -DBUILD_DOCUMENTATION=OFF .
 
+    -DBUILD_STATICALLY_LINKED_EXE=[ON|OFF]  Default: OFF
+    If this option is on, the executable will be linked statically to all
+    libraries. This option is currently only valid for gcc.
+    e.g. cmake -DBUILD_STATICALLY_LINKED_EXE=ON .
+
     -DINSTALL_HTML_DOC=[ON|OFF]             Default: OFF
     If this option is on and BUILD_DOCUMENTATION is on, html documentation
     will be installed when execute "make install" or something similar.
