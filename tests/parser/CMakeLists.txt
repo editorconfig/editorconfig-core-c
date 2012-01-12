@@ -63,6 +63,24 @@ set_tests_properties(blank_lines_between_properties
     PROPERTIES PASS_REGULAR_EXPRESSION
     "^key1=value1[ \t\n\r]+key2=value2[ \t\n\r]*$")
 
+# test spaces in section name
+add_test(spaces_in_section_name ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/ test 7 ")
+set_tests_properties(spaces_in_section_name
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test spaces before section name cause incorrect parsing
+add_test(spaces_before_section_name ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test8.c")
+set_tests_properties(spaces_before_section_name
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# test spaces after section name
+add_test(spaces_after_section_name ${editorconfig_cmd} -f whitespace.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test9.c")
+set_tests_properties(spaces_after_section_name
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
 
 # Tests for comment parsing
 
