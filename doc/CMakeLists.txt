@@ -46,6 +46,7 @@ if(BUILD_DOCUMENTATION)
             DEPENDS
             ${PROJECT_SOURCE_DIR}/include/editorconfig/editorconfig.h
             ${PROJECT_SOURCE_DIR}/include/editorconfig/editorconfig_handle.h
+            ${PROJECT_SOURCE_DIR}/logo/logo.png
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
         # Generating man page of editorconfig command. Although we have other
