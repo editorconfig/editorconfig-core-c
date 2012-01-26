@@ -59,7 +59,7 @@ set_tests_properties(path_separator
 add_test(nested_path_separator ${editorconfig_cmd} -f path_separator.in
     "${CMAKE_CURRENT_SOURCE_DIR}/nested/path/separator")
 set_tests_properties(nested_path_separator
-    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
 
 # Tests path separator match top of path only
 add_test(top_level_path_separator ${editorconfig_cmd} -f path_separator.in
