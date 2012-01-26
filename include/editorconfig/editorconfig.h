@@ -40,10 +40,10 @@
  *
  * <pre>
  *
- * <em>-f</em>             Sepcify a conf file name other than the default value
+ * <em>-f</em>             Specify a conf file name other than the default value
  *  ".editorconfig".
  *
- * <em>-b</em>             Sepcify a version to act like. Usually used for
+ * <em>-b</em>             Specify a version to act like. Usually used for
  * testing compatibility for editor plugin developers.
  *
  * <em>-h</em> OR <em>--help</em>   Print this help message.
