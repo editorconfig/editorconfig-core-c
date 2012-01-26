@@ -7,3 +7,9 @@ key=value
 
 [/top/of/path]
 key=value
+
+[windows\separator]
+key=value
+
+[windows\\separator2]
+key=value

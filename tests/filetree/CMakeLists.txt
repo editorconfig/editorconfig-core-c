@@ -72,3 +72,15 @@ add_test(top_level_path_separator_neg ${editorconfig_cmd} -f path_separator.in
     "${CMAKE_CURRENT_SOURCE_DIR}/not/top/of/path")
 set_tests_properties(top_level_path_separator_neg
     PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# Test Windows-style path separator (backslash) does not work
+add_test(windows_separator ${editorconfig_cmd} -f path_separator.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/windows/separator")
+set_tests_properties(windows_separator
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+
+# Test again that Windows-style path separator (backslash) does not work
+add_test(windows_separator2 ${editorconfig_cmd} -f path_separator.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/windows/separator2")
+set_tests_properties(windows_separator2
+    PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
