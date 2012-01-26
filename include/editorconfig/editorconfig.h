@@ -81,6 +81,31 @@
  * @brief Header file of EditorConfig.
  *
  * @author EditorConfig Team
+ *
+ * @section file-format-details Details of File Format
+ *
+ * EditorConfig files use an INI file format in which section names are globs
+ * matching filenames in a format accepted by the fnmatch C library.
+ *
+ * Filename globs containing path separators (/) match filepaths in the same
+ * way as the filename globs used by .gitignore files.  Backslashes (\\) are
+ * not allowed as path separators.
+ *
+ * EditorConfig files should be UTF-8 encoded.
+ *
+ * @section file-location Filename and Location
+ *
+ * When a filename is given to EditorConfig a search is performed in the
+ * directory of the given file and all parent directories for an EditorConfig
+ * file (named ".editorconfig" by default).  All found EditorConfig files are
+ * searched for sections with section names matching the given filename. The
+ * search will stop if an EditorConfig file is found with the root property set
+ * to true or when reaching the root filesystem directory.
+ *
+ * Files are read top to bottom and the most recent rules found take
+ * precedence. If multiple EditorConfig files have matching sections, the rules
+ * from the closer EditorConfig file are read last, so properties in closer
+ * files take precedence.
  */
 
 #ifndef __EDITORCONFIG_EDITORCONFIG_H__
