@@ -38,17 +38,42 @@
  *
  * Usage: editorconfig <em>[OPTIONS]</em> FILENAME
  *
- * <pre>
+ * @htmlonly
+ * <table cellpadding="5" cellspacing="5">
  *
- * <em>-f</em>             Specify conf filename other than ".editorconfig".
+ * <tr>
+ * <td><em>-f</em></td>
+ * <td>Specify conf filename other than ".editorconfig".</td>
+ * </tr>
  *
- * <em>-b</em>             Specify version (used by devs to test compatibility).
+ * <tr>
+ * <td><em>-b</em></td>
+ * <td>Specify version (used by devs to test compatibility).</td>
+ * </tr>
  *
- * <em>-h</em> OR <em>--help</em>   Print this help message.
+ * <tr>
+ * <td><em>-h</em> OR <em>--help</em></td>
+ * <td>Print this help message.</td>
+ * </tr>
  *
- * <em>--version</em>      Display version information.
+ * <tr>
+ * <td><em>--version</em></td>
+ * <td>Display version information.</td>
+ * </tr>
  *
- * </pre>
+ * </table>
+ * @endhtmlonly
+ * @manonly
+ *
+ * -f             Specify conf filename other than ".editorconfig".
+ *
+ * -b             Specify version (used by devs to test compatibility).
+ *
+ * -h OR --help   Print this help message.
+ *
+ * --version      Display version information.
+ *
+ * @endmanonly
  */
 
 /*!
