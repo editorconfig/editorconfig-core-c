@@ -81,11 +81,6 @@
  */
 
 /*!
- * @file editorconfig/editorconfig.h
- * @brief Header file of EditorConfig.
- *
- * @author EditorConfig Team
- *
  * @page editorconfig-format EditorConfig File Format
  *
  * @section format EditorConfig File Format
@@ -112,6 +107,13 @@
  * precedence. If multiple EditorConfig files have matching sections, the rules
  * from the closer EditorConfig file are read last, so properties in closer
  * files take precedence.
+ */
+
+/*!
+ * @file editorconfig/editorconfig.h
+ * @brief Header file of EditorConfig.
+ *
+ * @author EditorConfig Team
  */
 
 #ifndef __EDITORCONFIG_EDITORCONFIG_H__
