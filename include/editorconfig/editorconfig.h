@@ -82,7 +82,9 @@
  *
  * @author EditorConfig Team
  *
- * @section file-format-details Details of File Format
+ * @page editorconfig-format EditorConfig File Format
+ *
+ * @section format EditorConfig File Format
  *
  * EditorConfig files use an INI file format in which section names are globs
  * matching filenames in a format accepted by the fnmatch C library.
