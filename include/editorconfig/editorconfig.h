@@ -113,6 +113,8 @@
  * @file editorconfig/editorconfig.h
  * @brief Header file of EditorConfig.
  *
+ * Related page: @ref editorconfig-format
+ *
  * @author EditorConfig Team
  */
 
