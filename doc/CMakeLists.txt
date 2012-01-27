@@ -39,7 +39,7 @@ if(BUILD_DOCUMENTATION)
             ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
         add_custom_command(
-            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
             COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
             MAIN_DEPENDENCY
             ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
@@ -65,7 +65,7 @@ if(BUILD_DOCUMENTATION)
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
         add_custom_target(doc ALL DEPENDS
-            ${CMAKE_CURRENT_BINARY_DIR}/html
+            ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
             ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1)
 
         # install man pages
