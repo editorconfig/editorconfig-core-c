@@ -74,6 +74,10 @@
  * --version      Display version information.
  *
  * @endmanonly
+ *
+ * @section related Related Pages
+ *
+ * @subpage editorconfig-format
  */
 
 /*!
