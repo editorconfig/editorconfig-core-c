@@ -77,7 +77,7 @@
  *
  * @section related Related Pages
  *
- * @subpage editorconfig-format
+ * @ref editorconfig-format
  */
 
 /*!
