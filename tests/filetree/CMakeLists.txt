@@ -55,6 +55,18 @@ add_test(path_separator ${editorconfig_cmd} -f path_separator.in
 set_tests_properties(path_separator
     PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
 
+# Windows style path separator in the command line should work on Windows, but
+# should not work on other systems
+add_test(path_separator_backslash_in_cmd_line ${editorconfig_cmd} -f
+    path_separator.in "${CMAKE_CURRENT_SOURCE_DIR}\\path\\separator")
+if(WIN32)
+    set_tests_properties(path_separator_backslash_in_cmd_line
+        PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+else(WIN32)
+    set_tests_properties(path_separator_backslash_in_cmd_line
+        PROPERTIES PASS_REGULAR_EXPRESSION "^[ \t\n\r]*$")
+endif(WIN32)
+
 # Tests path separator match below top of path
 add_test(nested_path_separator ${editorconfig_cmd} -f path_separator.in
     "${CMAKE_CURRENT_SOURCE_DIR}/nested/path/separator")
