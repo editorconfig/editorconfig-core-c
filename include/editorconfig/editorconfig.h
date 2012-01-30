@@ -92,6 +92,8 @@
  * way as the filename globs used by .gitignore files.  Backslashes (\\) are
  * not allowed as path separators.
  *
+ * A semicolon character (;) starts a line comment that terminates at the end of the line.  Line comments and blank lines are ignored when parsing.
+ *
  * EditorConfig files should be UTF-8 encoded.
  *
  * @section file-location Filename and Location
@@ -107,6 +109,46 @@
  * precedence. If multiple EditorConfig files have matching sections, the rules
  * from the closer EditorConfig file are read last, so properties in closer
  * files take precedence.
+ * Where are these files stored?
+ *
+ * @section patterns Wildcard Patterns
+ *
+ * Section names in EditorConfig files are filename globs that support pattern matching through Unix shell-style wildcards. These filename globs recognize the following as special characters for wildcard matching:
+ *
+ * @htmlonly
+ * <table>
+ *   <tr><td><code>*</code></td><td>Matches any string of characters, except path separators (<code>/</code>)</td></tr>
+ *   <tr><td><code>**</code></td><td>Matches any string of characters</td></tr>
+ *   <tr><td><code>?</code></td><td>Matches any single character</td></tr>
+ *   <tr><td><code>[seq]</code></td><td>Matches any single character in <i>seq</i></td></tr>
+ *   <tr><td><code>[!seq]</code></td><td>Matches any single character not in <i>seq</i></td></tr>
+ * </table>
+ * @endhtmlonly
+ * @manonly
+ * *        Matches any string of characters, except path separators (/)
+ * **       Matches any string of characters
+ * ?        Matches any single character
+ * [seq]    Matches any single character in seq
+ * [!seq]   Matches any single character not in seq
+ * @endmanonly
+ *
+ * The backslash character (\) can be used to escape a character so it is not interpreted as a special character.
+ *
+ * @section properties Supported Properties
+ *
+ * EditorConfig file sections contain properties, which are name-value pairs separated by an equal sign (=). EditorConfig plugins will ignore unrecognized property names and properties with invalid values.
+ *
+ * Here is the list of all property names understood by EditorConfig and all valid values for these properties:
+ *
+ * <ul>
+ * <li><strong>indent_style</strong>: set to "tab" or "space" to use hard tabs or soft tabs respectively.</li>
+ * <li><strong>indent_size</strong>: a whole number defining the number of columns used for each indentation level and the width of soft tabs (when supported).</li>
+ * <li><strong>tab_width</strong>: a whole number defining the number of columns used to represent a tab character.  This defaults to the value of <strong>indent_size</strong> and should not usually need to be specified.</li>
+ * <li><strong>end_of_line</strong>: set to "LF", "CR", or "CRLF" to control how line breaks are represented.</li>
+ * <li><strong>root</strong>: special property that should be specified at the top of the file outside of any sections.  Set to "true" to stop <code>.editorconfig</code> files search on current file.</li>
+ * </ul>
+ *
+ * Property names are case insensitive and all property names are lowercased when parsing. The values of the indent_style and end_of_line properties are also case insensitive and are lowercased when parsing.
  */
 
 /*!
