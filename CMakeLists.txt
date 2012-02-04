@@ -24,7 +24,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-cmake_minimum_required(VERSION 2.4.2)
+cmake_minimum_required(VERSION 2.6)
 
 set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 2)
