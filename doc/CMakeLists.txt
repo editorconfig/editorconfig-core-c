@@ -27,6 +27,11 @@
 option(BUILD_DOCUMENTATION
     "Use Doxygen to create the HTML and man page documentation" ON)
 
+# Whether to install the html documentation. Only valid when
+# BUILD_DOCUMENTATION is set to ON
+option(INSTALL_HTML_DOC
+    "Install the generated html documentation" OFF)
+
 if(BUILD_DOCUMENTATION)
 
     find_package(Doxygen)
@@ -88,10 +93,6 @@ if(BUILD_DOCUMENTATION)
         # "make clean" should also clean generated docs
         set_directory_properties(PROPERTIES
             ADDITIONAL_MAKE_CLEAN_FILES "html;man")
-
-        # Whether to install the html documentation
-        option(INSTALL_HTML_DOC
-            "Install the generated html documentation" OFF)
 
         if(INSTALL_HTML_DOC)
             install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
