@@ -92,7 +92,10 @@
  * way as the filename globs used by .gitignore files.  Backslashes (\\) are
  * not allowed as path separators.
  *
- * A semicolon character (;) starts a line comment that terminates at the end of the line.  Line comments and blank lines are ignored when parsing.
+ * A semicolon character (;) starts a line comment that terminates at the end of
+ * the line.  Line comments and blank lines are ignored when parsing.  Comments
+ * should not be added to the ends of non-empty lines; this is not officially
+ * supported, but works currently.
  *
  * EditorConfig files should be UTF-8 encoded.
  *
