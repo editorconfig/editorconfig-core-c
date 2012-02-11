@@ -125,3 +125,45 @@ add_test(escaped_semicolon_in_section ${editorconfig_cmd} -f comments.in
     "${CMAKE_CURRENT_SOURCE_DIR}/test;.c")
 set_tests_properties(escaped_semicolon_in_section
     PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test octothorpe comments ignored after property name
+add_test(octothorpe_comments_after_property ${editorconfig_cmd} -f comments.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test7.c")
+set_tests_properties(octothorpe_comments_after_property
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test octothorpe comments ignored after section name
+add_test(octothorpe_comments_after_section ${editorconfig_cmd} -f comments.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test8.c")
+set_tests_properties(octothorpe_comments_after_section
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test octothorpe comments ignored before properties
+add_test(octothorpe_comment_before_props ${editorconfig_cmd} -f comments.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test9.c")
+set_tests_properties(octothorpe_comment_before_props
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
+
+# test octothorpe comments ignored between properties
+add_test(octothorpe_comment_between_props ${editorconfig_cmd} -f comments.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test10.c")
+set_tests_properties(octothorpe_comment_between_props
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key1=value1[ \t\n\r]+key2=value2[ \t\n\r]*$")
+
+# test octothorpe at end of property value are included in value
+add_test(octothorpe_in_property ${editorconfig_cmd} -f comments.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test11.c")
+set_tests_properties(octothorpe_in_property
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value; not comment[ \t\n\r]*$")
+
+# test escaped octothorpes are included in property value
+add_test(escaped_octothorpe_in_property ${editorconfig_cmd} -f comments.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test12.c")
+set_tests_properties(escaped_octothorpe_in_property
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value ; not comment[ \t\n\r]*$")
+
+# test escaped octothorpes are included in section names
+add_test(escaped_octothorpe_in_section ${editorconfig_cmd} -f comments.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test\#.c")
+set_tests_properties(escaped_octothorpe_in_section
+    PROPERTIES PASS_REGULAR_EXPRESSION "^key=value[ \t\n\r]*$")
