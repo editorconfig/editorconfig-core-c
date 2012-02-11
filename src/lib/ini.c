@@ -67,7 +67,7 @@ static char* lskip(const char* s)
 static char* find_char_or_comment(const char* s, char c)
 {
     int was_whitespace = 0;
-    while (*s && *s != c && !(was_whitespace && *s == ';')) {
+    while (*s && *s != c && !(was_whitespace && (*s == ';' || *s == '#'))) {
         was_whitespace = isspace(*s);
         s++;
     }
@@ -78,7 +78,7 @@ static char* find_last_char_or_comment(const char* s, char c)
 {
     const char* last_char = s;
     int was_whitespace = 0;
-    while (*s && !(was_whitespace && *s == ';')) {
+    while (*s && !(was_whitespace && (*s == ';' || *s == '#'))) {
         if (*s == c)
             last_char = s;
         was_whitespace = isspace(*s);
@@ -129,7 +129,7 @@ int ini_parse_file(FILE* file,
         else
 #endif
         if (*start == ';' || *start == '#') {
-            /* Per Python ConfigParser, allow '#' comments at start of line */
+            /* Allow '#' comments at start of line */
         }
         else if (*start == '[') {
             /* A "[section]" line */
@@ -144,7 +144,7 @@ int ini_parse_file(FILE* file,
                 error = lineno;
             }
         }
-        else if (*start && *start != ';') {
+        else if (*start && (*start != ';' || *start == '#')) {
             /* Not a comment, must be a name[=:]value pair */
             end = find_char_or_comment(start, '=');
             if (*end != '=') {
@@ -155,7 +155,7 @@ int ini_parse_file(FILE* file,
                 name = rstrip(start);
                 value = lskip(end + 1);
                 end = find_char_or_comment(value, '\0');
-                if (*end == ';')
+                if (*end == ';' || *end == '#')
                     *end = '\0';
                 rstrip(value);
 
