@@ -94,8 +94,8 @@
  *
  * A semicolon character (;) starts a line comment that terminates at the end of
  * the line.  Line comments and blank lines are ignored when parsing.  Comments
- * should not be added to the ends of non-empty lines; this is not officially
- * supported, but works currently.
+ * may be added to the ends of non-empty lines.  An octothorpe character (#)
+ * may be used instead of a semicolon to denote the start of a comment.
  *
  * EditorConfig files should be UTF-8 encoded.
  *
