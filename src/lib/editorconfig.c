@@ -343,8 +343,6 @@ const char* editorconfig_get_error_msg(int err_num)
         return "Memory error.";
     case EDITORCONFIG_PARSE_VERSION_TOO_NEW:
         return "Required version is greater than the current version.";
-    default:
-        return "Unknown error.";
     }
 
     return "Unknown error.";
