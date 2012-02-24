@@ -32,6 +32,40 @@ set_tests_properties(tab_width_default
     PROPERTIES PASS_REGULAR_EXPRESSION
     "^indent_style=space[ \t\n\r]+indent_size=4[ \t\n\r]+tab_width=4[\t\n\r]*$")
 
+# Tab_width should not be set to any value if indent_size is "tab" and
+# tab_width is not set
+add_test(tab_width_default_indent_size_tab ${editorconfig_cmd} -f
+    tab_width_default.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test2.c")
+set_tests_properties(tab_width_default_indent_size_tab 
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "^indent_style=tab[ \t\n\r]+indent_size=tab[ \t\n\r]*$")
+
+# Test indent_size default. When indent_style is "tab", indent_size defaults to
+# "tab".
+add_test(indent_size_default ${editorconfig_cmd} -f indent_size_default.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
+set_tests_properties(indent_size_default
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "^indent_style=tab[ \t\n\r]+indent_size=tab[ \t\n\r]*$")
+
+# Test indent_size default. When indent_style is "tab", indent_size should have
+# no default value for version prior than 0.9.0.
+add_test(indent_size_default_pre_0_9_0 ${editorconfig_cmd} -b 0.8.0 -f
+    indent_size_default.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test.c")
+set_tests_properties(indent_size_default_pre_0_9_0
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "^indent_style=tab[ \t\n\r]*$")
+
+# Test indent_size default. When indent_style is "space", indent_size has no
+# default value.
+add_test(indent_size_default_space ${editorconfig_cmd} -f indent_size_default.in
+    "${CMAKE_CURRENT_SOURCE_DIR}/test2.c")
+set_tests_properties(indent_size_default_space
+    PROPERTIES PASS_REGULAR_EXPRESSION
+    "^indent_style=space[ \t\n\r]*$")
+
 # test that same property values are lowercased
 add_test(lowercase_values1 ${editorconfig_cmd} -f lowercase_values.in
     "${CMAKE_CURRENT_SOURCE_DIR}/test1.c")
