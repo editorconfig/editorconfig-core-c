@@ -34,6 +34,7 @@
  * array_editorconfig_name_value */
 typedef struct
 {
+    editorconfig_name_value*        indent_style;
     editorconfig_name_value*        indent_size;
     editorconfig_name_value*        tab_width;
 } special_property_name_value_pointers;
@@ -65,11 +66,14 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
         nv->value = strdup(value);
     /* lowercase the value when the name is one of the following */
     if (!strcmp(nv->name, "end_of_line") ||
-            !strcmp(nv->name, "indent_style"))
+            !strcmp(nv->name, "indent_style") ||
+            !strcmp(nv->name, "indent_size"))
         strlwr(nv->value);
 
     /* set speical pointers */
-    if (!strcmp(nv->name, "indent_size"))
+    if (!strcmp(nv->name, "indent_style"))
+        spnvp->indent_style = nv;
+    else if (!strcmp(nv->name, "indent_size"))
         spnvp->indent_size = nv;
     else if (!strcmp(nv->name, "tab_width"))
         spnvp->tab_width = nv;
@@ -362,6 +366,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     int                                 i;
     struct editorconfig_handle*         eh = (struct editorconfig_handle*)h;
     struct editorconfig_version         cur_ver;
+    struct editorconfig_version         tmp_ver;
 
     /* get current version */
     editorconfig_get_version(&cur_ver.major, &cur_ver.minor,
@@ -434,9 +439,24 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 
     /* value proprocessing */
 
-    /* set tab_width to indent_size if indent_size is specified */
+    /* Set indent_size to "tab" if indent_size is not specified and
+     * indent_style is set to "tab". Only should be done after v0.9 */
+    SET_EDITORCONFIG_VERSION(&tmp_ver, 0, 9, 0);
+    if (editorconfig_compare_version(&eh->ver, &tmp_ver) >= 0) {
+        if (hfp.array_name_value.spnvp.indent_style &&
+                !hfp.array_name_value.spnvp.indent_size &&
+                !strcmp(hfp.array_name_value.spnvp.indent_style->value, "tab"))
+            array_editorconfig_name_value_add(&hfp.array_name_value,
+                    "indent_size", "tab");
+    }
+
+    /* Set tab_width to indent_size if indent_size is specified. If version is
+     * not less than 0.9.0, we also need to check when the indent_size is set
+     * to "tab", we should not duplicate the value to tab_width */
     if (hfp.array_name_value.spnvp.indent_size &&
-            !hfp.array_name_value.spnvp.tab_width)
+            !hfp.array_name_value.spnvp.tab_width &&
+            (editorconfig_compare_version(&eh->ver, &tmp_ver) < 0 ||
+             strcmp(hfp.array_name_value.spnvp.indent_size->value, "tab")))
         array_editorconfig_name_value_add(&hfp.array_name_value, "tab_width",
                 hfp.array_name_value.spnvp.indent_size->value);
 

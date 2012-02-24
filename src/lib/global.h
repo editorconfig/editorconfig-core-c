@@ -66,5 +66,13 @@
 # define EDITORCONFIG_LOCAL
 #endif
 
+/* a macro to set editorconfig_version struct */
+#define SET_EDITORCONFIG_VERSION(editorconfig_ver, maj, min, submin) \
+    do { \
+        (editorconfig_ver)->major = (maj); \
+        (editorconfig_ver)->minor = (min); \
+        (editorconfig_ver)->subminor = (submin); \
+    } while(0)
+
 #endif /* !__GLOBAL_H__ */
 
