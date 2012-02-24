@@ -260,6 +260,15 @@ const char* editorconfig_get_error_msg(int err_num);
 EDITORCONFIG_EXPORT
 void editorconfig_get_version(int* major, int* minor, int* subminor);
 
+/*!
+ * @brief Get the version suffix.
+ *
+ * @return The version suffix, such as "-development" for a development
+ * version, empty string for a stable version.
+ */
+EDITORCONFIG_EXPORT
+const char* editorconfig_get_version_suffix(void);
+
 #ifdef __cplusplus
 }
 #endif

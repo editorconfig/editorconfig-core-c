@@ -475,3 +475,12 @@ void editorconfig_get_version(int* major, int* minor, int* subminor)
     if (subminor)
         *subminor = editorconfig_VERSION_SUBMINOR;
 }
+
+/*
+ * See header file
+ */
+EDITORCONFIG_EXPORT
+const char* editorconfig_get_version_suffix(void)
+{
+    return editorconfig_VERSION_SUFFIX;
+}

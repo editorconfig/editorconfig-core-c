@@ -39,8 +39,8 @@ static void version(FILE* stream, const char* command)
 
     editorconfig_get_version(&major, &minor, &subminor);
 
-    fprintf(stream,"%s Version %d.%d.%d\n", command,
-            major, minor, subminor);
+    fprintf(stream,"%s Version %d.%d.%d%s\n", command,
+            major, minor, subminor, editorconfig_get_version_suffix());
 }
 
 static void usage(FILE* stream, const char* command)
