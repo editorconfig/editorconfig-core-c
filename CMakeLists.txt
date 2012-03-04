@@ -89,5 +89,8 @@ include(CPack)
 add_subdirectory(src)
 add_subdirectory(doc)
 add_subdirectory(include)
+
+# testing
+set(EDITORCONFIG_CMD "${PROJECT_BINARY_DIR}/bin/editorconfig")
 add_subdirectory(tests)
 
