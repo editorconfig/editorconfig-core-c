@@ -39,9 +39,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/bin")
 
-# Enable testing. Type "make test" to run tests
-enable_testing()
-
 # uninstall target
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
@@ -90,7 +87,8 @@ add_subdirectory(src)
 add_subdirectory(doc)
 add_subdirectory(include)
 
-# testing
+# testing. Type "make test" to run tests
+enable_testing()
 set(EDITORCONFIG_CMD "${PROJECT_BINARY_DIR}/bin/editorconfig")
 add_subdirectory(tests)
 
