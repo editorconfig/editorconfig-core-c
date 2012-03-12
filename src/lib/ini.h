@@ -74,7 +74,7 @@ int ini_parse_file(FILE* file,
    ConfigParser. If allowed, ini_parse() will call the handler with the same
    name for each subsequent line parsed. */
 #ifndef INI_ALLOW_MULTILINE
-#define INI_ALLOW_MULTILINE 1
+#define INI_ALLOW_MULTILINE 0
 #endif
 
 #define MAX_SECTION_NAME 50
