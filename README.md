@@ -35,6 +35,7 @@ Getting Help
 ------------
 
 For help with the EditorConfig core code, please write to our [mailing list][].
+Bugs and feature requests should be submitted to our [issue tracker][].
 
 If you are writing a plugin a language that can import C libraries, you may
 want to import and use the EditorConfig library directly.  If you do use the
@@ -52,5 +53,6 @@ under the New BSD license. See LICENSE file for details.
 
 [EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
+[issue tracker]: https://github.com/editorconfig/editorconfig/issues
 [documentation]: http://editorconfig.org/core-docs/ "EditorConfig Core C API documentation"
 [downloads]: https://github.com/editorconfig/editorconfig/downloads
