@@ -87,8 +87,14 @@ add_subdirectory(src)
 add_subdirectory(doc)
 add_subdirectory(include)
 
-# testing. Type "make test" to run tests
-enable_testing()
-set(EDITORCONFIG_CMD "${PROJECT_BINARY_DIR}/bin/editorconfig")
-add_subdirectory(tests)
+# Testing. Type "make test" to run tests. Only if the test submodule is
+# checkouted should we do this
+if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt)
+    enable_testing()
+    set(EDITORCONFIG_CMD "${PROJECT_BINARY_DIR}/bin/editorconfig")
+    add_subdirectory(tests)
+else()
+    message(WARNING
+        "Testing files are not found. Testing will not be available. If you obtained the source tree through git, please run `git submodule update --init` to update the tests submodule.")
+endif()
 
