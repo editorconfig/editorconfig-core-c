@@ -101,6 +101,6 @@ if(BUILD_DOCUMENTATION)
 
     else(DOXYGEN_FOUND)
         message(WARNING
-            "Doxygen is not found. Documentation will not be generated.")
+            " Doxygen is not found. Documentation will not be generated.")
     endif(DOXYGEN_FOUND)
 endif(BUILD_DOCUMENTATION)
