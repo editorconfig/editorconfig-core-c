@@ -55,4 +55,4 @@ under the New BSD license. See LICENSE file for details.
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [issue tracker]: https://github.com/editorconfig/editorconfig/issues
 [documentation]: http://editorconfig.org/core-docs/ "EditorConfig Core C API documentation"
-[downloads]: https://github.com/editorconfig/editorconfig/downloads
+[downloads]: https://github.com/editorconfig/editorconfig-core/downloads
