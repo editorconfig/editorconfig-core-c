@@ -182,7 +182,9 @@ extern "C" {
  * @brief Parse editorconfig files corresponding to the file path given by
  * full_filename, and related information is input and output in h.
  *
- * An example is available at src/bin/main.c in EditorConfig Core source code.
+ * An example is available at 
+ * <a href=https://github.com/editorconfig/editorconfig-core/blob/master/src/bin/main.c>src/bin/main.c</a>
+ * in EditorConfig Core source code.
  *
  * @param full_filename The full path of a file that is edited by the editor
  * for which the parsing result is.
@@ -217,7 +219,9 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h);
  * @brief Get the error message from the error number returned by
  * editorconfig_parse().
  *
- * An example is available at src/bin/main.c in EditorConfig Core source code.
+ * An example is available at
+ * <a href=https://github.com/editorconfig/editorconfig-core/blob/master/src/bin/main.c>src/bin/main.c</a>
+ * in EditorConfig Core source code.
  *
  * @param err_num The error number that is used to obtain the error message.
  *
@@ -244,7 +248,9 @@ const char* editorconfig_get_error_msg(int err_num);
 /*!
  * @brief Get the version number of EditorConfig.
  *
- * An example is available at src/bin/main.c in EditorConfig Core source code.
+ * An example is available at
+ * <a href=https://github.com/editorconfig/editorconfig-core/blob/master/src/bin/main.c>src/bin/main.c</a>
+ * in EditorConfig Core source code.
  *
  * @param major If not null, the integer pointed by major will be filled with
  * the major version of EditorConfig.
