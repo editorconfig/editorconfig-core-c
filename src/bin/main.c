@@ -51,7 +51,7 @@ static void usage(FILE* stream, const char* command)
     fprintf(stream, "-f                 Specify conf filename other than \".editorconfig\".\n");
     fprintf(stream, "-b                 Specify version (used by devs to test compatibility).\n");
     fprintf(stream, "-h OR --help       Print this help message.\n");
-    fprintf(stream, "--version          Display version information.\n");
+    fprintf(stream, "-v OR --version    Display version information.\n");
 }
 
 int main(int argc, const char* argv[])
