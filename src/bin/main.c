@@ -31,7 +31,7 @@
 #include <string.h>
 #include <editorconfig/editorconfig.h>
 
-static void version(FILE* stream, const char* command)
+static void version(FILE* stream)
 {
     int     major;
     int     minor;
@@ -39,7 +39,7 @@ static void version(FILE* stream, const char* command)
 
     editorconfig_get_version(&major, &minor, &subminor);
 
-    fprintf(stream,"%s Version %d.%d.%d%s\n", command,
+    fprintf(stream,"Version %d.%d.%d%s\n",
             major, minor, subminor, editorconfig_get_version_suffix());
 }
 
@@ -68,7 +68,7 @@ int main(int argc, const char* argv[])
     eh = editorconfig_handle_init();
 
     if (argc <= 1) {
-        version(stderr, argv[0]);
+        version(stderr);
         usage(stderr, argv[0]);
         return 1;
     }
@@ -114,11 +114,11 @@ int main(int argc, const char* argv[])
             editorconfig_handle_set_conf_file_name(eh, argv[i]);
         } else if (strcmp(argv[i], "--version") == 0 ||
                 strcmp(argv[i], "-v") == 0) {
-            version(stdout, argv[0]);
+            version(stdout);
             return 0;
         } else if (strcmp(argv[i], "--help") == 0 ||
                 strcmp(argv[i], "-h") == 0) {
-            version(stdout, argv[0]);
+            version(stdout);
             usage(stdout, argv[0]);
             return 0;
         } else if (strcmp(argv[i], "-b") == 0)
