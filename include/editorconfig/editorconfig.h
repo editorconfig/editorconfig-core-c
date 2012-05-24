@@ -112,7 +112,6 @@
  * precedence. If multiple EditorConfig files have matching sections, the rules
  * from the closer EditorConfig file are read last, so properties in closer
  * files take precedence.
- * Where are these files stored?
  *
  * @section patterns Wildcard Patterns
  *
