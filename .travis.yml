@@ -1,5 +1,5 @@
-# As CMake is not officially supported we use erlang VMs
-language: erlang
+# As CMake is not officially supported we use java
+language: java
 
 # Settings to try
 env:
