@@ -20,3 +20,10 @@ script:
 after_script:
  - ctest -V .
 
+# Notify the mailing list
+notifications:
+ recipients:
+   - editorconfig@googlegroups.com
+ email:
+   on_success: change
+   on_failure: always
