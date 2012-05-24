@@ -1,0 +1,22 @@
+# As CMake is not officially supported we use erlang VMs
+language: erlang
+
+# Settings to try
+env:
+ - OPTIONS="-DCMAKE_BUILD_TYPE=Release -DBUILD_STATICALLY_LINKED_EXE"
+
+# Make sure CMake and doxygen is installed
+install:
+ - sudo apt-get install cmake doxygen
+
+# Run the Build script
+script:
+ - mkdir _build
+ - cd _build
+ - cmake .. -DCMAKE_INSTALL_PREFIX=../_install $OPTIONS
+ - cmake --build . --target install
+
+# Run Tests
+after_script:
+ - ctest -V .
+
