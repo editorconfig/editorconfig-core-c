@@ -97,7 +97,8 @@
  * may be added to the ends of non-empty lines.  An octothorpe character (#)
  * may be used instead of a semicolon to denote the start of a comment.
  *
- * EditorConfig files should be UTF-8 encoded.
+ * EditorConfig files should be UTF-8 encoded, and <strong>please do not
+ * include any BOM header in your EditorConfig files</strong>.
  *
  * @section file-location Filename and Location
  *
