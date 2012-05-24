@@ -3,7 +3,7 @@ language: erlang
 
 # Settings to try
 env:
- - OPTIONS="-DCMAKE_BUILD_TYPE=Release -DBUILD_STATICALLY_LINKED_EXE"
+ - OPTIONS="-DCMAKE_BUILD_TYPE=Release -DBUILD_STATICALLY_LINKED_EXE=ON"
 
 # Make sure CMake and doxygen is installed
 install:
