@@ -1,6 +1,8 @@
 [EditorConfig][]
 ==============
 
+[![Build Status](https://secure.travis-ci.org/editorconfig/editorconfig-core.png?branch=master)](http://travis-ci.org/editorconfig/editorconfig-core)
+
 EditorConfig makes it easy to maintain the correct coding style when switching
 between different text editors and between different projects.  The
 EditorConfig project maintains a file format and plugins for various text
