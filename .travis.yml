@@ -19,7 +19,7 @@ script:
 
 # Run Tests
 after_script:
- - ctest -V .
+ - ctest -VV --output-on-failure .
 
 # Notify the mailing list
 notifications:
