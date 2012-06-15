@@ -145,7 +145,7 @@
  *
  * <ul>
  * <li><strong>indent_style</strong>: set to "tab" or "space" to use hard tabs or soft tabs respectively.</li>
- * <li><strong>indent_size</strong>: a whole number defining the number of columns used for each indentation level and the width of soft tabs (when supported).</li>
+ * <li><strong>indent_size</strong>: a whole number defining the number of columns used for each indentation level and the width of soft tabs (when supported). If this equals to "tab", the <strong>indent_size</strong> will be set to the tab size, which should be tab_width if <strong>tab_width</strong> is specified, or the tab size set by editor if <strong>tab_width</strong> is not specified.</li>
  * <li><strong>tab_width</strong>: a whole number defining the number of columns used to represent a tab character.  This defaults to the value of <strong>indent_size</strong> and should not usually need to be specified.</li>
  * <li><strong>end_of_line</strong>: set to "LF", "CR", or "CRLF" to control how line breaks are represented.</li>
  * <li><strong>root</strong>: special property that should be specified at the top of the file outside of any sections.  Set to "true" to stop <code>.editorconfig</code> files search on current file.</li>
