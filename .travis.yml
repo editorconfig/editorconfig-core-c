@@ -24,7 +24,7 @@ after_script:
 # Notify the mailing list
 notifications:
  recipients:
-   - editorconfig@googlegroups.com
+   - admin@editorconfig.org
  email:
    on_success: change
    on_failure: always
