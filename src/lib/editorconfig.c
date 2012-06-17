@@ -439,15 +439,23 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 
     /* value proprocessing */
 
-    /* Set indent_size to "tab" if indent_size is not specified and
-     * indent_style is set to "tab". Only should be done after v0.9 */
+    /* For v0.9 */
     SET_EDITORCONFIG_VERSION(&tmp_ver, 0, 9, 0);
     if (editorconfig_compare_version(&eh->ver, &tmp_ver) >= 0) {
+    /* Set indent_size to "tab" if indent_size is not specified and
+     * indent_style is set to "tab". Only should be done after v0.9 */
         if (hfp.array_name_value.spnvp.indent_style &&
                 !hfp.array_name_value.spnvp.indent_size &&
                 !strcmp(hfp.array_name_value.spnvp.indent_style->value, "tab"))
             array_editorconfig_name_value_add(&hfp.array_name_value,
                     "indent_size", "tab");
+    /* Set indent_size to tab_width if indent_size is "tab" and tab_width is
+     * specified. This behavior is specified for v0.9 and up. */
+        if (hfp.array_name_value.spnvp.indent_size &&
+            hfp.array_name_value.spnvp.tab_width &&
+            !strcmp(hfp.array_name_value.spnvp.indent_size->value, "tab"))
+        array_editorconfig_name_value_add(&hfp.array_name_value, "indent_size",
+                hfp.array_name_value.spnvp.tab_width->value);
     }
 
     /* Set tab_width to indent_size if indent_size is specified. If version is
