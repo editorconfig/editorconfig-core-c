@@ -468,6 +468,16 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
         array_editorconfig_name_value_add(&hfp.array_name_value, "tab_width",
                 hfp.array_name_value.spnvp.indent_size->value);
 
+    /* Set indent_size to tab_width if indent_size is "tab" and tab_width is
+     * set. This behavior is specified for v0.9 and up.
+     */
+    if (editorconfig_compare_version(&eh->ver, &tmp_ver) >= 0 &&
+            hfp.array_name_value.spnvp.indent_size &&
+            hfp.array_name_value.spnvp.tab_width &&
+            !strcmp(hfp.array_name_value.spnvp.indent_size->value, "tab"))
+        array_editorconfig_name_value_add(&hfp.array_name_value, "indent_size",
+                hfp.array_name_value.spnvp.tab_width->value);
+
     eh->name_value_count = hfp.array_name_value.current_value_count;
 
     if (eh->name_value_count == 0) {  /* no value is set, just return 0. */
