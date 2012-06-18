@@ -106,6 +106,7 @@ int ini_parse_file(FILE* file,
     char line[MAX_LINE];
     char section[MAX_SECTION] = "";
     char prev_name[MAX_NAME] = "";
+    unsigned char utf_bom[3] = "";
 
     char* start;
     char* end;
@@ -113,6 +114,14 @@ int ini_parse_file(FILE* file,
     char* value;
     int lineno = 0;
     int error = 0;
+
+    /* Check UTF-8 BOM first. If we do not have BOM, seek the pointer back to
+     * the begin of the file. Otherwise, the BOM is skipped by fread. */
+    if (fread(utf_bom, 1, 3, file) != 3 ||
+            utf_bom[0] != 0xEF ||
+            utf_bom[1] != 0xBB ||
+            utf_bom[2] != 0xBF)
+        fseek(file, 0, SEEK_SET);
 
     /* Scan through file line by line */
     while (fgets(line, sizeof(line), file) != NULL) {
