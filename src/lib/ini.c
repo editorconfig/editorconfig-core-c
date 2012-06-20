@@ -128,18 +128,17 @@ int ini_parse_file(FILE* file,
 #endif
         start = lskip(rstrip(start));
 
+        if (*start == ';' || *start == '#') {
+            /* Per Python ConfigParser, allow '#' comments at start of line */
+        }
 #if INI_ALLOW_MULTILINE
-        if (*prev_name && *start && start > line) {
+        else if (*prev_name && *start && start > line) {
             /* Non-black line with leading whitespace, treat as continuation
                of previous name's value (as per Python ConfigParser). */
             if (!handler(user, section, prev_name, start) && !error)
                 error = lineno;
         }
-        else
 #endif
-        if (*start == ';' || *start == '#') {
-            /* Allow '#' comments at start of line */
-        }
         else if (*start == '[') {
             /* A "[section]" line */
             end = find_last_char_or_comment(start + 1, ']');
