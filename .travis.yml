@@ -8,7 +8,6 @@ env:
 
 # Make sure CMake and doxygen is installed
 install:
- - sudo apt-get update
  - sudo apt-get install cmake doxygen
 
 # Run the Build script
