@@ -56,5 +56,5 @@ under the New BSD license. See LICENSE file for details.
 [EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [issue tracker]: https://github.com/editorconfig/editorconfig/issues
-[documentation]: http://editorconfig.org/core-docs/ "EditorConfig Core C API documentation"
+[documentation]: http://docs.editorconfig.org/ "EditorConfig Core C API documentation"
 [downloads]: https://github.com/editorconfig/editorconfig-core/downloads
