@@ -61,18 +61,24 @@ int main(int argc, const char* argv[])
     int                                 i;
     int                                 name_value_count;
     editorconfig_handle                 eh;
+    char**                              file_paths = NULL;
+    int                                 path_count; /* the count of path input*/
+    /* Will be a EditorConfig file name if -f is specified on command line */
+    const char*                         conf_filename = NULL;
+
+    int                                 version_major = -1;
+    int                                 version_minor = -1;
+    int                                 version_subminor = -1;
 
     _Bool                               f_flag = 0;
     _Bool                               b_flag = 0;
-
-    eh = editorconfig_handle_init();
 
     if (argc <= 1) {
         version(stderr);
         usage(stderr, argv[0]);
         return 1;
     }
-    
+
     for (i = 1; i < argc; ++i) {
 
         if (b_flag) {
@@ -91,13 +97,13 @@ int main(int argc, const char* argv[])
 
                 switch(ver_pos) {
                 case 0:
-                    editorconfig_handle_set_version(eh, ver, -1, -1);
+                    version_major = ver;
                     break;
                 case 1:
-                    editorconfig_handle_set_version(eh, -1, ver, -1);
+                    version_minor = ver;
                     break;
                 case 2:
-                    editorconfig_handle_set_version(eh, -1, -1, ver);
+                    version_subminor = ver;
                     break;
                 default:
                     fprintf(stderr, "Invalid version number: %s\n", argv[i]);
@@ -111,7 +117,7 @@ int main(int argc, const char* argv[])
             free(argvi);
         } else if (f_flag) {
             f_flag = 0;
-            editorconfig_handle_set_conf_file_name(eh, argv[i]);
+            conf_filename = argv[i];
         } else if (strcmp(argv[i], "--version") == 0 ||
                 strcmp(argv[i], "-v") == 0) {
             version(stdout);
@@ -125,11 +131,18 @@ int main(int argc, const char* argv[])
             b_flag = 1;
         else if (strcmp(argv[i], "-f") == 0)
             f_flag = 1;
-        else if (i == argc - 1) {
-            full_filename = strdup(argv[i]);
-            if (full_filename == NULL) {
-                fprintf(stderr, "Error: Unable to obtain the full path.\n");
-                return 1;
+        else if (i < argc) {
+            /* If there are other args left, regard them as file names */
+
+            path_count = argc - i;
+            file_paths = (char**) malloc(path_count * sizeof(char**));
+
+            for (; i < argc; ++i) {
+                file_paths[path_count + i - argc] = strdup(argv[i]);
+                if (file_paths[path_count - argc + i] == NULL) {
+                    fprintf(stderr, "Error: Unable to obtain the full path.\n");
+                    return 1;
+                }
             }
         } else {
             usage(stderr, argv[0]);
@@ -137,38 +150,64 @@ int main(int argc, const char* argv[])
         }
     }
 
-    if (!full_filename) { /* No filename is set */ 
+    if (!file_paths) { /* No filename is set */ 
         usage(stderr, argv[0]);
         return 1;
     }
 
-    err_num = editorconfig_parse(full_filename, eh);
+    /* Go through all the files in the argument list */
+    for (i = 0; i < path_count; ++i) {
 
-    free(full_filename);
+        int             j;
 
-    if (err_num != 0) {
-        /* print error message */
-        fprintf(stderr, editorconfig_get_error_msg(err_num));
-        if (err_num > 0)
-            fprintf(stderr, "\"%s\"", editorconfig_handle_get_err_file(eh));
-        fprintf(stderr, "\n");
-        return 1;
+        full_filename = file_paths[i];
+
+        /* Print the file path first, with [], if more than one file is
+         * specified */
+        if (path_count > 1)
+            printf("[%s]\n", full_filename);
+
+        /* Initialize the EditorConfig handle */
+        eh = editorconfig_handle_init();
+
+        /* Set conf file name */
+        if (conf_filename)
+            editorconfig_handle_set_conf_file_name(eh, conf_filename);
+
+        /* Set the version to be compatible with */
+        editorconfig_handle_set_version(eh,
+                version_major, version_minor, version_subminor);
+
+        /* parsing the editorconfig files */
+        err_num = editorconfig_parse(full_filename, eh);
+        free(full_filename);
+
+        if (err_num != 0) {
+            /* print error message */
+            fprintf(stderr, editorconfig_get_error_msg(err_num));
+            if (err_num > 0)
+                fprintf(stderr, "\"%s\"", editorconfig_handle_get_err_file(eh));
+            fprintf(stderr, "\n");
+            return 1;
+        }
+
+        /* print the result */
+        name_value_count = editorconfig_handle_get_name_value_count(eh);
+        for (j = 0; j < name_value_count; ++j) {
+            const char*         name;
+            const char*         value;
+
+            editorconfig_handle_get_name_value(eh, j, &name, &value);
+            printf("%s=%s\n", name, value);
+        }
+
+        if (editorconfig_handle_destroy(eh) != 0) {
+            fprintf(stderr, "Failed to destroy editorconfig_handle.\n");
+            return 1;
+        }
     }
 
-    /* print the result */
-    name_value_count = editorconfig_handle_get_name_value_count(eh);
-    for (i = 0; i < name_value_count; ++i) {
-        const char*         name;
-        const char*         value;
-
-        editorconfig_handle_get_name_value(eh, i, &name, &value);
-        printf("%s=%s\n", name, value);
-    }
-
-    if (editorconfig_handle_destroy(eh) != 0) {
-        fprintf(stderr, "Failed to destroy editorconfig_handle.\n");
-        return 1;
-    }
+    free(file_paths);
 
     return 0;
 }
