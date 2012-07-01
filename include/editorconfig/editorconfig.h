@@ -36,7 +36,14 @@
  *
  * @section usage Usage of the `editorconfig` command line tool
  *
- * Usage: editorconfig <em>[OPTIONS]</em> FILENAME
+ * Usage: editorconfig <em>[OPTIONS]</em> FILEPATH1 [FILEPATH2 FILEPATH3 ...]
+ *
+ * FILEPATH can be a hyphen (-) if you want to path(s) to be read from stdin.
+ * Hyphen can also be specified with other file names. In this way, both file
+ * paths from stdin and the paths specified on the command line will be used.
+ * If more than one path specified on the command line, or the paths are
+ * reading from stdin (even only one path is read from stdin), the output
+ * format would be INI format, instead of the simple "key=value" lines.
  *
  * @htmlonly
  * <table cellpadding="5" cellspacing="5">
