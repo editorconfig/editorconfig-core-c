@@ -31,6 +31,7 @@
 #include <string.h>
 #include <editorconfig/editorconfig.h>
 
+
 static void version(FILE* stream)
 {
     int     major;
@@ -69,6 +70,9 @@ int main(int argc, const char* argv[])
     int                                 version_major = -1;
     int                                 version_minor = -1;
     int                                 version_subminor = -1;
+
+    /* File names read from stdin are put in this buffer temporarily */
+    char                                file_line_buffer[FILENAME_MAX + 1];
 
     _Bool                               f_flag = 0;
     _Bool                               b_flag = 0;
@@ -164,8 +168,40 @@ int main(int argc, const char* argv[])
 
         /* Print the file path first, with [], if more than one file is
          * specified */
-        if (path_count > 1)
+        if (path_count > 1 && strcmp(full_filename, "-"))
             printf("[%s]\n", full_filename);
+
+        if (!strcmp(full_filename, "-")) {
+            int             len;
+            int             c;
+
+            /* Read a line from stdin. If EOF encountered, continue */
+            if (!fgets(file_line_buffer, FILENAME_MAX + 1, stdin)) {
+                if (!feof(stdin))
+                    perror("Failed to read stdin");
+
+                free(full_filename);
+                continue;
+            }
+
+            -- i;
+
+            /* trim the trailing space characters */
+            len = strlen(file_line_buffer) - 1;
+            while (len >= 0 && isspace(file_line_buffer[len]))
+                -- len;
+            if (len < 0) /* we meet a blank line */
+                continue;
+            file_line_buffer[len + 1] = '\0';
+
+            full_filename = file_line_buffer;
+            while (isspace(*full_filename))
+                ++ full_filename;
+
+            full_filename = strdup(full_filename);
+
+            printf("[%s]\n", full_filename);
+        }
 
         /* Initialize the EditorConfig handle */
         eh = editorconfig_handle_init();
