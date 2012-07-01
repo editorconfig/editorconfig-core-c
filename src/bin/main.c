@@ -46,7 +46,8 @@ static void version(FILE* stream)
 
 static void usage(FILE* stream, const char* command)
 {
-    fprintf(stream, "Usage: %s [OPTIONS] FILENAME\n", command);
+    fprintf(stream, "Usage: %s [OPTIONS] FILEPATH1 [FILEPATH2 FILEPATH3 ...]\n", command);
+    fprintf(stream, "FILEPATH can be a hyphen (-) if you want to path(s) to be read from stdin.\n");
 
     fprintf(stream, "\n");
     fprintf(stream, "-f                 Specify conf filename other than \".editorconfig\".\n");
