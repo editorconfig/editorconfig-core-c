@@ -28,7 +28,7 @@ maintained in one code base, resulting in less code repitition between plugins.
 Installation
 ------------
 
-To install the EditorConfig core from source see the `INSTALL` file.
+To install the EditorConfig core from source see the [INSTALL.md][] file.
 
 Binary installation packages for the EditorConfig core can be found on the [downloads page on Github][downloads].
 
@@ -54,6 +54,7 @@ under the New BSD license. See LICENSE file for details.
 
 
 [EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
+[INSTALL.md]: https://github.com/editorconfig/editorconfig-core/blob/master/INSTALL.md
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [issue tracker]: https://github.com/editorconfig/editorconfig/issues
 [documentation]: http://docs.editorconfig.org/ "EditorConfig Core C API documentation"

@@ -63,15 +63,9 @@ these libraries could be executed properly.
 Installing from a binary package
 ================================
 
-Binary packages are not available currently. But don't worry, they will be
-available soon.
+Binary packages can be downloaded [here](https://github.com/editorconfig/editorconfig-core/downloads).
+
+Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
 
 
 [cmake]: http://www.cmake.org
-
-
---
-EditorConfig Team
-
-2011-11-02
-
