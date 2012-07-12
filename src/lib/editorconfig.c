@@ -67,7 +67,8 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
     /* lowercase the value when the name is one of the following */
     if (!strcmp(nv->name, "end_of_line") ||
             !strcmp(nv->name, "indent_style") ||
-            !strcmp(nv->name, "indent_size"))
+            !strcmp(nv->name, "indent_size") ||
+            !strcmp(nv->name, "insert_final_newline"))
         strlwr(nv->value);
 
     /* set speical pointers */
