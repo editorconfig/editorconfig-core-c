@@ -68,7 +68,9 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
     if (!strcmp(nv->name, "end_of_line") ||
             !strcmp(nv->name, "indent_style") ||
             !strcmp(nv->name, "indent_size") ||
-            !strcmp(nv->name, "insert_final_newline"))
+            !strcmp(nv->name, "insert_final_newline") ||
+            !strcmp(nv->name, "trim_trailing_whitespace") ||
+            !strcmp(nv->name, "charset"))
         strlwr(nv->value);
 
     /* set speical pointers */
