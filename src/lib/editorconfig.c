@@ -286,8 +286,7 @@ static char** get_filenames(const char* path, const char* filename)
     int slashes = count_slashes(path);
     int i;
 
-    files = malloc((slashes+1)*sizeof(char*));
-    memset(files, 0, sizeof(files));
+    files = (char**) calloc(slashes+1, sizeof(char*));
 
     currdir = strdup(path);
     for (i = slashes - 1; i >= 0; --i) {
