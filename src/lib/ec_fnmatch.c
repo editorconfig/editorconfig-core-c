@@ -47,6 +47,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "misc.h"
+
 #include "ec_fnmatch.h"
 
 #ifdef EOS
@@ -131,6 +133,115 @@ int ec_fnmatch(const char *pattern, const char *string, int flags)
                         rangematch(pattern, *string, flags)) == NULL)
                 return (EC_FNM_NOMATCH);
             ++string;
+            break;
+        case '{':
+            if (*string == EOS)
+                return (EC_FNM_NOMATCH);
+
+            {
+                const char *next_right_brace;
+                const char *next_comma;
+
+                next_right_brace = strchr(pattern, '}');
+
+                if (next_right_brace== NULL) { /* unclosed braces */
+                    if (*string == '{') {
+                        ++ string;
+                        break;
+                    }
+
+                    return (EC_FNM_NOMATCH);
+                }
+
+                next_comma = strchr(pattern, ',');
+
+                /* no comma between the two braces, including the case of {} */
+                if (next_comma == NULL || next_comma > next_right_brace) {
+                    if (*string == '{' && !strncmp(string + 1, pattern,
+                                (size_t) (next_right_brace - pattern + 1))) {
+                        string += next_right_brace - pattern + 2;
+                        pattern = next_right_brace + 1;
+                        break;
+                    }
+
+                    return (EC_FNM_NOMATCH);
+                }
+            }
+
+            /* Here we have confirmed that it's not {} or {single} and the
+             * braces are closed */
+            {
+                /* set to true to we could match empty */
+                _Bool is_empty_matched = 0;
+                _Bool is_matched = 0;  /* Do we find them matched */
+                int matched_length = 0; /* the length of the matched string */
+                const char *pattern1 = pattern;
+                const char *comma_brace;
+
+                for (;;) {
+                    comma_brace = strpbrk(pattern, ",}");
+
+                    /* {str0,,str1,str2}, we are on the empty one. Remember the
+                     * {} case is handled in the block above */
+                    if (comma_brace == pattern1)
+                        is_empty_matched = 1;
+                    else {
+                        /* string between pattern1 and a real , or brace, i.e.
+                         * not an escaped one */
+                        char *this_item; 
+                        int len;
+                        char *p;
+
+                        /* we have backslash before , or the brace. Handle them
+                         * carefully by counting the number of backslashes */
+                        if (*(comma_brace - 1) == '\\') {
+
+                            int i;
+                            for (i = 2; *(comma_brace - i) == '\\'; ++ i)
+                                ;
+
+                            if (i % 2) { /* escaped , or brace */
+                                pattern = comma_brace + 1;
+                                continue;
+                            }
+                        }
+
+                        this_item = strndup(pattern1,
+                                (size_t) (comma_brace - pattern1));
+
+                        /* cleanup the escaping, remember the last character
+                         * cannot be an escaped backslash, since this is handled
+                         * above */
+                        for (p = this_item; *p; ++ p) {
+                            if (*p == '\\') {
+                                memmove(p + 1, p, strlen(p));
+                                ++ p;
+                            }
+                        }
+
+
+                        /* matched */
+                        len = strlen(this_item);
+                        if (!strncmp(this_item, string, len) &&
+                                ((!is_matched) || len > matched_length)) {
+                            is_matched = 1;
+                            matched_length = len;
+                        }
+                        free(this_item);
+                    } 
+
+                    pattern = comma_brace + 1;
+                    pattern1 = pattern;
+
+                    if (*comma_brace == '}') { /* end of {...} */
+                        if (is_matched)
+                            string += matched_length;
+                        else if (!is_empty_matched)
+                            return (EC_FNM_NOMATCH);
+                        break;
+                    }
+                }
+            }
             break;
         case '\\':
             if (!(flags & EC_FNM_NOESCAPE)) {
