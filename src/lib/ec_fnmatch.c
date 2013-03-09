@@ -77,8 +77,6 @@ int ec_fnmatch(const char *pattern, const char *string, int flags)
         case '?':
             if (*string == EOS)
                 return (EC_FNM_NOMATCH);
-            if (*string == '/' && (flags & EC_FNM_PATHNAME))
-                return (EC_FNM_NOMATCH);
             if (*string == '.' && (flags & EC_FNM_PERIOD) &&
                     (string == stringstart ||
                      ((flags & EC_FNM_PATHNAME) && *(string - 1) == '/')))
