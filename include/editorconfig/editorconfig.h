@@ -132,14 +132,22 @@
  *   <tr><td><code>?</code></td><td>Matches any single character</td></tr>
  *   <tr><td><code>[seq]</code></td><td>Matches any single character in <i>seq</i></td></tr>
  *   <tr><td><code>[!seq]</code></td><td>Matches any single character not in <i>seq</i></td></tr>
+ *   <tr><td><code>{s1,s2,s3}</code></td><td>Matches any of the strings given (separated by commas)</td></tr>
  * </table>
  * @endhtmlonly
  * @manonly
- * *        Matches any string of characters, except path separators (/)
- * **       Matches any string of characters
- * ?        Matches any single character
- * [seq]    Matches any single character in seq
- * [!seq]   Matches any single character not in seq
+ * *            Matches any string of characters, except path separators (/)
+ *
+ * **           Matches any string of characters
+ *
+ * ?            Matches any single character
+ *
+ * [seq]        Matches any single character in seq
+ *
+ * [!seq]       Matches any single character not in seq
+ *
+ * {s1,s2,s3}   Matches any of the strings given (separated by commas)
+ *
  * @endmanonly
  *
  * The backslash character (\) can be used to escape a character so it is not interpreted as a special character.
