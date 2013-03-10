@@ -30,7 +30,8 @@ Installation
 
 To install the EditorConfig core from source see the [INSTALL.md][] file.
 
-Binary installation packages for the EditorConfig core can be found on the [downloads page on Github][downloads].
+Binary installation packages for the EditorConfig core can be found on the
+[downloads page on Github][downloads].
 
 
 Getting Help
@@ -41,7 +42,9 @@ Bugs and feature requests should be submitted to our [issue tracker][].
 
 If you are writing a plugin a language that can import C libraries, you may
 want to import and use the EditorConfig library directly.  If you do use the
-EditorConfig core as a C library, check the [documentation][] for help.
+EditorConfig core as a C library, check the [documentation][] for latest stable
+version for help. The documentation for latest development version is also
+available [online][dev doc].
 
 
 License
@@ -57,5 +60,6 @@ under the New BSD license. See LICENSE file for details.
 [INSTALL.md]: https://github.com/editorconfig/editorconfig-core/blob/master/INSTALL.md
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [issue tracker]: https://github.com/editorconfig/editorconfig/issues
-[documentation]: http://docs.editorconfig.org/ "EditorConfig Core C API documentation"
+[documentation]: http://docs.editorconfig.org/ "EditorConfig C Core documentation"
 [downloads]: https://github.com/editorconfig/editorconfig-core/downloads
+[dev doc]: http://docs.editorconfig.org/development "EditorConfig C Core latest development version documentation"
