@@ -189,20 +189,21 @@ int ec_fnmatch(const char *pattern, const char *string, int flags)
                         char *this_item; 
                         int len;
                         char *p;
+                        int bs_count; /* # of backslashes */
 
-                        /* we have backslash before , or the brace. Handle them
-                         * carefully by counting the number of backslashes */
-                        if (*(comma_brace - 1) == '\\') {
+                        /* we may have backslashes before , or the brace.
+                         * Handle them carefully by counting the number of
+                         * backslashes */
+                        for (bs_count = 0;
+                                *(comma_brace - bs_count - 1) == '\\';
+                                ++ bs_count)
+                            ;
 
-                            int i;
-                            for (i = 2; *(comma_brace - i) == '\\'; ++ i)
-                                ;
-
-                            if (i % 2) { /* escaped , or brace */
-                                pattern = comma_brace + 1;
-                                continue;
-                            }
+                        if (bs_count % 2) { /* escaped comma or brace */
+                            pattern = comma_brace + 1;
+                            continue;
                         }
+
 
                         this_item = strndup(pattern1,
                                 (size_t) (comma_brace - pattern1));
@@ -211,10 +212,8 @@ int ec_fnmatch(const char *pattern, const char *string, int flags)
                          * cannot be an escaped backslash, since this is handled
                          * above */
                         for (p = this_item; *p; ++ p) {
-                            if (*p == '\\') {
-                                memmove(p + 1, p, strlen(p));
-                                ++ p;
-                            }
+                            if (*p == '\\')
+                                memmove(p, p + 1, strlen(p));
                         }
 
 
