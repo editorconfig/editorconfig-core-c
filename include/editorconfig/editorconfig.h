@@ -72,13 +72,13 @@
  * @endhtmlonly
  * @manonly
  *
- * -f             Specify conf filename other than ".editorconfig".
+ * \-f             Specify conf filename other than ".editorconfig".
  *
- * -b             Specify version (used by devs to test compatibility).
+ * \-b             Specify version (used by devs to test compatibility).
  *
- * -h OR --help   Print this help message.
+ * \-h OR \-\-help   Print this help message.
  *
- * --version      Display version information.
+ * \-\-version      Display version information.
  *
  * @endmanonly
  *
