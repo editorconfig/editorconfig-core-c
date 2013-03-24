@@ -41,7 +41,7 @@ static void version(FILE* stream)
 
     editorconfig_get_version(&major, &minor, &subminor);
 
-    fprintf(stream,"Version %d.%d.%d%s\n",
+    fprintf(stream,"EditorConfig C Core Version %d.%d.%d%s\n",
             major, minor, subminor, editorconfig_get_version_suffix());
 }
 
