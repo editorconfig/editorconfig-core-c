@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2012 EditorConfig Team
+ * Copyright (c) 2011-2013 EditorConfig Team
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -24,9 +24,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 /*!
- * @mainpage EditorConfig Core Documentation
+ * @mainpage EditorConfig C Core Documentation
  *
- * This is the documentation of EditorConfig Core. In this documentation, you
+ * This is the documentation of EditorConfig C Core. In this documentation, you
  * could find the document of the @ref editorconfig and the document of
  * EditorConfig Core C APIs in editorconfig.h and editorconfig_handle.h.
  */
@@ -202,7 +202,7 @@ extern "C" {
  *
  * An example is available at 
  * <a href=https://github.com/editorconfig/editorconfig-core/blob/master/src/bin/main.c>src/bin/main.c</a>
- * in EditorConfig Core source code.
+ * in EditorConfig C Core source code.
  *
  * @param full_filename The full path of a file that is edited by the editor
  * for which the parsing result is.
@@ -239,7 +239,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h);
  *
  * An example is available at
  * <a href=https://github.com/editorconfig/editorconfig-core/blob/master/src/bin/main.c>src/bin/main.c</a>
- * in EditorConfig Core source code.
+ * in EditorConfig C Core source code.
  *
  * @param err_num The error number that is used to obtain the error message.
  *
@@ -268,7 +268,7 @@ const char* editorconfig_get_error_msg(int err_num);
  *
  * An example is available at
  * <a href=https://github.com/editorconfig/editorconfig-core/blob/master/src/bin/main.c>src/bin/main.c</a>
- * in EditorConfig Core source code.
+ * in EditorConfig C Core source code.
  *
  * @param major If not null, the integer pointed by major will be filled with
  * the major version of EditorConfig.
