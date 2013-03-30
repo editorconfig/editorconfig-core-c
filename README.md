@@ -62,4 +62,4 @@ under the New BSD license. See LICENSE file for details.
 [issue tracker]: https://github.com/editorconfig/editorconfig/issues
 [documentation]: http://docs.editorconfig.org/ "EditorConfig C Core documentation"
 [downloads]: https://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/
-[dev doc]: http://docs.editorconfig.org/en/development "EditorConfig C Core latest development version documentation"
+[dev doc]: http://docs.editorconfig.org/en/master "EditorConfig C Core latest development version documentation"
