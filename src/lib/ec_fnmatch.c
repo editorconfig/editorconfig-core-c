@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 1989, 1993, 1994
- *	The Regents of the University of California.  All rights reserved.
+ *  The Regents of the University of California.  All rights reserved.
  *
  * This code is derived from software contributed to Berkeley by
  * Guido van Rossum.
@@ -54,7 +54,7 @@
 #ifdef EOS
 # undef EOS
 #endif
-#define	EOS	'\0'
+#define EOS '\0'
 
 static const char *rangematch(const char *, char, int);
 

@@ -26,7 +26,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *	@(#)fnmatch.h	8.1 (Berkeley) 6/2/93
+ *  @(#)fnmatch.h   8.1 (Berkeley) 6/2/93
  *
  * From FreeBSD fnmatch.h 1.7
  * $Id: fnmatch.h,v 1.4 2001/10/04 02:46:21 jdp Exp $
@@ -35,21 +35,21 @@
  * Modified by EditorConfig Team for use in EditorConfig project.
  */
 
-#ifndef	__EC_FNMATCH_H__
-#define	__EC_FNMATCH_H__
+#ifndef __EC_FNMATCH_H__
+#define __EC_FNMATCH_H__
 
 #include "global.h"
 
-#define	EC_FNM_NOMATCH	1	/* Match failed. */
+#define EC_FNM_NOMATCH  1   /* Match failed. */
 
-#define	EC_FNM_NOESCAPE	0x01	/* Disable backslash escaping. */
-#define	EC_FNM_PATHNAME	0x02	/* Slash must be matched by slash. */
-#define	EC_FNM_PERIOD	0x04	/* Period must be matched by period. */
-#define	EC_FNM_LEADING_DIR	0x08	/* Ignore /<tail> after Imatch. */
-#define	EC_FNM_CASEFOLD	0x10	/* Case insensitive search. */
-#define EC_FNM_PREFIX_DIRS	0x20	/* Directory prefixes of pattern match too. */
+#define EC_FNM_NOESCAPE 0x01    /* Disable backslash escaping. */
+#define EC_FNM_PATHNAME 0x02    /* Slash must be matched by slash. */
+#define EC_FNM_PERIOD   0x04    /* Period must be matched by period. */
+#define EC_FNM_LEADING_DIR  0x08    /* Ignore /<tail> after Imatch. */
+#define EC_FNM_CASEFOLD 0x10    /* Case insensitive search. */
+#define EC_FNM_PREFIX_DIRS  0x20    /* Directory prefixes of pattern match too. */
 
 EDITORCONFIG_LOCAL
-int	 ec_fnmatch(const char *, const char *, int);
+int ec_fnmatch(const char *, const char *, int);
 
 #endif /* !__EC_FNMATCH_H__ */

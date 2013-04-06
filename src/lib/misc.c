@@ -137,7 +137,7 @@ char* ec_strdup(const char *str)
  * $NetBSD: strndup.c,v 1.3 2007/01/14 23:41:24 cbiere Exp $ 
  *
  * Copyright (c) 1988, 1993
- *	The Regents of the University of California.  All rights reserved.
+ *  The Regents of the University of California.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
