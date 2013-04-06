@@ -30,7 +30,7 @@ set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 11)
 set (editorconfig_VERSION_SUBMINOR 4)
 
-set (editorconfig_VERSION_SUFFIX "-development")
+set (editorconfig_VERSION_SUFFIX "")
 
 project(editorconfig C)
 
