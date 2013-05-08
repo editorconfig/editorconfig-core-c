@@ -63,7 +63,7 @@ these libraries could be executed properly.
 Installing from a binary package
 ================================
 
-Binary packages can be downloaded [here](https://github.com/editorconfig/editorconfig-core/downloads).
+Binary packages can be downloaded [here](http://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/).
 
 Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
 
