@@ -1,3 +1,12 @@
+Installing from a binary package
+================================
+
+Binary packages can be downloaded [here](http://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/).
+
+Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
+
+Debian (Currently only in sid): apt-get install editorconfig
+
 Installing from source
 ======================
 
@@ -58,14 +67,6 @@ Note that you have to use ldconfig or change LD_LIBRARY_PATH to specify the
 PREFIX/lib as one of the library searching directory on UNIX/Linux to make sure
 that source files could be linked to the libraries and executables depending on
 these libraries could be executed properly.
-
-
-Installing from a binary package
-================================
-
-Binary packages can be downloaded [here](http://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/).
-
-Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
 
 
 [cmake]: http://www.cmake.org
