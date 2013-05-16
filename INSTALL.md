@@ -5,6 +5,8 @@ Binary packages can be downloaded [here](http://sourceforge.net/projects/editorc
 
 Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
 
+Mac users can `brew install editorconfig` with [Homebrew](https://github.com/mxcl/homebrew).
+
 Debian (Currently only in sid): apt-get install editorconfig
 
 Installing from source
