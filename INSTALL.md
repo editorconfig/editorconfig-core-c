@@ -61,7 +61,7 @@ root or admin privilege):
 
     make install
 
-This command will copy all the file you need to corresponding directories:
+This command will copy all the files you need to corresponding directories:
 editorconfig libraries will be copied to PREFIX/lib and executables will be
 copied to PREFIX/bin.
 
@@ -70,5 +70,8 @@ PREFIX/lib as one of the library searching directory on UNIX/Linux to make sure
 that source files could be linked to the libraries and executables depending on
 these libraries could be executed properly.
 
+On Windows, via Developer Command Prompt for Visual Studio:
+
+    msbuild all_build.vcxproj /p:Configuration=Release
 
 [cmake]: http://www.cmake.org
