@@ -225,3 +225,22 @@ char* ec_strlwr(char* str)
 
 #endif /* !HAVE_STRLWR */
 
+/*
+ * is path an abosolute file path
+ */
+EDITORCONFIG_LOCAL
+_Bool is_file_path_absolute(const char* path)
+{
+    if (!path)
+        return 0;
+
+#if defined(UNIX)
+    if (*path == '/')
+        return 1;
+    return 0;
+#elif defined(WIN32)
+    return !PathIsRelative(path);
+#else
+# error "Either UNIX or WIN32 must be defined."
+#endif
+}

@@ -57,5 +57,6 @@ EDITORCONFIG_LOCAL
 char* ec_strlwr(char* str);
 # define strlwr ec_strlwr
 #endif
-
+EDITORCONFIG_LOCAL
+_Bool is_file_path_absolute(const char* path);
 #endif /* __MISC_H__ */

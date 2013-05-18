@@ -390,7 +390,6 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     handler_first_param                 hfp;
     char**                              config_file;
     char**                              config_files;
-    char*                               directory;
     int                                 err_num;
     int                                 i;
     struct editorconfig_handle*         eh = (struct editorconfig_handle*)h;
@@ -435,17 +434,15 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 
     hfp.full_filename = strdup(full_filename);
 
+    /* return an error if file path is not absolute */
+    if (!is_file_path_absolute(full_filename)) {
+        return EDITORCONFIG_PARSE_NOT_FULL_PATH;
+    }
+
 #ifdef WIN32
     /* replace all backslashes with slashes on Windows */
     str_replace(hfp.full_filename, '\\', '/');
 #endif
-
-    split_file_path(&directory, NULL, hfp.full_filename);
-    if (directory == NULL) {
-        return EDITORCONFIG_PARSE_NOT_FULL_PATH;
-    }
-
-    free(directory);
 
     array_editorconfig_name_value_init(&hfp.array_name_value);
 
