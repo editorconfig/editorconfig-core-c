@@ -27,6 +27,10 @@
 
 #include "misc.h"
 
+#ifdef WIN32
+# include <Shlwapi.h>
+#endif
+
 #if !defined(HAVE_STRCASECMP) && !defined(HAVE_STRICMP)
 /*
  * strcasecmp function from FreeBSD
