@@ -83,6 +83,24 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
 }
 
 /*
+ * reset special property name value pointers
+ */
+static void reset_special_property_name_value_pointers(
+        array_editorconfig_name_value* aenv)
+{
+    int         i;
+    
+    for (i = 0; i < aenv->current_value_count; ++ i) {
+        if (!strcmp(aenv->name_values[i].name, "indent_style"))
+            aenv->spnvp.indent_style = &aenv->name_values[i];
+        else if (!strcmp(aenv->name_values[i].name, "indent_size"))
+            aenv->spnvp.indent_size = &aenv->name_values[i];
+        else if (!strcmp(aenv->name_values[i].name, "tab_width"))
+            aenv->spnvp.tab_width = &aenv->name_values[i];
+    }
+}
+
+/*
  * Find the editorconfig_name_value from name in a editorconfig_name_value
  * array.
  */
@@ -118,7 +136,7 @@ static int array_editorconfig_name_value_add(
     /* For the first time we came here, aenv->name_values is NULL */
     if (aenv->name_values == NULL) {
         aenv->name_values = (editorconfig_name_value*)malloc(
-                sizeof(editorconfig_name_value) * 2 * VALUE_COUNT_INITIAL);
+                sizeof(editorconfig_name_value) * VALUE_COUNT_INITIAL);
 
         if (aenv->name_values == NULL)
             return -1;
@@ -151,13 +169,16 @@ static int array_editorconfig_name_value_add(
         new_max_value_count = aenv->current_value_count +
             VALUE_COUNT_INCREASEMENT;
         new_values = (editorconfig_name_value*)realloc(aenv->name_values,
-                sizeof(editorconfig_name_value) * 2 * new_max_value_count);
+                sizeof(editorconfig_name_value) * new_max_value_count);
 
         if (new_values == NULL) /* error occured */
             return -1;
 
         aenv->name_values = new_values;
         aenv->max_value_count = new_max_value_count;
+
+        /* reset special pointers */
+        reset_special_property_name_value_pointers(aenv);
     }
 
     set_name_value(&aenv->name_values[aenv->current_value_count],
