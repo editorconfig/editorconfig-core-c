@@ -34,9 +34,9 @@
  * array_editorconfig_name_value */
 typedef struct
 {
-    editorconfig_name_value*        indent_style;
-    editorconfig_name_value*        indent_size;
-    editorconfig_name_value*        tab_width;
+    const editorconfig_name_value*        indent_style;
+    const editorconfig_name_value*        indent_size;
+    const editorconfig_name_value*        tab_width;
 } special_property_name_value_pointers;
 
 typedef struct
@@ -53,6 +53,22 @@ typedef struct
     char*                           editorconfig_file_dir;
     array_editorconfig_name_value   array_name_value;
 } handler_first_param;
+
+/*
+ * Set the special pointers for a name
+ */
+static void set_special_property_name_value_pointers(
+        const editorconfig_name_value* nv,
+        special_property_name_value_pointers* spnvp)
+{
+    /* set speical pointers */
+    if (!strcmp(nv->name, "indent_style"))
+        spnvp->indent_style = nv;
+    else if (!strcmp(nv->name, "indent_size"))
+        spnvp->indent_size = nv;
+    else if (!strcmp(nv->name, "tab_width"))
+        spnvp->tab_width = nv;
+}
 
 /*
  * Set the name and value of a editorconfig_name_value structure
@@ -74,12 +90,7 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
         strlwr(nv->value);
 
     /* set speical pointers */
-    if (!strcmp(nv->name, "indent_style"))
-        spnvp->indent_style = nv;
-    else if (!strcmp(nv->name, "indent_size"))
-        spnvp->indent_size = nv;
-    else if (!strcmp(nv->name, "tab_width"))
-        spnvp->tab_width = nv;
+    set_special_property_name_value_pointers(nv, spnvp);
 }
 
 /*
@@ -90,14 +101,9 @@ static void reset_special_property_name_value_pointers(
 {
     int         i;
     
-    for (i = 0; i < aenv->current_value_count; ++ i) {
-        if (!strcmp(aenv->name_values[i].name, "indent_style"))
-            aenv->spnvp.indent_style = &aenv->name_values[i];
-        else if (!strcmp(aenv->name_values[i].name, "indent_size"))
-            aenv->spnvp.indent_size = &aenv->name_values[i];
-        else if (!strcmp(aenv->name_values[i].name, "tab_width"))
-            aenv->spnvp.tab_width = &aenv->name_values[i];
-    }
+    for (i = 0; i < aenv->current_value_count; ++ i)
+        set_special_property_name_value_pointers(
+                &aenv->name_values[i], &aenv->spnvp);
 }
 
 /*
