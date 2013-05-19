@@ -133,7 +133,7 @@ static int array_editorconfig_name_value_add(
         array_editorconfig_name_value* aenv,
         const char* name, const char* value)
 {
-#define VALUE_COUNT_INITIAL      10
+#define VALUE_COUNT_INITIAL      30
 #define VALUE_COUNT_INCREASEMENT 10
     int         name_value_pos;
     /* always use name_lwr but not name, since property names are case
