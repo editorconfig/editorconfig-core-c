@@ -10,5 +10,5 @@ if [ $# -ne 1 ]; then
   exit
 fi
 
-curl -L https://raw.github.com/Kentzo/git-archive-all/master/git-archive-all | python - editorconfig-$*.tar.gz
-curl -L https://raw.github.com/Kentzo/git-archive-all/master/git-archive-all | python - editorconfig-$*.zip
+curl -L https://raw.github.com/Kentzo/git-archive-all/master/git-archive-all | python - editorconfig-core-c-$*.tar.gz
+curl -L https://raw.github.com/Kentzo/git-archive-all/master/git-archive-all | python - editorconfig-core-c-$*.zip
