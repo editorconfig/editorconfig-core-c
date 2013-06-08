@@ -92,20 +92,23 @@
  *
  * @section format EditorConfig File Format
  *
- * EditorConfig files use an INI file format in which section names are globs
- * matching filenames in a format accepted by the fnmatch C library.
+ * EditorConfig files use an INI format that is compatible with the format used
+ * by Python ConfigParser Library, but [ and ] are allowed in the section names.
+ * The section names are filepath globs, similar to the format accepted by
+ * gitignore. Forward slashes (/) are used as path separators and semicolons (;)
+ * or octothorpes (#) are used for comments. Comments should go individual lines.
+ * EditorConfig files should be UTF-8 encoded, with either CRLF or LF line
+ * separators. 
  *
  * Filename globs containing path separators (/) match filepaths in the same
  * way as the filename globs used by .gitignore files.  Backslashes (\\) are
  * not allowed as path separators.
  *
- * A semicolon character (;) starts a line comment that terminates at the end of
- * the line.  Line comments and blank lines are ignored when parsing.  Comments
- * may be added to the ends of non-empty lines.  An octothorpe character (#)
- * may be used instead of a semicolon to denote the start of a comment.
- *
- * EditorConfig files should be UTF-8 encoded, with either CRLF or LF line
- * separators.
+ * A semicolon character (;) starts a line comment that terminates at the end
+ * of the line. Line comments and blank lines are ignored when parsing.
+ * Comments may be added to the ends of non-empty lines. An octothorpe
+ * character (#) may be used instead of a semicolon to denote the start of a
+ * comment.
  *
  * @section file-location Filename and Location
  *
@@ -123,7 +126,9 @@
  *
  * @section patterns Wildcard Patterns
  *
- * Section names in EditorConfig files are filename globs that support pattern matching through Unix shell-style wildcards. These filename globs recognize the following as special characters for wildcard matching:
+ * Section names in EditorConfig files are filename globs that support pattern
+ * matching through Unix shell-style wildcards. These filename globs recognize
+ * the following as special characters for wildcard matching:
  *
  * @htmlonly
  * <table>
