@@ -9,7 +9,7 @@ Mac OS X users can `brew install editorconfig` with [Homebrew](http://brew.sh).
 Generally Linux users can also install with [LinuxBrew](https://github.com/Homebrew/linuxbrew)
 by `brew install editorconfig`.
 
-Debian (Currently only in sid): `apt-get install editorconfig`
+Debian (Jessie and later): `apt-get install editorconfig`
 
 Installing from source
 ======================
