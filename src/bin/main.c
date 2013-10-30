@@ -82,7 +82,7 @@ int main(int argc, const char* argv[])
     if (argc <= 1) {
         version(stderr);
         usage(stderr, argv[0]);
-        return 1;
+        exit(1);
     }
 
     for (i = 1; i < argc; ++i) {
@@ -127,12 +127,12 @@ int main(int argc, const char* argv[])
         } else if (strcmp(argv[i], "--version") == 0 ||
                 strcmp(argv[i], "-v") == 0) {
             version(stdout);
-            return 0;
+            exit(0);
         } else if (strcmp(argv[i], "--help") == 0 ||
                 strcmp(argv[i], "-h") == 0) {
             version(stdout);
             usage(stdout, argv[0]);
-            return 0;
+            exit(0);
         } else if (strcmp(argv[i], "-b") == 0)
             b_flag = 1;
         else if (strcmp(argv[i], "-f") == 0)
@@ -147,18 +147,18 @@ int main(int argc, const char* argv[])
                 file_paths[path_count + i - argc] = strdup(argv[i]);
                 if (file_paths[path_count - argc + i] == NULL) {
                     fprintf(stderr, "Error: Unable to obtain the full path.\n");
-                    return 1;
+                    exit(1);
                 }
             }
         } else {
             usage(stderr, argv[0]);
-            return 1;
+            exit(1);
         }
     }
 
     if (!file_paths) { /* No filename is set */ 
         usage(stderr, argv[0]);
-        return 1;
+        exit(1);
     }
 
     /* Go through all the files in the argument list */
@@ -226,7 +226,7 @@ int main(int argc, const char* argv[])
             if (err_num > 0)
                 fprintf(stderr, "\"%s\"", editorconfig_handle_get_err_file(eh));
             fprintf(stderr, "\n");
-            return 1;
+            exit(1);
         }
 
         /* print the result */
@@ -241,12 +241,12 @@ int main(int argc, const char* argv[])
 
         if (editorconfig_handle_destroy(eh) != 0) {
             fprintf(stderr, "Failed to destroy editorconfig_handle.\n");
-            return 1;
+            exit(1);
         }
     }
 
     free(file_paths);
 
-    return 0;
+    exit(0);
 }
 
