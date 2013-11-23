@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011-2012 EditorConfig Team
+# Copyright (c) 2011-2013 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -82,7 +82,8 @@ if(BUILD_DOCUMENTATION)
         # we need to exclude it when installing man3.
         install(DIRECTORY ${EC_MANPAGE3_DIR}
             DESTINATION share/man
-            PATTERN editorconfig.3 EXCLUDE)
+            PATTERN editorconfig.3 EXCLUDE
+            REGEX ._include_. EXCLUDE)
 
         set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
 
