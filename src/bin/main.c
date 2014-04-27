@@ -175,7 +175,6 @@ int main(int argc, const char* argv[])
 
         if (!strcmp(full_filename, "-")) {
             int             len;
-            int             c;
 
             /* Read a line from stdin. If EOF encountered, continue */
             if (!fgets(file_line_buffer, FILENAME_MAX + 1, stdin)) {
