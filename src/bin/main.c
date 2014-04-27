@@ -141,7 +141,7 @@ int main(int argc, const char* argv[])
             /* If there are other args left, regard them as file names */
 
             path_count = argc - i;
-            file_paths = (char**) malloc(path_count * sizeof(char**));
+            file_paths = (char**) malloc(path_count * sizeof(char*));
 
             for (; i < argc; ++i) {
                 file_paths[path_count + i - argc] = strdup(argv[i]);
@@ -175,7 +175,6 @@ int main(int argc, const char* argv[])
 
         if (!strcmp(full_filename, "-")) {
             int             len;
-            int             c;
 
             /* Read a line from stdin. If EOF encountered, continue */
             if (!fgets(file_line_buffer, FILENAME_MAX + 1, stdin)) {
