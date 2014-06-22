@@ -25,7 +25,7 @@
 #
 
 set(editorconfig_LIBSRCS
-    ec_fnmatch.c
+    ec_glob.c
     editorconfig.c
     editorconfig_handle.c
     ini.c
@@ -43,6 +43,7 @@ set_target_properties(editorconfig_shared PROPERTIES
 if(WIN32)
     target_link_libraries(editorconfig_shared Shlwapi)
 endif()
+target_link_libraries(editorconfig_shared ${PCRE_LIBRARIES})
 
 add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
 set_target_properties(editorconfig_static PROPERTIES
@@ -54,6 +55,7 @@ set_target_properties(editorconfig_static PROPERTIES
 if(WIN32)
     target_link_libraries(editorconfig_static Shlwapi)
 endif()
+target_link_libraries(editorconfig_static ${PCRE_LIBRARIES})
 
 install(TARGETS editorconfig_shared editorconfig_static
     RUNTIME DESTINATION bin

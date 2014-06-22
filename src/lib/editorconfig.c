@@ -28,7 +28,7 @@
 #include "editorconfig.h"
 #include "misc.h"
 #include "ini.h"
-#include "ec_fnmatch.h"
+#include "ec_glob.h"
 
 /* could be used to fast locate these properties in an
  * array_editorconfig_name_value */
@@ -247,7 +247,7 @@ static int ini_handler(void* hfp, const char* section, const char* name,
 
     strcat(pattern, section);
 
-    if (ec_fnmatch(pattern, hfparam->full_filename, EC_FNM_PATHNAME) == 0) {
+    if (ec_glob(pattern, hfparam->full_filename) == 0) {
         if (array_editorconfig_name_value_add(&hfparam->array_name_value, name,
                 value)) {
             free(pattern);

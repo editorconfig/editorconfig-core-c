@@ -27,6 +27,12 @@
 include(CheckFunctionExists)
 include(CheckTypeSize)
 
+find_package(PCRE REQUIRED)
+
+if(PCRE_FOUND)
+    include_directories(BEFORE ${PCRE_INCLUDE_DIRS})
+endif()
+
 # config.h will be generated in src/auto, we should include it.
 include_directories(BEFORE
     ${CMAKE_CURRENT_BINARY_DIR}/auto)

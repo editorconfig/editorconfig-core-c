@@ -52,9 +52,9 @@ License
 -------
 
 Unless otherwise stated, all files are distributed under the Simplified BSD
-license. The inih(`src/lib/ini.c` and `src/lib/ini.h`) and fnmatch
-(`src/lib/ec_fnmatch.c` and `src/lib/ec_fnmatch.h`) libraries are distributed
-under the New BSD license. See LICENSE file for details.
+license. The inih(`src/lib/ini.c` and `src/lib/ini.h`) library is distributed
+under the New BSD license. `src/lib/utarray.h` is distributed under the Revised
+BSD License. The See LICENSE file for details.
 
 
 [EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
