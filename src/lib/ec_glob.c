@@ -331,14 +331,17 @@ int ec_glob(const char *pattern, const char *string)
     }
 
     /* Whether the numbers are in the desired range? */
-    i = 1;
-    p = NULL;
-    while( (p = (int_pair *) utarray_next(nums, p)) != NULL)
+    for(p = (int_pair *) utarray_front(nums), i = 1; p;
+            ++ i, p = (int_pair *) utarray_next(nums, p))
     {
         const char * substring_start = string + pcre_result[2 * i];
         size_t  substring_length = pcre_result[2 * i + 1] - pcre_result[2 * i];
         char *       num_string;
         int          num;
+
+        /* we don't consider 0digits such as 010 as matched */
+        if (*substring_start == '0')
+            break;
 
         num_string = strndup(substring_start, substring_length);
         num = atoi(num_string);
@@ -346,8 +349,6 @@ int ec_glob(const char *pattern, const char *string)
 
         if (num < p->num1 || num > p->num2) /* not matched */
             break;
-
-        ++ i;
     }
 
     if (p != NULL)      /* numbers not matched */
