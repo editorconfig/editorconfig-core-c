@@ -137,7 +137,8 @@
  *   <tr><td><code>?</code></td><td>Matches any single character</td></tr>
  *   <tr><td><code>[seq]</code></td><td>Matches any single character in <i>seq</i></td></tr>
  *   <tr><td><code>[!seq]</code></td><td>Matches any single character not in <i>seq</i></td></tr>
- *   <tr><td><code>{s1,s2,s3}</code></td><td>Matches any of the strings given (separated by commas)</td></tr>
+ *   <tr><td><code>{s1,s2,s3}</code></td><td>Matches any of the strings given (separated by commas, can be nested)</td></tr>
+ *   <tr><td><code>{num1..num2}</code></td><td>Matches any integer numbers between num1 and num2, where num1 and num2 can be either positive or negative</td></tr>
  * </table>
  * @endhtmlonly
  * @manonly
@@ -151,7 +152,9 @@
  *
  * [!seq]       Matches any single character not in seq
  *
- * {s1,s2,s3}   Matches any of the strings given (separated by commas)
+ * {s1,s2,s3}   Matches any of the strings given (separated by commas, can be nested)
+ *
+ * {num1..num2} Matches any integer numbers between num1 and num2, where num1 and num2 can be either positive or negative
  *
  * @endmanonly
  *
