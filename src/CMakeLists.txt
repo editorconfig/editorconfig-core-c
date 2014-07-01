@@ -31,6 +31,7 @@ find_package(PCRE REQUIRED)
 
 if(PCRE_FOUND)
     include_directories(BEFORE ${PCRE_INCLUDE_DIRS})
+    option(PCRE_STATIC "Turn this option ON when linking to PCRE static library" OFF)
 endif()
 
 # config.h will be generated in src/auto, we should include it.
