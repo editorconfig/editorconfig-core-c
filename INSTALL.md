@@ -1,3 +1,8 @@
+Dependency
+==========
+
+- [pcre](http://www.pcre.org/) (Since version 0.12.0)
+
 Installing from a binary package
 ================================
 
@@ -14,8 +19,9 @@ Debian (Jessie and later): `apt-get install editorconfig`
 Installing from source
 ======================
 
-Before install, you need to install [cmake][]. Cmake installation instruction
-could be found here: <http://www.cmake.org/cmake/help/install.html>.
+Before installing, you need to install the building tool [cmake][]. Cmake
+installation instruction could be found here:
+<http://www.cmake.org/cmake/help/install.html>.
 
 Make sure cmake is in your PATH environment variable. Switch to the root
 directory of editorconfig and execute the following command:
