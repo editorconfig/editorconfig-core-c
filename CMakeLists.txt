@@ -27,10 +27,10 @@
 cmake_minimum_required(VERSION 2.6)
 
 set (editorconfig_VERSION_MAJOR 0)
-set (editorconfig_VERSION_MINOR 11)
-set (editorconfig_VERSION_SUBMINOR 5)
+set (editorconfig_VERSION_MINOR 12)
+set (editorconfig_VERSION_SUBMINOR 0)
 
-set (editorconfig_VERSION_SUFFIX "-development")
+set (editorconfig_VERSION_SUFFIX "-alpha1")
 
 project(editorconfig C)
 
