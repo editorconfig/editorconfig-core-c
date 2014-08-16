@@ -10,11 +10,13 @@ Binary packages can be downloaded [here](http://sourceforge.net/projects/editorc
 
 Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
 
+Debian (Jessie and later): `apt-get install editorconfig`
+
+ArchLinux: An [Arch AUR package](https://aur.archlinux.org/packages/editorconfig-core-c) is available.
+
 Mac OS X users can `brew install editorconfig` with [Homebrew](http://brew.sh).
 Generally Linux users can also install with [LinuxBrew](https://github.com/Homebrew/linuxbrew)
 by `brew install editorconfig`.
-
-Debian (Jessie and later): `apt-get install editorconfig`
 
 Installing from source
 ======================
