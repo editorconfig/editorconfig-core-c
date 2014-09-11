@@ -44,10 +44,14 @@ typedef struct int_pair
 static const UT_icd ut_int_pair_icd = {sizeof(int_pair),NULL,NULL,NULL};
 
 /* concatenate the string then move the pointer to the end */
-#define STRING_CAT(p, string)  do {\
+#define STRING_CAT(p, string, end)  do {    \
+    size_t string_len = strlen(string); \
+    if (p + string_len >= end) \
+        return -1; \
     strcat(p, string); \
-    p += strlen(string); \
+    p += string_len; \
 } while(0)
+
 #define PATTERN_MAX  300
 /*
  * Whether the string matches the given glob pattern
@@ -60,6 +64,7 @@ int ec_glob(const char *pattern, const char *string)
     char *                    c;
     char                      pcre_str[2 * PATTERN_MAX] = "^";
     char *                    p_pcre;
+    char *                    pcre_str_end;
     int                       brace_level = 0;
     bool                      is_in_bracket = false;
     const char *              error_msg;
@@ -76,6 +81,7 @@ int ec_glob(const char *pattern, const char *string)
 
     strcpy(l_pattern, pattern);
     p_pcre = pcre_str + 1;
+    pcre_str_end = pcre_str + 2 * PATTERN_MAX;
 
     {
         int     left_count = 0;
@@ -116,7 +122,7 @@ int ec_glob(const char *pattern, const char *string)
                 *(p_pcre ++) = *c;
             }
             else
-                STRING_CAT(p_pcre, "\\\\");
+                STRING_CAT(p_pcre, "\\\\", pcre_str_end);
 
             break;
         case '?':
@@ -125,17 +131,17 @@ int ec_glob(const char *pattern, const char *string)
         case '*':
             if (*(c+1) == '*')      /* case of ** */
             {
-                STRING_CAT(p_pcre, ".*");
+                STRING_CAT(p_pcre, ".*", pcre_str_end);
                 ++ c;
             }
             else                    /* case of * */
-                STRING_CAT(p_pcre, "[^\\/]*");
+                STRING_CAT(p_pcre, "[^\\/]*", pcre_str_end);
 
             break;
         case '[':
             if (is_in_bracket)     /* inside brackets, we really mean bracket */
             {
-                STRING_CAT(p_pcre, "\\[");
+                STRING_CAT(p_pcre, "\\[", pcre_str_end);
                 break;
             }
 
@@ -175,7 +181,7 @@ int ec_glob(const char *pattern, const char *string)
             is_in_bracket = true;
             if (*(c+1) == '!')     /* case of [!...] */
             {
-                STRING_CAT(p_pcre, "[^");
+                STRING_CAT(p_pcre, "[^", pcre_str_end);
                 ++ c;
             }
             else
@@ -192,13 +198,13 @@ int ec_glob(const char *pattern, const char *string)
             if (is_in_bracket)      /* in brackets, - indicates range */
                 *(p_pcre ++) = *c;
             else
-                STRING_CAT(p_pcre, "\\-");
+                STRING_CAT(p_pcre, "\\-", pcre_str_end);
 
             break;
         case '{':
             if (!are_brace_paired)
             {
-                STRING_CAT(p_pcre, "\\{");
+                STRING_CAT(p_pcre, "\\{", pcre_str_end);
                 break;
             }
 
@@ -237,7 +243,7 @@ int ec_glob(const char *pattern, const char *string)
 
                     if (rc < 0)    /* not {num1..num2} case */
                     {
-                        STRING_CAT(p_pcre, "\\{");
+                        STRING_CAT(p_pcre, "\\{", pcre_str_end);
 
                         memmove(cc+1, cc, strlen(cc) + 1);
                         *cc = '\\';
@@ -252,7 +258,7 @@ int ec_glob(const char *pattern, const char *string)
 
                     utarray_push_back(nums, &pair);
 
-                    STRING_CAT(p_pcre, "([\\+\\-]?\\d+)");
+                    STRING_CAT(p_pcre, "([\\+\\-]?\\d+)", pcre_str_end);
                     c = cc;
 
                     break;
@@ -260,13 +266,13 @@ int ec_glob(const char *pattern, const char *string)
             }
 
             ++ brace_level;
-            STRING_CAT(p_pcre, "(?:");
+            STRING_CAT(p_pcre, "(?:", pcre_str_end);
             break;
 
         case '}':
             if (!are_brace_paired)
             {
-                STRING_CAT(p_pcre, "\\}");
+                STRING_CAT(p_pcre, "\\}", pcre_str_end);
                 break;
             }
 
@@ -278,18 +284,18 @@ int ec_glob(const char *pattern, const char *string)
             if (brace_level > 0)  /* , inside {...} */
                 *(p_pcre ++) = '|';
             else
-                STRING_CAT(p_pcre, "\\,");
+                STRING_CAT(p_pcre, "\\,", pcre_str_end);
             break;
 
         case '/':
             // /**/ case, match both single / and /anything/
             if (!strncmp(c, "/**/", 4))
             {
-                STRING_CAT(p_pcre, "(\\/|\\/.*\\/)");
+                STRING_CAT(p_pcre, "(\\/|\\/.*\\/)", pcre_str_end);
                 c += 3;
             }
             else
-                STRING_CAT(p_pcre, "\\/");
+                STRING_CAT(p_pcre, "\\/", pcre_str_end);
 
             break;
 
