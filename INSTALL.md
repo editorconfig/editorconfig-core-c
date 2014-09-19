@@ -21,9 +21,12 @@ by `brew install editorconfig`.
 Installing from source
 ======================
 
-Before installing, you need to install the building tool [cmake][]. Cmake
-installation instruction could be found here:
-<http://www.cmake.org/cmake/help/install.html>.
+Before installing, you need to install the building tool [cmake][] and
+dependency [pcre][]. To install cmake and pcre with package manager:
+
+Arch Linux: `pacman -S cmake pcre`
+Homebrew on OS X: `brew install cmake pcre`
+Ubuntu/Debian: `apt-get install cmake libpcre3-dev`
 
 Make sure cmake is in your PATH environment variable. Switch to the root
 directory of editorconfig and execute the following command:
@@ -85,3 +88,4 @@ On Windows, via Developer Command Prompt for Visual Studio:
     msbuild all_build.vcxproj /p:Configuration=Release
 
 [cmake]: http://www.cmake.org
+[pcre]: http://pcre.org
