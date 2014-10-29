@@ -284,13 +284,13 @@ const char* editorconfig_get_error_msg(int err_num);
  * @param minor If not null, the integer pointed by minor will be filled with
  * the minor version of EditorConfig.
  *
- * @param subminor If not null, the integer pointed by subminor will be filled
- * with the subminor version of EditorConfig.
+ * @param patch If not null, the integer pointed by patch will be filled
+ * with the patch version of EditorConfig.
  *
  * @return None.
  */
 EDITORCONFIG_EXPORT
-void editorconfig_get_version(int* major, int* minor, int* subminor);
+void editorconfig_get_version(int* major, int* minor, int* patch);
 
 /*!
  * @brief Get the version suffix.

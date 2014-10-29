@@ -96,14 +96,14 @@ const char* editorconfig_handle_get_err_file(editorconfig_handle h);
  * @param minor If not null, the integer pointed by minor will be filled with
  * the minor version field of the editorconfig_handle object.
  *
- * @param subminor If not null, the integer pointed by subminor will be filled
- * with the subminor version field of the editorconfig_handle object.
+ * @param patch If not null, the integer pointed by patch will be filled
+ * with the patch version field of the editorconfig_handle object.
  *
  * @return None.
  */
 EDITORCONFIG_EXPORT
 void editorconfig_handle_get_version(const editorconfig_handle h, int* major,
-        int* minor, int* subminor);
+        int* minor, int* patch);
 
 /*!
  * @brief Set the version fields of an editorconfig_handle object.
@@ -118,15 +118,15 @@ void editorconfig_handle_get_version(const editorconfig_handle h, int* major,
  * minor. If this parameter is less than 0, the minor version field of the
  * editorconfig_handle object will remain unchanged.
  *
- * @param subminor If not less than 0, the subminor version field will be set to
- * subminor. If this parameter is less than 0, the subminor version field of the
+ * @param patch If not less than 0, the patch version field will be set to
+ * patch. If this parameter is less than 0, the patch version field of the
  * editorconfig_handle object will remain unchanged.
  *
  * @return None.
  */
 EDITORCONFIG_EXPORT
 void editorconfig_handle_set_version(const editorconfig_handle h, int major,
-        int minor, int subminor);
+        int minor, int patch);
 /*!
  * @brief Set the conf_file_name field of an editorconfig_handle object.
  *

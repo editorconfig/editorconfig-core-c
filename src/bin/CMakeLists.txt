@@ -51,7 +51,7 @@ target_link_libraries(editorconfig_bin editorconfig_static)
 set_target_properties(editorconfig_bin PROPERTIES
     OUTPUT_NAME editorconfig
     VERSION
-    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_PATCH})
 
 install(TARGETS editorconfig_bin
     RUNTIME DESTINATION bin)

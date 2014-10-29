@@ -37,12 +37,12 @@ static void version(FILE* stream)
 {
     int     major;
     int     minor;
-    int     subminor;
+    int     patch;
 
-    editorconfig_get_version(&major, &minor, &subminor);
+    editorconfig_get_version(&major, &minor, &patch);
 
     fprintf(stream,"EditorConfig C Core Version %d.%d.%d%s\n",
-            major, minor, subminor, editorconfig_get_version_suffix());
+            major, minor, patch, editorconfig_get_version_suffix());
 }
 
 static void usage(FILE* stream, const char* command)
@@ -71,7 +71,7 @@ int main(int argc, const char* argv[])
 
     int                                 version_major = -1;
     int                                 version_minor = -1;
-    int                                 version_subminor = -1;
+    int                                 version_patch = -1;
 
     /* File names read from stdin are put in this buffer temporarily */
     char                                file_line_buffer[FILENAME_MAX + 1];
@@ -109,7 +109,7 @@ int main(int argc, const char* argv[])
                     version_minor = ver;
                     break;
                 case 2:
-                    version_subminor = ver;
+                    version_patch = ver;
                     break;
                 default:
                     fprintf(stderr, "Invalid version number: %s\n", argv[i]);
@@ -213,7 +213,7 @@ int main(int argc, const char* argv[])
 
         /* Set the version to be compatible with */
         editorconfig_handle_set_version(eh,
-                version_major, version_minor, version_subminor);
+                version_major, version_minor, version_patch);
 
         /* parsing the editorconfig files */
         err_num = editorconfig_parse(full_filename, eh);

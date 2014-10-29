@@ -88,14 +88,14 @@ const char* editorconfig_handle_get_err_file(const editorconfig_handle h)
  */
 EDITORCONFIG_EXPORT
 void editorconfig_handle_get_version(const editorconfig_handle h, int* major,
-        int* minor, int* subminor)
+        int* minor, int* patch)
 {
     if (major)
         *major = ((const struct editorconfig_handle*)h)->ver.major;
     if (minor)
         *minor = ((const struct editorconfig_handle*)h)->ver.minor;
-    if (subminor)
-        *subminor = ((const struct editorconfig_handle*)h)->ver.subminor;
+    if (patch)
+        *patch = ((const struct editorconfig_handle*)h)->ver.patch;
 }
 
 /*
@@ -103,7 +103,7 @@ void editorconfig_handle_get_version(const editorconfig_handle h, int* major,
  */
 EDITORCONFIG_EXPORT
 void editorconfig_handle_set_version(editorconfig_handle h, int major,
-        int minor, int subminor)
+        int minor, int patch)
 {
     if (major >= 0)
         ((struct editorconfig_handle*)h)->ver.major = major;
@@ -111,8 +111,8 @@ void editorconfig_handle_set_version(editorconfig_handle h, int major,
     if (minor >= 0)
         ((struct editorconfig_handle*)h)->ver.minor = minor;
 
-    if (subminor >= 0)
-        ((struct editorconfig_handle*)h)->ver.subminor = minor;
+    if (patch >= 0)
+        ((struct editorconfig_handle*)h)->ver.patch = minor;
 }
 
 /*

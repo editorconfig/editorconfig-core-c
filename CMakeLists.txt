@@ -28,7 +28,7 @@ cmake_minimum_required(VERSION 2.6)
 
 set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 12)
-set (editorconfig_VERSION_SUBMINOR 1)
+set (editorconfig_VERSION_PATCH 1)
 
 set (editorconfig_VERSION_SUFFIX "-development")
 
@@ -58,7 +58,7 @@ set(MAILING_LIST "editorconfig@googlegroups.com")
 set(CPACK_PACKAGE_VENDOR "EditorConfig Team")
 set(CPACK_PACKAGE_VERSION_MAJOR ${editorconfig_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${editorconfig_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${editorconfig_VERSION_SUBMINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${editorconfig_VERSION_PATCH})
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")

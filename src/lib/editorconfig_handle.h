@@ -52,8 +52,8 @@ struct editorconfig_version
     int                     major;
     /*! minor version */
     int                     minor;
-    /*! subminor version */
-    int                     subminor;
+    /*! patch version */
+    int                     patch;
 };
 
 struct editorconfig_handle

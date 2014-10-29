@@ -37,7 +37,7 @@ set_target_properties(editorconfig_shared PROPERTIES
     OUTPUT_NAME editorconfig
     SOVERSION 0
     VERSION
-    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_PATCH})
 
 # We need to link Shwapi since we use PathIsRelative
 if(WIN32)
@@ -49,7 +49,7 @@ add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
 set_target_properties(editorconfig_static PROPERTIES
     OUTPUT_NAME editorconfig_static
     VERSION
-    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_SUBMINOR})
+    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_PATCH})
 
 # We need to link Shwapi since we use PathIsRelative
 if(WIN32)

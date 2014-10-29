@@ -73,7 +73,7 @@
 
 #define editorconfig_VERSION_MAJOR @editorconfig_VERSION_MAJOR@
 #define editorconfig_VERSION_MINOR @editorconfig_VERSION_MINOR@
-#define editorconfig_VERSION_SUBMINOR @editorconfig_VERSION_SUBMINOR@
+#define editorconfig_VERSION_PATCH @editorconfig_VERSION_PATCH@
 #define editorconfig_VERSION_SUFFIX "@editorconfig_VERSION_SUFFIX@"
 
 

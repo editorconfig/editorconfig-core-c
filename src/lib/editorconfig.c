@@ -352,10 +352,10 @@ static int editorconfig_compare_version(
     else if (v0->minor < v1->minor)
         return -1;
 
-    /* compare subminor */
-    if (v0->subminor > v1->subminor)
+    /* compare patch */
+    if (v0->patch > v1->patch)
         return 1;
-    else if (v0->subminor < v1->subminor)
+    else if (v0->patch < v1->patch)
         return -1;
 
     return 0;
@@ -398,12 +398,12 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 
     /* get current version */
     editorconfig_get_version(&cur_ver.major, &cur_ver.minor,
-            &cur_ver.subminor);
+            &cur_ver.patch);
 
     /* if version is set to 0.0.0, we set it to current version */
     if (eh->ver.major == 0 &&
             eh->ver.minor == 0 &&
-            eh->ver.subminor == 0)
+            eh->ver.patch == 0)
         eh->ver = cur_ver;
 
     if (editorconfig_compare_version(&eh->ver, &cur_ver) > 0)
@@ -520,14 +520,14 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
  * See header file
  */
 EDITORCONFIG_EXPORT
-void editorconfig_get_version(int* major, int* minor, int* subminor)
+void editorconfig_get_version(int* major, int* minor, int* patch)
 {
     if (major)
         *major = editorconfig_VERSION_MAJOR;
     if (minor)
         *minor = editorconfig_VERSION_MINOR;
-    if (subminor)
-        *subminor = editorconfig_VERSION_SUBMINOR;
+    if (patch)
+        *patch = editorconfig_VERSION_PATCH;
 }
 
 /*
