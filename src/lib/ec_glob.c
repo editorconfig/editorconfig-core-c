@@ -27,7 +27,9 @@
 #include "global.h"
 
 #include <ctype.h>
+#ifdef HAVE__BOOL
 #include <stdbool.h>
+#endif
 #include <string.h>
 #include <pcre.h>
 

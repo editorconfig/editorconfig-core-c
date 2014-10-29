@@ -69,6 +69,9 @@
 /* _Bool type */
 #ifndef HAVE__BOOL
 # define _Bool signed char
+# define bool _Bool
+# define false 0
+# define true 1
 #endif
 
 #define editorconfig_VERSION_MAJOR @editorconfig_VERSION_MAJOR@
