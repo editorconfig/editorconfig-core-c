@@ -27,7 +27,6 @@
 #include "global.h"
 
 #include <ctype.h>
-#include <stdbool.h>
 #include <string.h>
 #include <pcre.h>
 
@@ -66,7 +65,7 @@ int ec_glob(const char *pattern, const char *string)
     char *                    p_pcre;
     char *                    pcre_str_end;
     int                       brace_level = 0;
-    bool                      is_in_bracket = false;
+    _Bool                     is_in_bracket = 0;
     const char *              error_msg;
     int                       erroffset;
     pcre *                    re;
@@ -75,7 +74,7 @@ int ec_glob(const char *pattern, const char *string)
     size_t                    pcre_result_len;
     char                      l_pattern[2 * PATTERN_MAX];
     int                       pattern_length = strlen(pattern);
-    bool                      are_brace_paired;
+    _Bool                     are_brace_paired;
     UT_array *                nums;     /* number ranges */
     int                       ret = 0;
 
@@ -147,7 +146,7 @@ int ec_glob(const char *pattern, const char *string)
 
             {
                 /* check whether we have slash within the bracket */
-                bool            has_slash = false;
+                _Bool           has_slash = 0;
                 char *          cc;
                 for (cc = c; *cc && *cc != ']'; ++ cc)
                 {
@@ -159,7 +158,7 @@ int ec_glob(const char *pattern, const char *string)
 
                     if (*cc == '/')
                     {
-                        has_slash = true;
+                        has_slash = 1;
                         break;
                     }
                 }
@@ -178,7 +177,7 @@ int ec_glob(const char *pattern, const char *string)
                 }
             }
 
-            is_in_bracket = true;
+            is_in_bracket = 1;
             if (*(c+1) == '!')     /* case of [!...] */
             {
                 STRING_CAT(p_pcre, "[^", pcre_str_end);
@@ -190,7 +189,7 @@ int ec_glob(const char *pattern, const char *string)
             break;
 
         case ']':
-            is_in_bracket = false;
+            is_in_bracket = 0;
             *(p_pcre ++) = *c;
             break;
 
@@ -211,7 +210,7 @@ int ec_glob(const char *pattern, const char *string)
             /* Check the case of {single}, where single can be empty */
             {
                 char *                   cc;
-                bool                     is_single = true;
+                _Bool                    is_single = 1;
 
                 for (cc = c + 1; *cc != '\0' && *cc != '}'; ++ cc)
                 {
@@ -223,13 +222,13 @@ int ec_glob(const char *pattern, const char *string)
 
                     if (*cc == ',')
                     {
-                        is_single = false;
+                        is_single = 0;
                         break;
                     }
                 }
 
                 if (*cc == '\0')
-                    is_single = false;
+                    is_single = 0;
 
                 if (is_single)      /* escape the { and the corresponding } */
                 {
