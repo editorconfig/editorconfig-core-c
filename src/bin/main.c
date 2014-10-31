@@ -189,14 +189,14 @@ int main(int argc, const char* argv[])
 
             /* trim the trailing space characters */
             len = strlen(file_line_buffer) - 1;
-            while (len >= 0 && isspace(file_line_buffer[len]))
+            while (len >= 0 && isspace((unsigned char)file_line_buffer[len]))
                 -- len;
             if (len < 0) /* we meet a blank line */
                 continue;
             file_line_buffer[len + 1] = '\0';
 
             full_filename = file_line_buffer;
-            while (isspace(*full_filename))
+            while (isspace(*(unsigned char *)full_filename))
                 ++ full_filename;
 
             full_filename = strdup(full_filename);

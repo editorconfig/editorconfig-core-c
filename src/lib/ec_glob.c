@@ -299,7 +299,7 @@ int ec_glob(const char *pattern, const char *string)
             break;
 
         default:
-            if (!isalnum(*c))
+            if (!isalnum(*(unsigned char *)c))
                 *(p_pcre ++) = '\\';
 
             *(p_pcre ++) = *c;
