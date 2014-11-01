@@ -72,6 +72,13 @@ if(MSVC AND NOT MSVC_MD)
     endforeach(flag_var)
 endif()
 
+# Use unsigned char to represent plain char
+if(MSVC)
+    add_definitions("-J")
+else()
+    add_definitions("-funsigned-char")
+endif()
+
 add_subdirectory(lib)
 add_subdirectory(bin)
 
