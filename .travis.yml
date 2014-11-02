@@ -1,14 +1,13 @@
-# As CMake is not officially supported we use java
-language: java
+language: c
+
+compiler:
+  - gcc
+  - clang
 
 # Settings to try
 env:
  - OPTIONS="-DCMAKE_BUILD_TYPE=Release -DBUILD_STATICALLY_LINKED_EXE=ON"
  - OPTIONS="-DCMAKE_BUILD_TYPE=Release -DBUILD_STATICALLY_LINKED_EXE=OFF"
-
-# Make sure CMake and doxygen is installed
-install:
- - sudo apt-get install cmake
 
 # Run the Build script
 script:
