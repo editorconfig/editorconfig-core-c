@@ -24,9 +24,9 @@ Installing from source
 Before installing, you need to install the building tool [cmake][] and
 dependency [pcre][]. To install cmake and pcre with package manager:
 
-Arch Linux: `pacman -S cmake pcre`
-Homebrew on OS X: `brew install cmake pcre`
-Ubuntu/Debian: `apt-get install cmake libpcre3-dev`
+- Arch Linux: `pacman -S cmake pcre`
+- Homebrew on OS X: `brew install cmake pcre`
+- Ubuntu/Debian: `apt-get install cmake libpcre3-dev`
 
 Make sure cmake is in your PATH environment variable. Switch to the root
 directory of editorconfig and execute the following command:
