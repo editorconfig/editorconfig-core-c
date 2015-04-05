@@ -1,5 +1,5 @@
 [EditorConfig][]
-==============
+================
 
 [![Build Status](https://secure.travis-ci.org/editorconfig/editorconfig-core-c.png?branch=master)](http://travis-ci.org/editorconfig/editorconfig-core-c)
 
@@ -38,8 +38,9 @@ Getting Help
 ------------
 
 For help with the EditorConfig C Core code, please write to our
-[mailing list][].  Bugs and feature requests should be submitted to our
-[issue tracker][].
+[mailing list][]. Bugs and feature requests should be submitted to our
+[issue tracker][]. If you find any security bugs, please send them privately to
+hong AT topbug DOT net -- they need to be embargoed before fixed.
 
 If you are writing a plugin a language that can import C libraries, you may
 want to import and use the EditorConfig library directly.  If you do use the
@@ -61,7 +62,7 @@ LICENSE file for details.
 [EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
 [INSTALL.md]: https://github.com/editorconfig/editorconfig-core-c/blob/master/INSTALL.md
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
-[issue tracker]: https://github.com/editorconfig/editorconfig/issues
+[issue tracker]: https://github.com/editorconfig/editorconfig-core-c/issues
 [documentation]: http://docs.editorconfig.org/ "EditorConfig C Core documentation"
 [downloads]: https://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/
 [dev doc]: http://docs.editorconfig.org/en/master "EditorConfig C Core latest development version documentation"
