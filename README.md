@@ -40,7 +40,7 @@ Getting Help
 For help with the EditorConfig C Core code, please write to our
 [mailing list][]. Bugs and feature requests should be submitted to our
 [issue tracker][]. If you find any security bugs, please send them privately to
-hong AT topbug DOT net -- they need to be embargoed before fixed.
+`hong AT topbug DOT net` -- they need to be embargoed before fixed.
 
 If you are writing a plugin a language that can import C libraries, you may
 want to import and use the EditorConfig library directly.  If you do use the
