@@ -38,8 +38,10 @@ if(BUILD_DOCUMENTATION)
 
     if(DOXYGEN_FOUND)
 
-        # Generating the major part of the doc. Although it generates
+        # Generating the main part of the doc. Although it generates
         # editorconfig.3, we discard that file
+        set(DOC_MAN_SECTION 3)
+        set(DOC_GEN_HTML "YES")
         configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
             ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
 
@@ -54,42 +56,68 @@ if(BUILD_DOCUMENTATION)
             ${PROJECT_SOURCE_DIR}/logo/logo.png
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
+        set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
+        set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
+        set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
+        set(EC_MANPAGE5_DIR ${EC_MANPAGE_DIR}/man5)
+
         # Generating man page of editorconfig command. Although we have other
         # .1s other than editorconfig.1, we ignore them
-        configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
-            ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd)
+        set(DOC_MAN_SECTION 1)
+        set(DOC_GEN_HTML "NO")
+        configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+            ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-1)
 
         add_custom_command(
             OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1
             COMMAND
-            ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_cmd"
+            ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-1"
             MAIN_DEPENDENCY
-            ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile_cmd.in
+            ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
             DEPENDS
             ${PROJECT_SOURCE_DIR}/include/editorconfig/editorconfig.h
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
+        # Generating man page editorconfig-format.5. Although we have other
+        # .5s other than editorconfig-format.5, we ignore them
+        set(DOC_MAN_SECTION 5)
+        set(DOC_GEN_HTML "NO")
+        configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+            ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-5)
+
+        add_custom_command(
+            OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/man/man5/editorconfig-format.5
+            COMMAND
+            ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-5"
+            MAIN_DEPENDENCY
+            ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+            DEPENDS
+            ${PROJECT_SOURCE_DIR}/include/editorconfig/editorconfig.h
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+        # doc generation target
         add_custom_target(doc ALL DEPENDS
             ${CMAKE_CURRENT_BINARY_DIR}/html/index.html
-            ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1)
+            ${EC_MANPAGE1_DIR}/editorconfig.1
+            ${EC_MANPAGE5_DIR}/editorconfig-format.5)
 
         # install man pages
-        set(EC_MANPAGE_DIR ${CMAKE_CURRENT_BINARY_DIR}/man)
-        set(EC_MANPAGE3_DIR ${EC_MANPAGE_DIR}/man3)
-
         # Since we cannot avoid generating editorconfig.3 with doxygen, which
         # is the manpage of the command line interface with a manpage number 3,
-        # we need to exclude it when installing man3.
+        # we need to exclude it when installing man3. Same for
+        # editorconfig-format.3
         install(DIRECTORY ${EC_MANPAGE3_DIR}
             DESTINATION share/man
             PATTERN editorconfig.3 EXCLUDE
+            PATTERN editorconfig-format.3 EXCLUDE
             REGEX ._include_. EXCLUDE)
-
-        set(EC_MANPAGE1_DIR ${EC_MANPAGE_DIR}/man1)
 
         install(FILES
             ${EC_MANPAGE1_DIR}/editorconfig.1
             DESTINATION share/man/man1)
+        install(FILES
+            ${EC_MANPAGE5_DIR}/editorconfig-format.5
+            DESTINATION share/man/man5)
 
         # "make clean" should also clean generated docs
         set_directory_properties(PROPERTIES
