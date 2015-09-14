@@ -85,6 +85,9 @@
  * @section related Related Pages
  *
  * @ref editorconfig-format
+ * @manonly
+ * editorconfig-format(5)
+ * @endmanonly
  */
 
 /*!
@@ -185,6 +188,9 @@
  * @brief Header file of EditorConfig.
  *
  * Related page: @ref editorconfig-format
+ * @manonly
+ * editorconfig-format(5)
+ * @endmanonly
  *
  * @author EditorConfig Team
  */
