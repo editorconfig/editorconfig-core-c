@@ -21,7 +21,7 @@ NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-/* a dynamic array implementation using macros 
+/* a dynamic array implementation using macros
  */
 #ifndef UTARRAY_H
 #define UTARRAY_H
@@ -29,16 +29,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define UTARRAY_VERSION 1.9.9
 
 #ifdef __GNUC__
-#define _UNUSED_ __attribute__ ((__unused__)) 
+#define _UNUSED_ __attribute__ ((__unused__))
 #else
-#define _UNUSED_ 
+#define _UNUSED_
 #endif
 
 #include <stddef.h>  /* size_t */
 #include <string.h>  /* memset, etc */
 #include <stdlib.h>  /* exit */
 
+#ifndef oom
 #define oom() exit(-1)
+#endif
 
 typedef void (ctor_f)(void *dst, const void *src);
 typedef void (dtor_f)(void *elt);
@@ -85,9 +87,12 @@ typedef struct {
 } while(0)
 
 #define utarray_reserve(a,by) do {                                            \
-  if (((a)->i+by) > ((a)->n)) {                                               \
-    while(((a)->i+by) > ((a)->n)) { (a)->n = ((a)->n ? (2*(a)->n) : 8); }     \
-    if ( ((a)->d=(char*)realloc((a)->d, (a)->n*(a)->icd.sz)) == NULL) oom();  \
+  if (((a)->i+(by)) > ((a)->n)) {                                             \
+    char *utarray_tmp;                                                        \
+    while(((a)->i+(by)) > ((a)->n)) { (a)->n = ((a)->n ? (2*(a)->n) : 8); }   \
+    utarray_tmp=(char*)realloc((a)->d, (a)->n*(a)->icd.sz);                   \
+    if (utarray_tmp == NULL) oom();                                           \
+    (a)->d=utarray_tmp;                                                       \
   }                                                                           \
 } while(0)
 
@@ -189,7 +194,7 @@ typedef struct {
 #define utarray_renew(a,u) do {                                               \
   if (a) utarray_clear(a); \
   else utarray_new((a),(u));   \
-} while(0) 
+} while(0)
 
 #define utarray_clear(a) do {                                                 \
   if ((a)->i > 0) {                                                           \
