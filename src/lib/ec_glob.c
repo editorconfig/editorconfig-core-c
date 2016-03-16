@@ -30,6 +30,7 @@
 #include <string.h>
 #include <pcre.h>
 
+#define oom() { return -1; }
 #include "utarray.h"
 #include "misc.h"
 
