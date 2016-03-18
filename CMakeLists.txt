@@ -29,9 +29,9 @@ cmake_policy(VERSION 2.8.7)
 
 set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 12)
-set (editorconfig_VERSION_PATCH 1)
+set (editorconfig_VERSION_PATCH 2)
 
-set (editorconfig_VERSION_SUFFIX "")
+set (editorconfig_VERSION_SUFFIX "-development")
 
 project(editorconfig C)
 
