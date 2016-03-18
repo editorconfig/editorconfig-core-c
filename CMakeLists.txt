@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011-2016 EditorConfig Team
+# Copyright (c) 2011-2013 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -24,15 +24,15 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 2.8)
 
-cmake_policy(SET CMP0048 NEW)
-
-project(editorconfig C)
-project(editorconfig VERSION 0.12.1)
+set (editorconfig_VERSION_MAJOR 0)
+set (editorconfig_VERSION_MINOR 12)
+set (editorconfig_VERSION_PATCH 1)
 
 set (editorconfig_VERSION_SUFFIX "-development")
 
+project(editorconfig C)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake_Modules")
 
