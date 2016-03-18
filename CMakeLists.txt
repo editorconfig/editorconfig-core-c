@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011-2013 EditorConfig Team
+# Copyright (c) 2011-2016 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -24,7 +24,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.7)
+cmake_policy(VERSION 2.8.7)
 
 set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 12)
