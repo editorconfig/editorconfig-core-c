@@ -1,3 +1,10 @@
+v0.12.1
+
+- Fix an issue that libeditorconfig calls exit()---this should not be
+  called in a library function. (#12)
+- Bump required minimum cmake version to 2.8.7.
+- Use GNU installation dirs for OS portability. (#13)
+
 v0.12.0
 
 New dependency: pcre
