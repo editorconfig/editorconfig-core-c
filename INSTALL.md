@@ -41,12 +41,6 @@ could be used when generating the project file:
     man pages will be generated.
     e.g. cmake -DBUILD_DOCUMENTATION=OFF .
 
-    -DBUILD_STATICALLY_LINKED_ECC=[ON|OFF]  Default: OFF
-    If this option is on, the executable will link the EditorConfig-core
-    libraries statically. Otherwise, the executable will dynamically link
-    to libeditorconfig.so.
-    e.g. cmake -DBUILD_STATICALLY_LINKED_EXE=OFF .
-
     -DBUILD_STATICALLY_LINKED_EXE=[ON|OFF]  Default: OFF
     If this option is on, the executable will be linked statically to all
     libraries. This option is currently only valid for gcc.
