@@ -26,7 +26,6 @@
 
 link_directories(${CMAKE_ARCHIVE_OUTPUT_DIR})
 
-set(BUILD_STATICALLY_LINKED_ECC_DEFAULT_VAL OFF)
 # for gcc, BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL is OFF
 if(CMAKE_COMPILER_IS_GNUCC)
     set(BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL OFF)
@@ -35,15 +34,11 @@ endif(CMAKE_COMPILER_IS_GNUCC)
 option(BUILD_STATICALLY_LINKED_EXE
     "Link the standard library statically when building the executable.(Only valid for gcc)"
     ${BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL})
-option(BUILD_STATICALLY_LINKED_ECC
-    "Link the editorconfig libraries statically when building the executable."
-    ${BUILD_STATICALLY_LINKED_ECC_DEFAULT_VAL})
 
 if(CMAKE_COMPILER_IS_GNUCC)
     if(BUILD_STATICALLY_LINKED_EXE)
         # Add -static for linker if we want a statically linked executable
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
-        set(BUILD_STATICALLY_LINKED_ECC ON)
     endif(BUILD_STATICALLY_LINKED_EXE)
 endif(CMAKE_COMPILER_IS_GNUCC)
 
@@ -52,11 +47,11 @@ set(editorconfig_BINSRCS
 
 # targets
 add_executable(editorconfig_bin ${editorconfig_BINSRCS})
-if(BUILD_STATICALLY_LINKED_ECC)
+if(BUILD_STATICALLY_LINKED_EXE)
     target_link_libraries(editorconfig_bin editorconfig_static)
-else(BUILD_STATICALLY_LINKED_ECC)
+else(BUILD_STATICALLY_LINKED_EXE)
     target_link_libraries(editorconfig_bin editorconfig_shared)
-endif(BUILD_STATICALLY_LINKED_ECC)
+endif(BUILD_STATICALLY_LINKED_EXE)
 set_target_properties(editorconfig_bin PROPERTIES
     OUTPUT_NAME editorconfig
     VERSION
