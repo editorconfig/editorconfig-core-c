@@ -43,7 +43,9 @@ could be used when generating the project file:
 
     -DBUILD_STATICALLY_LINKED_EXE=[ON|OFF]  Default: OFF
     If this option is on, the executable will be linked statically to all
-    libraries. This option is currently only valid for gcc.
+    libraries. On MSVC, this means that EditorConfig will be statically
+    linked to the executable. On GCC, this means all libraries (glibc and 
+    EditorConfig) are statically linked to the executable.
     e.g. cmake -DBUILD_STATICALLY_LINKED_EXE=ON .
 
     -DINSTALL_HTML_DOC=[ON|OFF]             Default: OFF
