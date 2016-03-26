@@ -32,7 +32,7 @@ if(CMAKE_COMPILER_IS_GNUCC)
 endif(CMAKE_COMPILER_IS_GNUCC)
 
 option(BUILD_STATICALLY_LINKED_EXE
-    "Statically link all libraries when building the executable.(Only valid for gcc)"
+    "Statically link all libraries when building the executable."
     ${BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL})
 
 if(CMAKE_COMPILER_IS_GNUCC)
