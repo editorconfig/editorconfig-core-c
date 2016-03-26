@@ -43,6 +43,7 @@ if(CMAKE_COMPILER_IS_GNUCC)
     if(BUILD_STATICALLY_LINKED_EXE)
         # Add -static for linker if we want a statically linked executable
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+        set(BUILD_STATICALLY_LINKED_ECC ON)
     endif(BUILD_STATICALLY_LINKED_EXE)
 endif(CMAKE_COMPILER_IS_GNUCC)
 
