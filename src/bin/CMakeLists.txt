@@ -32,7 +32,7 @@ if(CMAKE_COMPILER_IS_GNUCC)
 endif(CMAKE_COMPILER_IS_GNUCC)
 
 option(BUILD_STATICALLY_LINKED_EXE
-    "Link the standard library statically when building the executable.(Only valid for gcc)"
+    "Statically link all libraries when building the executable."
     ${BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL})
 
 if(CMAKE_COMPILER_IS_GNUCC)
@@ -47,7 +47,11 @@ set(editorconfig_BINSRCS
 
 # targets
 add_executable(editorconfig_bin ${editorconfig_BINSRCS})
-target_link_libraries(editorconfig_bin editorconfig_static)
+if(BUILD_STATICALLY_LINKED_EXE)
+    target_link_libraries(editorconfig_bin editorconfig_static)
+else(BUILD_STATICALLY_LINKED_EXE)
+    target_link_libraries(editorconfig_bin editorconfig_shared)
+endif(BUILD_STATICALLY_LINKED_EXE)
 set_target_properties(editorconfig_bin PROPERTIES
     OUTPUT_NAME editorconfig
     VERSION
