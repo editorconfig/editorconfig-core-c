@@ -28,8 +28,12 @@ dependency [pcre][]. To install cmake and pcre with package manager:
 - Homebrew on OS X: `brew install cmake pcre`
 - Ubuntu/Debian: `apt-get install cmake libpcre3-dev`
 
-Make sure cmake is in your PATH environment variable. Switch to the root
-directory of editorconfig and execute the following command:
+Make sure cmake is in your PATH environment variable. on Windows, you also need
+to build pcre from source. If you want to build the MT version of this library,
+after running `cmake .` in the pcre source directory, please replace all
+occurrence of "MD" with "MT" in the CMakeCache.txt.
+
+Switch to the root directory of editorconfig and execute the following command:
 
     cmake .
 
@@ -61,7 +65,7 @@ could be used when generating the project file:
     -DMSVC_MD=[ON|OFF]                      Default: OFF
     Use /MD instead of /MT flag when compiling with Microsoft Visual C++. This
     option takes no effect when using compilers other than Microsoft Visual
-    C++.
+    C++. Note that the option chosen here must be consistent with pcre.
     e.g. We want to use /MD instead of /MT when compiling with MSVC.
     cmake -DMSVC_MD=ON .
 
