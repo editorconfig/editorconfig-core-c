@@ -223,7 +223,7 @@ int main(int argc, const char* argv[])
             /* print error message */
             fputs(editorconfig_get_error_msg(err_num), stderr);
             if (err_num > 0)
-                fprintf(stderr, ": \"%s\"",
+                fprintf(stderr, ":%d \"%s\"", err_num,
                         editorconfig_handle_get_err_file(eh));
             fprintf(stderr, "\n");
             exit(1);
