@@ -161,11 +161,17 @@
  *
  * @endmanonly
  *
- * The backslash character (\) can be used to escape a character so it is not interpreted as a special character.
+ * The backslash character (\) can be used to escape a character so it is not
+ * interpreted as a special character.
+ *
+ * The maximum length of a section name is 4096 characters. All sections
+ * exceeding this limit are ignored.
  *
  * @section properties Supported Properties
  *
- * EditorConfig file sections contain properties, which are name-value pairs separated by an equal sign (=). EditorConfig plugins will ignore unrecognized property names and properties with invalid values.
+ * EditorConfig file sections contain properties, which are name-value pairs
+ * separated by an equal sign (=). EditorConfig plugins will ignore unrecognized
+ * property names and properties with invalid values.
  *
  * Here is the list of all property names understood by EditorConfig and all valid values for these properties:
  *
@@ -180,7 +186,10 @@
  * <li><strong>root</strong>: special property that should be specified at the top of the file outside of any sections. Set to "true" to stop <code>.editorconfig</code> files search on current file. The value is case insensitive.</li>
  * </ul>
  *
- * Property names are case insensitive and all property names are lowercased when parsing.
+ * Property names are case insensitive and all property names are lowercased
+ * when parsing. The maximum length of a property name is 50 characters and the
+ * maximum length of a property value is 255 characters. Any property beyond
+ * these limits would be ignored.
  */
 
 /*!

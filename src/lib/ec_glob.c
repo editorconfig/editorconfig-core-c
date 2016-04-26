@@ -52,7 +52,7 @@ static const UT_icd ut_int_pair_icd = {sizeof(int_pair),NULL,NULL,NULL};
     p += string_len; \
 } while(0)
 
-#define PATTERN_MAX  300
+#define PATTERN_MAX  4097
 /*
  * Whether the string matches the given glob pattern
  */

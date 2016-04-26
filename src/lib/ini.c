@@ -40,7 +40,7 @@ http://code.google.com/p/inih/
 
 #include "ini.h"
 
-#define MAX_LINE 200
+#define MAX_LINE 5000
 #define MAX_SECTION MAX_SECTION_NAME
 #define MAX_NAME MAX_PROPERTY_NAME
 
@@ -104,8 +104,8 @@ int ini_parse_file(FILE* file,
 {
     /* Uses a fair bit of stack (use heap instead if you need to) */
     char line[MAX_LINE];
-    char section[MAX_SECTION] = "";
-    char prev_name[MAX_NAME] = "";
+    char section[MAX_SECTION+1] = "";
+    char prev_name[MAX_NAME+1] = "";
 
     char* start;
     char* end;
@@ -144,6 +144,9 @@ int ini_parse_file(FILE* file,
             end = find_last_char_or_comment(start + 1, ']');
             if (*end == ']') {
                 *end = '\0';
+                /* Section name too long. Skipped. */
+                if (end - start - 1 > MAX_SECTION_NAME)
+                    continue;
                 strncpy0(section, start + 1, sizeof(section));
                 *prev_name = '\0';
             }
@@ -166,6 +169,11 @@ int ini_parse_file(FILE* file,
                 if (*end == ';' || *end == '#')
                     *end = '\0';
                 rstrip(value);
+
+                /* Either name or value is too long. Skip it. */
+                if (strlen(name) > MAX_PROPERTY_NAME ||
+                    strlen(value) > MAX_PROPERTY_VALUE)
+                    continue;
 
                 /* Valid name[=:]value pair found, call handler */
                 strncpy0(prev_name, name, sizeof(prev_name));
