@@ -89,7 +89,7 @@ static void set_name_value(editorconfig_name_value* nv, const char* name,
             !strcmp(nv->name, "charset"))
         strlwr(nv->value);
 
-    /* set speical pointers */
+    /* set special pointers */
     set_special_property_name_value_pointers(nv, spnvp);
 }
 
