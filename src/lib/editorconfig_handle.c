@@ -112,7 +112,7 @@ void editorconfig_handle_set_version(editorconfig_handle h, int major,
         ((struct editorconfig_handle*)h)->ver.minor = minor;
 
     if (patch >= 0)
-        ((struct editorconfig_handle*)h)->ver.patch = minor;
+        ((struct editorconfig_handle*)h)->ver.patch = patch;
 }
 
 /*
