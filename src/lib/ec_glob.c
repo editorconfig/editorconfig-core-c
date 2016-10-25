@@ -314,7 +314,10 @@ int ec_glob(const char *pattern, const char *string)
     re = pcre_compile(pcre_str, 0, &error_msg, &erroffset, NULL);
 
     if (!re)        /* failed to compile */
+    {
+        utarray_free(nums);
         return -1;
+    }
 
     pcre_result_len = 3 * (utarray_len(nums) + 1);
     pcre_result = (int *) calloc(pcre_result_len, sizeof(int_pair));
