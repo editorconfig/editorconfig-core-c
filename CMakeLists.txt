@@ -35,6 +35,7 @@ set (editorconfig_VERSION_SUFFIX "-development")
 
 project(editorconfig C)
 
+include(GNUInstallDirs)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake_Modules")
 
 # set default compilation directory

@@ -24,8 +24,6 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-include(GNUInstallDirs)
-
 set(editorconfig_LIBSRCS
     ec_glob.c
     editorconfig.c

@@ -58,5 +58,5 @@ set_target_properties(editorconfig_bin PROPERTIES
     ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_PATCH})
 
 install(TARGETS editorconfig_bin
-    RUNTIME DESTINATION bin)
+    RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 

@@ -27,5 +27,5 @@
 install(FILES
     editorconfig/editorconfig.h
     editorconfig/editorconfig_handle.h
-    DESTINATION include/editorconfig)
+    DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}/editorconfig")
 
