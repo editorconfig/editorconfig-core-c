@@ -107,17 +107,17 @@ if(BUILD_DOCUMENTATION)
         # we need to exclude it when installing man3. Same for
         # editorconfig-format.3
         install(DIRECTORY ${EC_MANPAGE3_DIR}
-            DESTINATION share/man
+            DESTINATION "${CMAKE_INSTALL_MANDIR}"
             PATTERN editorconfig.3 EXCLUDE
             PATTERN editorconfig-format.3 EXCLUDE
             REGEX ._include_. EXCLUDE)
 
         install(FILES
             ${EC_MANPAGE1_DIR}/editorconfig.1
-            DESTINATION share/man/man1)
+            DESTINATION "${CMAKE_INSTALL_MANDIR}/man1")
         install(FILES
             ${EC_MANPAGE5_DIR}/editorconfig-format.5
-            DESTINATION share/man/man5)
+            DESTINATION "${CMAKE_INSTALL_MANDIR}/man5")
 
         # "make clean" should also clean generated docs
         set_directory_properties(PROPERTIES
@@ -125,7 +125,7 @@ if(BUILD_DOCUMENTATION)
 
         if(INSTALL_HTML_DOC)
             install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
-                DESTINATION share/doc/editorconfig)
+                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/editorconfig")
         endif(INSTALL_HTML_DOC)
 
     else(DOXYGEN_FOUND)
