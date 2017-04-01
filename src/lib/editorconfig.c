@@ -409,7 +409,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     if (editorconfig_compare_version(&eh->ver, &cur_ver) > 0)
         return EDITORCONFIG_PARSE_VERSION_TOO_NEW;
 
-    if (!eh->err_file) {
+    if (eh->err_file) {
         free(eh->err_file);
         eh->err_file = NULL;
     }
