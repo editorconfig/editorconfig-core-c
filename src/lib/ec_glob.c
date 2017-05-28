@@ -169,11 +169,21 @@ int ec_glob(const char *pattern, const char *string)
                 {
                     char *           right_bracket = strchr(c, ']');
 
+                    if (!right_bracket)  /* The right bracket may not exist */
+                        right_bracket = c + strlen(c);
+
                     strcat(p_pcre, "\\");
                     strncat(p_pcre, c, right_bracket - c);
-                    strcat(p_pcre, "\\]");
+                    if (*right_bracket)  /* right_bracket is a bracket */
+                        strcat(p_pcre, "\\]");
                     p_pcre += strlen(p_pcre);
                     c = right_bracket;
+                    if (!*c)
+                        /* end of string, meaning that right_bracket is not a
+                         * bracket. Then we go back one character to make the
+                         * parsing end normally for the counter in the "for"
+                         * loop. */
+                        c -= 1;
                     break;
                 }
             }
