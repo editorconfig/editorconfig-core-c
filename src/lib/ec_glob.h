@@ -36,6 +36,10 @@ extern "C" {
 #endif
 EDITORCONFIG_LOCAL
 int ec_glob(const char * pattern, const char * string);
+
+/* Special characters. */
+extern const char ec_special_chars[];
+
 #ifdef __cplusplus
 }
 #endif

@@ -36,6 +36,9 @@
 
 #include "ec_glob.h"
 
+/* Special characters */
+const char ec_special_chars[] = "?[]\\*-{},";
+
 typedef struct int_pair
 {
     int     num1;

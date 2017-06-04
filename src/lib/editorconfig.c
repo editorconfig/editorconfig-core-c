@@ -228,16 +228,34 @@ static int ini_handler(void* hfp, const char* section, const char* name,
         return 1;
     }
 
-    /* pattern would be: /dir/of/editorconfig/file[double_star]/[section] if
+    /* Pattern would be: /dir/of/editorconfig/file[double_star]/[section] if
      * section does not contain '/', or /dir/of/editorconfig/file[section]
      * if section starts with a '/', or /dir/of/editorconfig/file/[section] if
-     * section contains '/' but does not start with '/' */
+     * section contains '/' but does not start with '/'.
+     *
+     * If the dir part has any special characters as defined by ec_glob.c, we
+     * need to escape them.
+     */
     pattern = (char*)malloc(
-            strlen(hfparam->editorconfig_file_dir) * sizeof(char) +
+        /* The 2 here is for possible escaping. */
+        strlen(hfparam->editorconfig_file_dir) * sizeof(char) * 2 +
             sizeof("**/") + strlen(section) * sizeof(char));
     if (!pattern)
         return 0;
-    strcpy(pattern, hfparam->editorconfig_file_dir);
+
+    /* Escaping special characters in the directory part. */
+    char* ptr = hfparam->editorconfig_file_dir;
+    char* ptr_prev = ptr;
+    char* ptr_pattern = pattern;
+    for (; ptr = strpbrk(ptr, ec_special_chars); ++ ptr, ptr_prev = ptr)
+    {
+        ptrdiff_t s = ptr - ptr_prev;
+        memcpy(ptr_pattern, ptr_prev, s * sizeof(char));
+        ptr_pattern += s;
+        *(ptr_pattern ++) = '\\';  /* escaping char */
+        *(ptr_pattern ++) = *ptr;
+    }
+    strcpy(ptr_pattern, ptr_prev);
 
     if (strchr(section, '/') == NULL) /* No / is found, append '[star][star]/' */
         strcat(pattern, "**/");
