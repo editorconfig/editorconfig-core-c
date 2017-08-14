@@ -2,41 +2,28 @@ image:
   - Visual Studio 2017
   
 environment:
-  CMAKE_GENERATOR: 'Visual Studio 15 2017 Win64'
   CONFIG: Release
-  ARCH: x64
-  CMAKE_INSTALL_PREFIX: ..\build
-  PCRE2_DEST: C:\projects\bin\%ARCH%-static\pcre2
-  CORE_DEST: C:\projects\bin\%ARCH%-static\core
+  VSVER: 15
+  matrix:
+    - ARCH: x86
+    - ARCH: x64
 
 install:
   - cmake --version
-  - git submodule init
-  - git submodule update
-  - cd C:\projects
+  - git submodule update --init
   # Download PCRE2 sources
-  - curl -o pcre2.zip https://ftp.pcre.org/pub/pcre/pcre2-10.32.zip
-  - 7z x -y pcre2.zip > nul
-  - rename pcre2-10.32 pcre2
+  - ps: ./init.ps1 -pcre 10.32
   # Build and install PCRE2
-  - mkdir %PCRE2_DEST%
-  - cd %PCRE2_DEST%
-  - cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DPCRE2_STATIC_RUNTIME="ON" -DBUILD_SHARED_LIBS="OFF" -DPCRE2_BUILD_PCRE2GREP="OFF" -DPCRE2_BUILD_TESTS="OFF" C:\projects\pcre2
-  - cd %PCRE2_DEST%
-  - cmake --build %PCRE2_DEST% --target install -- /p:Configuration=%CONFIG%
+  - ps: ./build.ps1 -proj pcre2 -config $env:CONFIG -arch $env:ARCH -vsver $env:VSVER -init -install
 
 build_script:
   # Build and install editorconfig-core-c
-  - mkdir %CORE_DEST%
-  - cd %CORE_DEST%
-  - cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DMSVC_MD="OFF" -DPCRE2_STATIC="ON" C:\projects\editorconfig-core-c
-  - cmake --build %CORE_DEST% --target install -- /p:Configuration=%CONFIG%
+  - ps: ./build.ps1 -proj core -config $env:CONFIG -arch $env:ARCH -vsver $env:VSVER -init -install
 
 test_script:
   # Run the core tests
-  - cd %CORE_DEST%
-  - ctest -E utf_8_char -VV --output-on-failure .
+  - ps: ./test.ps1 -proj core -config $env:CONFIG -arch $env:ARCH
 
 on_failure:
   - echo. && echo. && echo. && echo "Tests for editorconfig-core-c failed. Here is their detailed output:" && echo. && echo. && echo.
-  - type C:\projects\bin\x64-static\core\Testing\Temporary\LastTest.log
+  - type .\bin\x64-static\core\Testing\Temporary\LastTest.log
