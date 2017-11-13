@@ -186,6 +186,10 @@
  * <li><strong>root</strong>: special property that should be specified at the top of the file outside of any sections. Set to "true" to stop <code>.editorconfig</code> files search on current file. The value is case insensitive.</li>
  * </ul>
  *
+ * For any property, a value of "unset" is to remove the effect of that
+ * property, even if it has been set before. For example, add "indent_size =
+ * unset" to undefine indent_size property (and use editor default).
+ *
  * Property names are case insensitive and all property names are lowercased
  * when parsing. The maximum length of a property name is 50 characters and the
  * maximum length of a property value is 255 characters. Any property beyond
