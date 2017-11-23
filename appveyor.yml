@@ -1,0 +1,12 @@
+
+install:
+  - cmake --version
+  - git submodule init
+  - git submodule update
+  
+build_script:
+  - cmake .
+  - ctest .
+on_failure:
+  - echo "failed"
+  - type Testing\Temporary\LastTest.log
