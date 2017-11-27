@@ -2,6 +2,7 @@
 ================
 
 [![Build Status](https://secure.travis-ci.org/editorconfig/editorconfig-core-c.svg?branch=master)](http://travis-ci.org/editorconfig/editorconfig-core-c)
+[![Build status](https://ci.appveyor.com/api/projects/status/u9t8m4uech5kejoi/branch/master?svg=true)](https://ci.appveyor.com/project/xuhdev/editorconfig-core-c/branch/master)
 
 EditorConfig makes it easy to maintain the correct coding style when switching
 between different text editors and between different projects.  The
