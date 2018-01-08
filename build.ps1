@@ -16,7 +16,7 @@ param(
     [string] $arch = "x64",
     
 
-    [ValidateSet("15","14","12")]
+    [ValidateSet("17","16","15","14","12")]
     [int] $vsver = 15
 )
 
@@ -75,6 +75,12 @@ if ($init) {
     $gen = "Visual Studio "
 
     switch ($vsver) {
+        17 {
+            $gen += "17 2022"
+        }
+        16 {
+            $gen += "16 2019"
+        }
         15 {
             $gen += "15 2017"
         }

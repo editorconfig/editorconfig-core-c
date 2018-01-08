@@ -14,7 +14,7 @@ New-Item $dest -ItemType Directory -ErrorAction SilentlyContinue | Out-Null
 #####################################################################
 # pcre
 #####################################################################
-$url = "https://ftp.pcre.org/pub/pcre/pcre2-$($pcre).zip"
+$url = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-$($pcre)/pcre2-$($pcre).zip"
 $output = "$dest\pcre-$($pcre).zip"
 
 "Downloading pcre2 v$pcre sources" | Write-Host -ForegroundColor DarkGreen

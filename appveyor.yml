@@ -26,4 +26,5 @@ test_script:
 
 on_failure:
   - echo. && echo. && echo. && echo "Tests for editorconfig-core-c failed. Here is their detailed output:" && echo. && echo. && echo.
-  - type .\bin\x64-static\core\Testing\Temporary\LastTest.log
+  - cd .\bin\%ARCH%-static\core\Testing\Temporary\
+  - type LastTest.log
