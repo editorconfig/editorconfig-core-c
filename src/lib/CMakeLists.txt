@@ -62,3 +62,10 @@ install(TARGETS editorconfig_shared editorconfig_static
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/editorconfig.pc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/editorconfig.pc
+    @ONLY)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/editorconfig.pc
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
