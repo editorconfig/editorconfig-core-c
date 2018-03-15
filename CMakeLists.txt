@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2011-2016 EditorConfig Team
+# Copyright (c) 2011-2018 EditorConfig Team
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@ set (editorconfig_VERSION_MAJOR 0)
 set (editorconfig_VERSION_MINOR 12)
 set (editorconfig_VERSION_PATCH 2)
 
-set (editorconfig_VERSION_SUFFIX "-development")
+set (editorconfig_VERSION_SUFFIX "")
 
 project(editorconfig C)
 
