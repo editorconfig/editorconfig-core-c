@@ -1,6 +1,6 @@
 prefix=@CMAKE_INSTALL_PREFIX@
 libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
-includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@/editorconfig
+includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
  
 Name: editorconfig
 Description: Library handling EditorConfig files, a file format defining coding styles in projects.
