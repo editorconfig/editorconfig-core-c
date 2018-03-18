@@ -35,7 +35,7 @@ build_script:
 test_script:
   # Run the core tests
   - cd %CORE_DEST%
-  - cmake --build %CORE_DEST% --target run_tests -- /p:Configuration=%CONFIG%
+  - ctest -E utf_8_char -VV --output-on-failure .
 
 on_failure:
   - echo. && echo. && echo. && echo "Tests for editorconfig-core-c failed. Here is their detailed output:" && echo. && echo. && echo.
