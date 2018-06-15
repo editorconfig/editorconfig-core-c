@@ -6,7 +6,7 @@ Dependency
 Installing from a binary package
 ================================
 
-Binary packages can be downloaded [here](http://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/).
+Windows binary packages can be downloaded [here](http://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/).
 
 Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
 

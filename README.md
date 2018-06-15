@@ -29,11 +29,7 @@ maintained in one code base, resulting in less code repitition between plugins.
 Installation
 ------------
 
-To install the EditorConfig core from source see the [INSTALL.md][] file.
-
-Binary installation packages for the EditorConfig core can be found on
-[SourceForge downloads page][downloads].
-
+See the [INSTALL.md][] file for instructions.
 
 Getting Help
 ------------
