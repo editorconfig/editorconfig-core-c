@@ -23,7 +23,7 @@ any properties found.
 When developing an editor plugin for reading EditorConfig files, the
 EditorConfig core code can be used to locate and parse these files. This means
 the file locator, INI parser, and file globbing mechanisms can all be
-maintained in one code base, resulting in less code repitition between plugins.
+maintained in one code base, resulting in less code repetition between plugins.
 
 
 Installation
@@ -52,8 +52,8 @@ License
 Unless otherwise stated, all files are distributed under the Simplified BSD
 license. The inih(`src/lib/ini.c` and `src/lib/ini.h`) library is distributed
 under the New BSD license. `src/lib/utarray.h` is distributed under the Revised
-BSD License. The See LICENSE file for details. Some code in src/lib/misc.c is
-idstributed under their own license (see the source file for details). See the
+BSD License. The See LICENSE file for details. Some code in `src/lib/misc.c` is
+distributed under their own license (see the source file for details). See the
 LICENSE file for details.
 
 [EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
