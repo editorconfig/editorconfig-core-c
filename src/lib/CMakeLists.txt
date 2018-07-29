@@ -55,7 +55,18 @@ if(WIN32)
 endif()
 target_link_libraries(editorconfig_static ${PCRE_LIBRARIES})
 
+# EditorConfig package name for find_package() and the CMake package registry.
+# On UNIX the system registry is usually just "lib/cmake/<package>".
+# See cmake-package(7) for details.
+set(config_package_name "EditorConfig")
+set(editorconfig_CONFIG_NAME "${config_package_name}Config")
+set(editorconfig_CONFIG_VERSION_NAME "${config_package_name}ConfigVersion")
+set(editorconfig_CONFIG_EXPORT_NAME "${config_package_name}Targets")
+set(editorconfig_CONFIG_INSTALL_LIBDIR
+    "${CMAKE_INSTALL_LIBDIR}/cmake/${config_package_name}")
+
 install(TARGETS editorconfig_shared editorconfig_static
+    EXPORT ${editorconfig_CONFIG_EXPORT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
@@ -67,3 +78,21 @@ configure_file(
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/editorconfig.pc
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(${editorconfig_CONFIG_NAME}.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${editorconfig_CONFIG_NAME}.cmake
+    INSTALL_DESTINATION ${editorconfig_CONFIG_INSTALL_LIBDIR})
+
+write_basic_package_version_file(
+    ${CMAKE_CURRENT_BINARY_DIR}/${editorconfig_CONFIG_VERSION_NAME}.cmake
+    COMPATIBILITY AnyNewerVersion)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/${editorconfig_CONFIG_NAME}.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${editorconfig_CONFIG_VERSION_NAME}.cmake
+    DESTINATION ${editorconfig_CONFIG_INSTALL_LIBDIR})
+
+install(EXPORT ${editorconfig_CONFIG_EXPORT_NAME}
+    DESTINATION ${editorconfig_CONFIG_INSTALL_LIBDIR})
