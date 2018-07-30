@@ -54,8 +54,7 @@ else(BUILD_STATICALLY_LINKED_EXE)
 endif(BUILD_STATICALLY_LINKED_EXE)
 set_target_properties(editorconfig_bin PROPERTIES
     OUTPUT_NAME editorconfig
-    VERSION
-    ${editorconfig_VERSION_MAJOR}.${editorconfig_VERSION_MINOR}.${editorconfig_VERSION_PATCH})
+    VERSION ${PROJECT_VERSION})
 
 install(TARGETS editorconfig_bin
     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
