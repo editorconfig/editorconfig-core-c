@@ -541,11 +541,11 @@ EDITORCONFIG_EXPORT
 void editorconfig_get_version(int* major, int* minor, int* patch)
 {
     if (major)
-        *major = editorconfig_VERSION_MAJOR;
+        *major = EC_VERSION_MAJOR;
     if (minor)
-        *minor = editorconfig_VERSION_MINOR;
+        *minor = EC_VERSION_MINOR;
     if (patch)
-        *patch = editorconfig_VERSION_PATCH;
+        *patch = EC_VERSION_PATCH;
 }
 
 /*
@@ -554,5 +554,5 @@ void editorconfig_get_version(int* major, int* minor, int* patch)
 EDITORCONFIG_EXPORT
 const char* editorconfig_get_version_suffix(void)
 {
-    return editorconfig_VERSION_SUFFIX;
+    return EC_VERSION_SUFFIX;
 }

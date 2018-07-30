@@ -4,6 +4,6 @@ includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
  
 Name: editorconfig
 Description: Library handling EditorConfig files, a file format defining coding styles in projects.
-Version: @editorconfig_VERSION_MAJOR@.@editorconfig_VERSION_MINOR@.@editorconfig_VERSION_PATCH@
+Version: @PROJECT_VERSION@
 Libs: -L${libdir} -leditorconfig
 Cflags: -I${includedir}

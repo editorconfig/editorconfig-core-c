@@ -71,10 +71,10 @@
 # define _Bool signed char
 #endif
 
-#define editorconfig_VERSION_MAJOR @editorconfig_VERSION_MAJOR@
-#define editorconfig_VERSION_MINOR @editorconfig_VERSION_MINOR@
-#define editorconfig_VERSION_PATCH @editorconfig_VERSION_PATCH@
-#define editorconfig_VERSION_SUFFIX "@editorconfig_VERSION_SUFFIX@"
+#define EC_VERSION_MAJOR @PROJECT_VERSION_MAJOR@
+#define EC_VERSION_MINOR @PROJECT_VERSION_MINOR@
+#define EC_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#define EC_VERSION_SUFFIX "@PROJECT_VERSION_SUFFIX@"
 
 
 #endif /* !__CONFIG_H__ */
