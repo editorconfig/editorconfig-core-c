@@ -26,14 +26,17 @@
 
 cmake_minimum_required(VERSION 2.8.7)
 cmake_policy(VERSION 2.8.7)
-
-set (editorconfig_VERSION_MAJOR 0)
-set (editorconfig_VERSION_MINOR 12)
-set (editorconfig_VERSION_PATCH 3)
-
-set (editorconfig_VERSION_SUFFIX "-development")
+# project() command sets VERSION variables (since CMake 3.0).
+cmake_policy(SET CMP0048 NEW)
 
 project(editorconfig C)
+
+# Must be placed after the call to project().
+set(editorconfig_VERSION_MAJOR 0)
+set(editorconfig_VERSION_MINOR 12)
+set(editorconfig_VERSION_PATCH 3)
+
+set(editorconfig_VERSION_SUFFIX "-development")
 
 include(GNUInstallDirs)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake_Modules")
