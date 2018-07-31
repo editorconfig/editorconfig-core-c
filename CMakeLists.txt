@@ -24,8 +24,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-cmake_minimum_required(VERSION 2.8.7)
-cmake_policy(VERSION 2.8.7)
+cmake_minimum_required(VERSION 2.8.12)
+cmake_policy(VERSION 2.8.12)
 # project() command sets VERSION variables (since CMake 3.0).
 cmake_policy(SET CMP0048 NEW)
 
