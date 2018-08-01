@@ -1,5 +1,13 @@
 v0.12.3
+
 - Bump required minimum cmake version to 2.8.12.
+
+v0.12.2
+
+- Add support for pkgconfig.
+- Memory leaks and crash fixes.
+- Improve error messages.
+- Add CI on AppVeyor.
 
 v0.12.1
 
