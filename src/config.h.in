@@ -52,7 +52,14 @@
 #cmakedefine CMAKE_COMPILER_IS_GNUCC
 #cmakedefine MSVC
 
+#cmakedefine HAVE_PCRE2
+
+#ifdef HAVE_PCRE2
+#cmakedefine PCRE2_STATIC
+#define PCRE2_CODE_UNIT_WIDTH 8
+#else
 #cmakedefine PCRE_STATIC
+#endif
 
 /* For gcc, we define _GNU_SOURCE to use gcc extensions */
 #ifdef CMAKE_COMPILER_IS_GNUCC
