@@ -77,7 +77,6 @@ int ec_glob(const char *pattern, const char *string)
     int *                     pcre_result;
     size_t                    pcre_result_len;
     char                      l_pattern[2 * PATTERN_MAX];
-    int                       pattern_length = strlen(pattern);
     _Bool                     are_brace_paired;
     UT_array *                nums;     /* number ranges */
     int                       ret = 0;
