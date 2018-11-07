@@ -42,7 +42,7 @@ set_target_properties(editorconfig_shared PROPERTIES
 if(WIN32)
     target_link_libraries(editorconfig_shared Shlwapi)
 endif()
-target_link_libraries(editorconfig_shared ${PCRE_LIBRARIES})
+target_link_libraries(editorconfig_shared ${PCRE_LIBRARIES} ${PCRE2_LIBRARIES})
 
 add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
 set_target_properties(editorconfig_static PROPERTIES
@@ -53,7 +53,7 @@ set_target_properties(editorconfig_static PROPERTIES
 if(WIN32)
     target_link_libraries(editorconfig_static Shlwapi)
 endif()
-target_link_libraries(editorconfig_static ${PCRE_LIBRARIES})
+target_link_libraries(editorconfig_static ${PCRE_LIBRARIES} ${PCRE2_LIBRARIES})
 
 # EditorConfig package name for find_package() and the CMake package registry.
 # On UNIX the system registry is usually just "lib/cmake/<package>".

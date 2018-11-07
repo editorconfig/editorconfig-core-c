@@ -6,30 +6,37 @@ environment:
   CONFIG: Release
   ARCH: x64
   CMAKE_INSTALL_PREFIX: ..\build
-  PCRE_DEST: C:\projects\bin\%ARCH%-static\pcre
   CORE_DEST: C:\projects\bin\%ARCH%-static\core
-  
+  PCRE_DEST: C:\projects\bin\%ARCH%-static\pcre
+  matrix:
+    - USE_PCRE: 1
+      PCRE_FILENAME: pcre-8.41
+    - USE_PCRE2: 1
+      PCRE_FILENAME: pcre2-10.32
+
 install:
   - cmake --version
   - git submodule init
   - git submodule update
   - cd C:\projects
-  # Download PCRE sources
-  - curl -o pcre.zip https://ftp.pcre.org/pub/pcre/pcre-8.41.zip
+  # Prepare pcre
+  - curl -o pcre.zip https://ftp.pcre.org/pub/pcre/%PCRE_FILENAME%.zip
   - 7z x -y pcre.zip > nul
-  - rename pcre-8.41 pcre
+  - rename %PCRE_FILENAME% pcre
   # Build and install PCRE
   - mkdir %PCRE_DEST%
   - cd %PCRE_DEST%
-  - cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DPCRE_STATIC_RUNTIME="ON" -DBUILD_SHARED_LIBS="OFF" -DPCRE_BUILD_PCRECPP=OFF -DPCRE_BUILD_PCREGREP=OFF -DPCRE_BUILD_TESTS=OFF C:\projects\pcre
+  - if "%USE_PCRE%"=="1"  cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DPCRE_STATIC_RUNTIME="ON" -DBUILD_SHARED_LIBS="OFF" -DPCRE_BUILD_PCRECPP=OFF -DPCRE_BUILD_PCREGREP=OFF -DPCRE_BUILD_TESTS=OFF C:\projects\pcre
+  - if "%USE_PCRE2%"=="1" cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DPCRE2_STATIC_RUNTIME="ON" -DBUILD_SHARED_LIBS="OFF" -DPCRE2_BUILD_PCRE2GREP="OFF" -DPCRE2_BUILD_TESTS="OFF" C:\projects\pcre
   - cd %PCRE_DEST%
   - cmake --build %PCRE_DEST% --target install -- /p:Configuration=%CONFIG%
-  
+
 build_script:
   # Build and install editorconfig-core-c
   - mkdir %CORE_DEST%
   - cd %CORE_DEST%
-  - cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DMSVC_MD="OFF" -DPCRE_STATIC="ON" C:\projects\editorconfig-core-c
+  - if "%USE_PCRE%"=="1"  cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DMSVC_MD="OFF" -DPCRE="ON" -DPCRE_STATIC="ON" C:\projects\editorconfig-core-c
+  - if "%USE_PCRE2%"=="1" cmake -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%CMAKE_INSTALL_PREFIX%" -DMSVC_MD="OFF" -DPCRE="OFF" -DPCRE2_STATIC="ON" C:\projects\editorconfig-core-c
   - cmake --build %CORE_DEST% --target install -- /p:Configuration=%CONFIG%
 
 test_script:

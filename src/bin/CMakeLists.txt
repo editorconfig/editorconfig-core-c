@@ -39,6 +39,9 @@ if(CMAKE_COMPILER_IS_GNUCC)
     if(BUILD_STATICALLY_LINKED_EXE)
         # Add -static for linker if we want a statically linked executable
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+
+        # libpcre2 might be dynamically linked against pthreads (at least on Ubuntu Xenial)
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
     endif(BUILD_STATICALLY_LINKED_EXE)
 endif(CMAKE_COMPILER_IS_GNUCC)
 
