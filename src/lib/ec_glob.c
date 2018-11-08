@@ -338,7 +338,6 @@ int ec_glob(const char *pattern, const char *string)
 
     if (rc < 0)     /* failed to match */
     {
-        int         ret;
         if (rc == PCRE_ERROR_NOMATCH)
             ret = EC_GLOB_NOMATCH;
         else
