@@ -27,20 +27,11 @@
 include(CheckFunctionExists)
 include(CheckTypeSize)
 
-option(PCRE "Use PCRE instead of PCRE2" ON)
-if(NOT PCRE)
-    find_package(PCRE2 REQUIRED)
-else()
-    find_package(PCRE REQUIRED)
-endif()
+find_package(PCRE2 REQUIRED)
 
 if(PCRE2_FOUND)
     include_directories(BEFORE ${PCRE2_INCLUDE_DIRS})
     option(PCRE2_STATIC "Turn this option ON when linking to PCRE2 static library" OFF)
-    add_compile_definitions(HAVE_PCRE2)
-elseif(PCRE_FOUND)
-    include_directories(BEFORE ${PCRE_INCLUDE_DIRS})
-    option(PCRE_STATIC "Turn this option ON when linking to PCRE static library" OFF)
 endif()
 
 # config.h will be generated in src/auto, we should include it.
