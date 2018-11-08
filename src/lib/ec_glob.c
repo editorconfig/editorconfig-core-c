@@ -29,11 +29,7 @@
 
 #include <ctype.h>
 #include <string.h>
-#ifdef HAVE_PCRE2
 #include <pcre2.h>
-#else
-#include <pcre.h>
-#endif
 
 #define oom() { return -1; }
 #include "utarray.h"
@@ -75,21 +71,12 @@ int ec_glob(const char *pattern, const char *string)
     char *                    pcre_str_end;
     int                       brace_level = 0;
     _Bool                     is_in_bracket = 0;
-#ifdef HAVE_PCRE2
     int                       error_code;
     size_t                    erroffset;
     pcre2_code *              re;
     int                       rc;
     size_t *                  pcre_result;
     pcre2_match_data *        pcre_match_data;
-#else
-    const char *              error_msg;
-    int                       erroffset;
-    pcre *                    re;
-    int                       rc;
-    int *                     pcre_result;
-    size_t                    pcre_result_len;
-#endif
     char                      l_pattern[2 * PATTERN_MAX];
     _Bool                     are_brace_paired;
     UT_array *                nums;     /* number ranges */
@@ -120,13 +107,8 @@ int ec_glob(const char *pattern, const char *string)
     }
 
     /* used to search for {num1..num2} case */
-#ifdef HAVE_PCRE2
     re = pcre2_compile("^\\{[\\+\\-]?\\d+\\.\\.[\\+\\-]?\\d+\\}$", PCRE2_ZERO_TERMINATED, 0,
             &error_code, &erroffset, NULL);
-#else
-    re = pcre_compile("^\\{[\\+\\-]?\\d+\\.\\.[\\+\\-]?\\d+\\}$", 0,
-            &error_msg, &erroffset, NULL);
-#endif
     if (!re)        /* failed to compile */
         return -1;
 
@@ -267,20 +249,12 @@ int ec_glob(const char *pattern, const char *string)
                     const char *        double_dots;
                     int_pair            pair;
 
-#ifdef HAVE_PCRE2
                     pcre2_match_data *  match_data = pcre2_match_data_create_from_pattern(re, NULL);
 
                     /* Check the case of {num1..num2} */
                     rc = pcre2_match(re, c, cc - c + 1, 0, 0, match_data, NULL);
 
                     pcre2_match_data_free(match_data);
-#else
-                    int                 pcre_res[3];
-
-                    /* Check the case of {num1..num2} */
-                    rc = pcre_exec(re, NULL, c, (int) (cc - c + 1), 0, 0,
-                            pcre_res, 3);
-#endif
 
                     if (rc < 0)    /* not {num1..num2} case */
                     {
@@ -350,15 +324,9 @@ int ec_glob(const char *pattern, const char *string)
 
     *(p_pcre ++) = '$';
 
-#ifdef HAVE_PCRE2
     pcre2_code_free(re); /* ^\\d+\\.\\.\\d+$ */
 
     re = pcre2_compile(pcre_str, PCRE2_ZERO_TERMINATED, 0, &error_code, &erroffset, NULL);
-#else
-    pcre_free(re); /* ^\\d+\\.\\.\\d+$ */
-
-    re = pcre_compile(pcre_str, 0, &error_msg, &erroffset, NULL);
-#endif
 
     if (!re)        /* failed to compile */
     {
@@ -366,43 +334,25 @@ int ec_glob(const char *pattern, const char *string)
         return -1;
     }
 
-#ifdef HAVE_PCRE2
     pcre_match_data = pcre2_match_data_create_from_pattern(re, NULL);
     rc = pcre2_match(re, string, strlen(string), 0, 0, pcre_match_data, NULL);
-#else
-    pcre_result_len = 3 * (utarray_len(nums) + 1);
-    pcre_result = (int *) calloc(pcre_result_len, sizeof(int_pair));
-    rc = pcre_exec(re, NULL, string, (int) strlen(string), 0, 0,
-            pcre_result, pcre_result_len);
-#endif
 
     if (rc < 0)     /* failed to match */
     {
-#ifdef HAVE_PCRE2
         if (rc == PCRE2_ERROR_NOMATCH)
-#else
-        if (rc == PCRE_ERROR_NOMATCH)
-#endif
             ret = EC_GLOB_NOMATCH;
         else
             ret = rc;
 
-#ifdef HAVE_PCRE2
         pcre2_code_free(re);
         pcre2_match_data_free(pcre_match_data);
-#else
-        pcre_free(re);
-        free(pcre_result);
-#endif
         utarray_free(nums);
 
         return ret;
     }
 
     /* Whether the numbers are in the desired range? */
-#ifdef HAVE_PCRE2
     pcre_result = pcre2_get_ovector_pointer(pcre_match_data);
-#endif
     for(p = (int_pair *) utarray_front(nums), i = 1; p;
             ++ i, p = (int_pair *) utarray_next(nums, p))
     {
@@ -426,13 +376,8 @@ int ec_glob(const char *pattern, const char *string)
     if (p != NULL)      /* numbers not matched */
         ret = EC_GLOB_NOMATCH;
 
-#ifdef HAVE_PCRE2
     pcre2_code_free(re);
     pcre2_match_data_free(pcre_match_data);
-#else
-    pcre_free(re);
-    free(pcre_result);
-#endif
     utarray_free(nums);
 
     return ret;
