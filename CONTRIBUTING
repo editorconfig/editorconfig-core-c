@@ -1,0 +1,11 @@
+Thanks for contributing EditorConfig C Core!
+
+To contribute, please first read through README and https://editorconfig.org to roughly understand
+what EditorConfig is for and the role of EditorConfig C Core.
+
+To make code contribution, you'll need to first fork our git repository, make changes in your
+repository, and create a pull request. This is pretty standard for most projects hosted on GitHub.
+If you are new to GitHub, take a look at this tutorial:
+https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
+
+When you make changes, also please remember to update CONTRIBUTORS and CHANGELOG if applicable.
