@@ -1,6 +1,7 @@
 v0.12.3
 
 - Bump required minimum cmake version to 2.8.12.
+- Support pcre2 and drop support for pcre.
 
 v0.12.2
 
