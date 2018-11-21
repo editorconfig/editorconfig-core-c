@@ -1,7 +1,7 @@
 Dependency
 ==========
 
-- [pcre](http://www.pcre.org/) (Since version 0.12.0)
+- [PCRE2][] (Since version 0.12.0)
 
 Installing from a binary package
 ================================
@@ -22,15 +22,15 @@ Installing from source
 ======================
 
 Before installing, you need to install the building tool [cmake][] and
-dependency [pcre][]. To install cmake and pcre with package manager:
+dependency [PCRE2][]. To install cmake and pcre with package manager:
 
-- Arch Linux: `pacman -S cmake pcre`
-- Homebrew on OS X: `brew install cmake pcre`
-- Ubuntu/Debian: `apt-get install cmake libpcre3-dev`
+- Arch Linux: `pacman -S cmake pcre2`
+- Homebrew on OS X: `brew install cmake pcre2`
+- Ubuntu/Debian: `apt-get install cmake libpcre2-dev`
 
 Make sure cmake is in your PATH environment variable. on Windows, you also need
-to build pcre from source. If you want to build the MT version of this library,
-after running `cmake .` in the pcre source directory, please replace all
+to build PCRE2 from source. If you want to build the MT version of this library,
+after running `cmake .` in the PCRE2 source directory, please replace all
 occurrence of "MD" with "MT" in the CMakeCache.txt.
 
 Switch to the root directory of editorconfig and execute the following command:
@@ -65,7 +65,7 @@ could be used when generating the project file:
     -DMSVC_MD=[ON|OFF]                      Default: OFF
     Use /MD instead of /MT flag when compiling with Microsoft Visual C++. This
     option takes no effect when using compilers other than Microsoft Visual
-    C++. Note that the option chosen here must be consistent with pcre.
+    C++. Note that the option chosen here must be consistent with PCRE2.
     e.g. We want to use /MD instead of /MT when compiling with MSVC.
     cmake -DMSVC_MD=ON .
 
@@ -94,4 +94,4 @@ On Windows, via Developer Command Prompt for Visual Studio:
     msbuild all_build.vcxproj /p:Configuration=Release
 
 [cmake]: http://www.cmake.org
-[pcre]: http://pcre.org
+[PCRE2]: http://pcre.org
