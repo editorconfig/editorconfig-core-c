@@ -89,9 +89,71 @@ PREFIX/lib as one of the library searching directory on UNIX/Linux to make sure
 that source files could be linked to the libraries and executables depending on
 these libraries could be executed properly.
 
-On Windows, via Developer Command Prompt for Visual Studio:
+## Build on Windows
+Requirements on Windows are [Visual Studio] 2013, 2015 or 2017, [cmake] 2.8.12 or higher and Powershell 3 or higher. For Visual Studio the community edition is sufficient, but the [C++ workload](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2017) is required.
 
-    msbuild all_build.vcxproj /p:Configuration=Release
+    Non-static build is currently not supported.
 
-[cmake]: http://www.cmake.org
-[PCRE2]: http://pcre.org
+### Download pcre2
+You have to download and extract the pcre2 sources after checkout.
+
+```powershell
+~> ./init.ps1 [-pcre 10.32]
+```
+
+Arguments:
+
+    -pcre  Optional; pcre2 version to download.
+
+### Build library
+To build pcre2 and editorconfig core library in one step use the `-init` and `-install` arguments at the same time.
+
+```powershell
+~> ./build.ps1 -init -install
+```
+
+The `-init` argument will generate the required cmake build files for Visual Studio. This is required after initial checkout or `CMakeLists.txt` changes.
+The `-install` argument will put the binaries to a location (`bin/$(ARCH)-static/build`) that the editorconfig project can find and link the library. This folder can be used to distribute the build binaries.
+For the other arguments please see below.
+
+```powershell
+~> ./build.ps1 [-proj all | core | pcre2] [-init] [-install] [-vsver 15 | 14 | 12] [-arch x64 | x86] [-config Release | Debug]
+```
+
+Arguments:
+
+    -proj Optional; Project to build.
+    -init Optional; (Re)Generate cmake build files, required first time or on `CMakeLists.txt` changes.
+    -install Optional; Install to `bin/$(ARCH)-static/build` folder.
+    -vsver Optional; Visual Studio version (major version number) to use.
+    -arch Optional; Architecture to build for.
+    -config Optional; Debug or release build.
+
+#### Build pcre2 library
+```powershell
+~> ./build.ps1 -proj pcre2 -init -install
+```
+
+#### Build editorconfig core library
+
+```powershell
+~> ./build.ps1 -proj core -init
+```
+
+
+### Run tests
+On Windows the test `utf_8_char` is disabled.
+
+```powershell
+~> ./test.ps1 [-arch x64 | x86] [-config Release | Debug]
+```
+
+Arguments:
+
+    -arch Optional; Architecture to build for.
+    -config Optional; Debug or release build.
+ 
+
+[cmake]: https://cmake.org
+[PCRE2]: https://pcre.org/
+[Visual Studio]: https://visualstudio.microsoft.com
