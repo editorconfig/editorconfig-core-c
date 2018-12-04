@@ -3,7 +3,7 @@ Dependency
 
 - [PCRE2][] (Since version 0.12.0)
 
-Installing from a binary package
+Installing From a Binary Package
 ================================
 
 Windows binary packages can be downloaded [here](http://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/).
@@ -18,8 +18,11 @@ Mac OS X users can `brew install editorconfig` with [Homebrew](http://brew.sh).
 Generally Linux users can also install with [LinuxBrew](https://github.com/Homebrew/linuxbrew)
 by `brew install editorconfig`.
 
-Installing from source
-======================
+Manually Install from Source
+============================
+
+**(To build on Windows: Since it's usually a lot harder to manually build on Windows, see the
+section "Automated Build on Windows" for an easier way.)**
 
 Before installing, you need to install the building tool [cmake][] and
 dependency [PCRE2][]. To install cmake and pcre with package manager:
@@ -89,12 +92,16 @@ PREFIX/lib as one of the library searching directory on UNIX/Linux to make sure
 that source files could be linked to the libraries and executables depending on
 these libraries could be executed properly.
 
-## Build on Windows
+Automated Build on Windows
+==========================
+
 Requirements on Windows are [Visual Studio] 2013, 2015 or 2017, [cmake] 2.8.12 or higher and Powershell 3 or higher. For Visual Studio the community edition is sufficient, but the [C++ workload](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2017) is required.
 
     Non-static build is currently not supported.
 
-### Download pcre2
+Download pcre2
+--------------
+
 You have to download and extract the pcre2 sources after checkout.
 
 ```powershell
@@ -105,7 +112,9 @@ Arguments:
 
     -pcre  Optional; pcre2 version to download.
 
-### Build library
+Build Library
+-------------
+
 To build pcre2 and editorconfig core library in one step use the `-init` and `-install` arguments at the same time.
 
 ```powershell
@@ -129,19 +138,20 @@ Arguments:
     -arch Optional; Architecture to build for.
     -config Optional; Debug or release build.
 
-#### Build pcre2 library
+### Build pcre2 Library
+
 ```powershell
 ~> ./build.ps1 -proj pcre2 -init -install
 ```
 
-#### Build editorconfig core library
+### Build EditorConfig Core Library
 
 ```powershell
 ~> ./build.ps1 -proj core -init
 ```
 
 
-### Run tests
+### Run Tests
 On Windows the test `utf_8_char` is disabled.
 
 ```powershell
