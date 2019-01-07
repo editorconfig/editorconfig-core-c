@@ -247,7 +247,7 @@ static int ini_handler(void* hfp, const char* section, const char* name,
     char* ptr = hfparam->editorconfig_file_dir;
     char* ptr_prev = ptr;
     char* ptr_pattern = pattern;
-    for (; ptr = strpbrk(ptr, ec_special_chars); ++ ptr, ptr_prev = ptr)
+    for (; (ptr = strpbrk(ptr, ec_special_chars)) != NULL; ++ ptr, ptr_prev = ptr)
     {
         ptrdiff_t s = ptr - ptr_prev;
         memcpy(ptr_pattern, ptr_prev, s * sizeof(char));
