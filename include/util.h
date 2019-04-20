@@ -35,7 +35,7 @@
  * An version of atoi that handles strings corresponding to integers that are
  * out of range.
  */
-inline int ec_atoi(const char* str)
+static inline int ec_atoi(const char* str)
 {
     return (int) strtol(str, (char **) NULL, 10);
 }
