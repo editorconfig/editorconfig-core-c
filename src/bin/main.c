@@ -32,7 +32,7 @@
 #include <string.h>
 #include <editorconfig/editorconfig.h>
 
-#include "../lib/misc.h"
+#include "util.h"
 
 
 static void version(FILE* stream)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2019 EditorConfig Team
+ * Copyright (c) 2019 Hong Xu <hong@topbug.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,40 +24,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef MISC_H__
-#define MISC_H__
+/*
+ * Small useful inline functions.
+ */
 
-#include "global.h"
+#ifndef UTIL_H__
+#define UTIL_H__
 
-#include <stddef.h>
+/*
+ * An version of atoi that handles strings corresponding to integers that are
+ * out of range.
+ */
+inline int ec_atoi(const char* str)
+{
+    return (int) strtol(str, (char **) NULL, 10);
+}
 
-#ifndef HAVE_STRCASECMP
-# ifdef HAVE_STRICMP
-#  define strcasecmp stricmp
-# else /* HAVE_STRICMP */
-EDITORCONFIG_LOCAL
-int ec_strcasecmp(const char *s1, const char *s2);
-# define strcasecmp ec_strcasecmp
-# endif /* HAVE_STRICMP */
-#endif /* !HAVE_STRCASECMP */
-#ifndef HAVE_STRDUP
-EDITORCONFIG_LOCAL
-char* ec_strdup(const char *str);
-# define strdup ec_strdup
-#endif
-#ifndef HAVE_STRNDUP
-EDITORCONFIG_LOCAL
-char* ec_strndup(const char* str, size_t n);
-# define strndup ec_strndup
-#endif
-EDITORCONFIG_LOCAL
-char* str_replace(char* str, char oldc, char newc);
-#ifndef HAVE_STRLWR
-EDITORCONFIG_LOCAL
-char* ec_strlwr(char* str);
-# define strlwr ec_strlwr
-#endif
-EDITORCONFIG_LOCAL
-_Bool is_file_path_absolute(const char* path);
-
-#endif /* !MISC_H__ */
+#endif /* !UTIL_H__ */

@@ -34,6 +34,7 @@
 #define oom() { return -1; }
 #include "utarray.h"
 #include "misc.h"
+#include "util.h"
 
 #include "ec_glob.h"
 
