@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2011-2013 EditorConfig Team
+ * Copyright (c) 2011-2019 EditorConfig Team
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -101,7 +101,7 @@
  * gitignore. Forward slashes (/) are used as path separators and semicolons (;)
  * or octothorpes (#) are used for comments. Comments should go individual lines.
  * EditorConfig files should be UTF-8 encoded, with either CRLF or LF line
- * separators. 
+ * separators.
  *
  * Filename globs containing path separators (/) match filepaths in the same
  * way as the filename globs used by .gitignore files.  Backslashes (\\) are
@@ -208,8 +208,8 @@
  * @author EditorConfig Team
  */
 
-#ifndef __EDITORCONFIG_EDITORCONFIG_H__
-#define __EDITORCONFIG_EDITORCONFIG_H__
+#ifndef EDITORCONFIG_EDITORCONFIG_H__
+#define EDITORCONFIG_EDITORCONFIG_H__
 
 /* When included from a user program, EDITORCONFIG_EXPORT may not be defined,
  * and we define it here*/
@@ -324,5 +324,5 @@ const char* editorconfig_get_version_suffix(void);
 }
 #endif
 
-#endif /* !__EDITORCONFIG_EDITORCONFIG_H__ */
+#endif /* !EDITORCONFIG_EDITORCONFIG_H__ */
 

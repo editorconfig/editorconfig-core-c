@@ -1,16 +1,16 @@
 /*
- * Copyright (c) 2014-2018 Hong Xu <hong AT topbug DOT net>
+ * Copyright (c) 2014-2019 Hong Xu <hong AT topbug DOT net>
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -24,8 +24,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef __EC_GLOB_H__
-#define __EC_GLOB_H__
+#ifndef EC_GLOB_H__
+#define EC_GLOB_H__
 
 #include "global.h"
 
@@ -44,4 +44,4 @@ extern const char ec_special_chars[];
 }
 #endif
 
-#endif /* !__EC_GLOB_H__ */
+#endif /* !EC_GLOB_H__ */

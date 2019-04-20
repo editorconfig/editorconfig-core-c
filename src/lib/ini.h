@@ -32,8 +32,8 @@ http://code.google.com/p/inih/
 
 */
 
-#ifndef __INI_H__
-#define __INI_H__
+#ifndef INI_H__
+#define INI_H__
 
 #include "global.h"
 
@@ -91,4 +91,4 @@ int ini_parse_file(FILE* file,
 }
 #endif
 
-#endif /* __INI_H__ */
+#endif /* INI_H__ */
