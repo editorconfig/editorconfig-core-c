@@ -60,13 +60,4 @@ char* ec_strlwr(char* str);
 EDITORCONFIG_LOCAL
 _Bool is_file_path_absolute(const char* path);
 
-/*
- * An version of atoi that handles strings corresponding to integers that are
- * out of range.
- */
-inline int ec_atoi(const char* str)
-{
-    return (int)strtol(str, (char **)NULL, 10);
-}
-
 #endif /* !MISC_H__ */
