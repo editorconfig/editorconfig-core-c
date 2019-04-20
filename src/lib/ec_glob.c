@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2014 Hong Xu <hong AT topbug DOT net>
+ * Copyright (c) 2014-2019 Hong Xu <hong AT topbug DOT net>
  * Copyright (c) 2018 Sven Strickroth <email AT cs-ware DOT de>
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -268,8 +268,8 @@ int ec_glob(const char *pattern, const char *string)
 
                     /* Get the range */
                     double_dots = strstr(c, "..");
-                    pair.num1 = atoi(c + 1);
-                    pair.num2 = atoi(double_dots + 2);
+                    pair.num1 = ec_atoi(c + 1);
+                    pair.num2 = ec_atoi(double_dots + 2);
 
                     utarray_push_back(nums, &pair);
 
@@ -366,7 +366,7 @@ int ec_glob(const char *pattern, const char *string)
             break;
 
         num_string = strndup(substring_start, substring_length);
-        num = atoi(num_string);
+        num = ec_atoi(num_string);
         free(num_string);
 
         if (num < p->num1 || num > p->num2) /* not matched */
