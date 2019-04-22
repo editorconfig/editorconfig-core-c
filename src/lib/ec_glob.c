@@ -79,7 +79,7 @@ int ec_glob(const char *pattern, const char *string)
     size_t *                  pcre_result;
     pcre2_match_data *        pcre_match_data;
     char                      l_pattern[2 * PATTERN_MAX];
-    _Bool                     are_brace_paired;
+    _Bool                     are_braces_paired;
     UT_array *                nums;     /* number ranges */
     int                       ret = 0;
 
@@ -104,7 +104,7 @@ int ec_glob(const char *pattern, const char *string)
                 ++ left_count;
         }
 
-        are_brace_paired = (right_count == left_count);
+        are_braces_paired = (right_count == left_count);
     }
 
     /* used to search for {num1..num2} case */
@@ -216,7 +216,7 @@ int ec_glob(const char *pattern, const char *string)
 
             break;
         case '{':
-            if (!are_brace_paired)
+            if (!are_braces_paired)
             {
                 STRING_CAT(p_pcre, "\\{", pcre_str_end);
                 break;
@@ -286,7 +286,7 @@ int ec_glob(const char *pattern, const char *string)
             break;
 
         case '}':
-            if (!are_brace_paired)
+            if (!are_braces_paired)
             {
                 STRING_CAT(p_pcre, "\\}", pcre_str_end);
                 break;
