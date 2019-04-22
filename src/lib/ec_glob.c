@@ -79,7 +79,7 @@ int ec_glob(const char *pattern, const char *string)
     size_t *                  pcre_result;
     pcre2_match_data *        pcre_match_data;
     char                      l_pattern[2 * PATTERN_MAX];
-    _Bool                     are_braces_paired;
+    _Bool                     are_braces_paired = 1;
     UT_array *                nums;     /* number ranges */
     int                       ret = 0;
 
@@ -87,6 +87,7 @@ int ec_glob(const char *pattern, const char *string)
     p_pcre = pcre_str + 1;
     pcre_str_end = pcre_str + 2 * PATTERN_MAX;
 
+    /* Determine whether curly braces are paired */
     {
         int     left_count = 0;
         int     right_count = 0;
@@ -100,11 +101,18 @@ int ec_glob(const char *pattern, const char *string)
 
             if (*c == '}')
                 ++ right_count;
-            if (*c == '{')
+            else if (*c == '{')
                 ++ left_count;
+
+            if (right_count > left_count)
+            {
+                are_braces_paired = 0;
+                break;
+            }
         }
 
-        are_braces_paired = (right_count == left_count);
+        if (right_count != left_count)
+            are_braces_paired = 0;
     }
 
     /* used to search for {num1..num2} case */
