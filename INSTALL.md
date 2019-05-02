@@ -24,10 +24,10 @@ Manually Install from Source
 **(To build on Windows: Since it's usually a lot harder to manually build on Windows, see the
 section "Automated Build on Windows" for an easier way.)**
 
-The source can be built with any C compiler that is C99 compliant (i.e.,
-virtually any C compiler that is not archaic). Before installing, you need to
-install the building tool [cmake][] (version >= 2.8.12) and dependency
-[PCRE2][]. To install cmake and pcre with package manager:
+In principle, you should be able to build the source using any C compiler that
+is C99 compliant (i.e., virtually any C compiler that is not archaic). Before
+installing, you need to install the building tool [cmake][] (version >= 2.8.12)
+and dependency [PCRE2][]. To install cmake and pcre with package manager:
 
 - Arch Linux: `pacman -S cmake pcre2`
 - Homebrew on OS X: `brew install cmake pcre2`
