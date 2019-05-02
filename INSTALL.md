@@ -1,7 +1,7 @@
-Dependency
-==========
+Runtime Dependency
+==================
 
-- [PCRE2][] (Since version 0.12.0)
+- [PCRE2][] (>= 10.00, since version 0.12.0)
 
 Installing From a Binary Package
 ================================
@@ -24,8 +24,10 @@ Manually Install from Source
 **(To build on Windows: Since it's usually a lot harder to manually build on Windows, see the
 section "Automated Build on Windows" for an easier way.)**
 
-Before installing, you need to install the building tool [cmake][] and
-dependency [PCRE2][]. To install cmake and pcre with package manager:
+The source can be built with any C compiler that is C99 compliant (i.e.,
+virtually any C compiler that is not archaic). Before installing, you need to
+install the building tool [cmake][] (version >= 2.8.12) and dependency
+[PCRE2][]. To install cmake and pcre with package manager:
 
 - Arch Linux: `pacman -S cmake pcre2`
 - Homebrew on OS X: `brew install cmake pcre2`
