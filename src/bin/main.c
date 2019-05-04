@@ -145,6 +145,12 @@ int main(int argc, const char* argv[])
             path_count = argc - i;
             file_paths = (char**) malloc(path_count * sizeof(char*));
 
+            if (file_paths == NULL)
+            {
+                perror("Unable to allocate memory");
+                exit(2);
+            }
+
             for (; i < argc; ++i) {
                 file_paths[path_count + i - argc] = strdup(argv[i]);
                 if (file_paths[path_count - argc + i] == NULL) {
@@ -208,6 +214,12 @@ int main(int argc, const char* argv[])
 
         /* Initialize the EditorConfig handle */
         eh = editorconfig_handle_init();
+
+        if (eh == NULL)
+        {
+            perror("Unable to create EditorConfig handle");
+            exit(3);
+        }
 
         /* Set conf file name */
         if (conf_filename)
