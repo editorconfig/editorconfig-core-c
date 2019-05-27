@@ -59,6 +59,20 @@ static void usage(FILE* stream, const char* command)
     fprintf(stream, "-v OR --version    Display version information.\n");
 }
 
+/*
+ * Returns strdup(s) and exits if it fails.
+ */
+static char* xstrdup(const char* s)
+{
+    char* new_s = strdup(s);
+    if (new_s == NULL)
+    {
+        fprintf(stderr, "Unable to allocate memory.\n");
+        exit(1);
+    }
+    return new_s;
+}
+
 int main(int argc, const char* argv[])
 {
     char*                               full_filename = NULL;
@@ -93,7 +107,9 @@ int main(int argc, const char* argv[])
             char*             pos;
             int               ver;
             int               ver_pos = 0;
-            char*             argvi = strdup(argv[i]);
+            char*             argvi;
+
+            argvi = xstrdup(argv[i]);
 
             b_flag = 0;
 
@@ -151,13 +167,8 @@ int main(int argc, const char* argv[])
                 exit(2);
             }
 
-            for (; i < argc; ++i) {
-                file_paths[path_count + i - argc] = strdup(argv[i]);
-                if (file_paths[path_count - argc + i] == NULL) {
-                    fprintf(stderr, "Error: Unable to obtain the full path.\n");
-                    exit(1);
-                }
-            }
+            for (; i < argc; ++i)
+                file_paths[path_count + i - argc] = xstrdup(argv[i]);
         } else {
             usage(stderr, argv[0]);
             exit(1);
@@ -207,7 +218,7 @@ int main(int argc, const char* argv[])
             while (isspace(*full_filename))
                 ++ full_filename;
 
-            full_filename = strdup(full_filename);
+            full_filename = xstrdup(full_filename);
 
             printf("[%s]\n", full_filename);
         }
