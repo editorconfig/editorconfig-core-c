@@ -31,7 +31,7 @@
 #include <string.h>
 #include <pcre2.h>
 
-#define oom() { return -1; }
+#define utarray_oom() { return -1; }
 #include "utarray.h"
 #include "misc.h"
 #include "util.h"
