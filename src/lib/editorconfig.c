@@ -277,13 +277,15 @@ static int ini_handler(void* hfp, const char* section, const char* name,
     return 1;
 }
 
-/* 
+/*
  * Split an absolute file path into directory and filename parts.
  *
  * If absolute_path does not contain a path separator, set directory and
  * filename to NULL pointers.
- */ 
-static void split_file_path(char** directory, char** filename,
+ *
+ * Returns -1 if an error occurs. Otherwise returns 0.
+ */
+static int split_file_path(char** directory, char** filename,
         const char* absolute_path)
 {
     char* path_char = strrchr(absolute_path, '/');
@@ -293,15 +295,23 @@ static void split_file_path(char** directory, char** filename,
             *directory = NULL;
         if (filename)
             *filename = NULL;
-        return;
+        return 0;
     }
 
     if (directory != NULL) {
         *directory = strndup(absolute_path,
                 (size_t)(path_char - absolute_path));
+        if (*directory == NULL)
+            return -1;
     }
+
     if (filename != NULL) {
         *filename = strndup(path_char+1, strlen(path_char)-1);
+        if (*filename == NULL) {
+            if (directory != NULL)
+                free(*directory);
+            return -1;
+        }
     }
 }
 
@@ -321,23 +331,31 @@ static int count_slashes(const char* filename)
 
 /*
  * Return an array of full filenames for files in every directory in and above
- * the given path with the name of the relative filename given.
+ * the given path with the name of the relative filename given. Return NULL if
+ * failed (OOM).
  */
 static char** get_filenames(const char* path, const char* filename)
 {
-    char* currdir;
-    char* currdir1;
+    char* currdir = NULL;
     char** files;
     int slashes = count_slashes(path);
     int i;
 
     files = (char**) calloc(slashes+1, sizeof(char*));
+    if (files == NULL)
+        goto failure_cleanup;
 
     currdir = strdup(path);
+    if (currdir == NULL)
+        goto failure_cleanup;
+
     for (i = slashes - 1; i >= 0; --i) {
-        currdir1 = currdir;
-        split_file_path(&currdir, NULL, currdir1);
+        char* currdir1 = currdir;
+        int err_split;
+        err_split = split_file_path(&currdir, NULL, currdir1);
         free(currdir1);
+        if (err_split == -1)
+            goto failure_cleanup;
         files[i] = malloc(strlen(currdir) + strlen(filename) + 2);
         strcpy(files[i], currdir);
         strcat(files[i], "/");
@@ -349,6 +367,18 @@ static char** get_filenames(const char* path, const char* filename)
     files[slashes] = NULL;
 
     return files;
+
+failure_cleanup:
+
+    free(currdir);
+
+    if (files != NULL) {
+        for (i = 0; i < slashes; ++ i)
+            free(files[i]);
+        free(files);
+    }
+
+    return NULL;
 }
 
 /*
@@ -399,7 +429,7 @@ const char* editorconfig_get_error_msg(int err_num)
     return "Unknown error.";
 }
 
-/* 
+/*
  * See the header file for the use of this function
  */
 EDITORCONFIG_EXPORT
@@ -407,8 +437,8 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 {
     handler_first_param                 hfp;
     char**                              config_file;
-    char**                              config_files;
-    int                                 err_num;
+    char**                              config_files = NULL;
+    int                                 err_num = 0;
     int                                 i;
     struct editorconfig_handle*         eh = (struct editorconfig_handle*)h;
     struct editorconfig_version         cur_ver;
@@ -451,10 +481,15 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     memset(&hfp, 0, sizeof(hfp));
 
     hfp.full_filename = strdup(full_filename);
+    if (hfp.full_filename == NULL) {
+        err_num = EDITORCONFIG_PARSE_MEMORY_ERROR;
+        goto cleanup;
+    }
 
     /* return an error if file path is not absolute */
     if (!is_file_path_absolute(full_filename)) {
-        return EDITORCONFIG_PARSE_NOT_FULL_PATH;
+        err_num = EDITORCONFIG_PARSE_NOT_FULL_PATH;
+        goto cleanup;
     }
 
 #ifdef WIN32
@@ -465,20 +500,26 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     array_editorconfig_name_value_init(&hfp.array_name_value);
 
     config_files = get_filenames(hfp.full_filename, eh->conf_file_name);
+    if (config_files == NULL) {
+        err_num = EDITORCONFIG_PARSE_MEMORY_ERROR;
+        goto cleanup;
+    }
     for (config_file = config_files; *config_file != NULL; config_file++) {
+        int ini_err_num;
         split_file_path(&hfp.editorconfig_file_dir, NULL, *config_file);
-        if ((err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
+        if ((ini_err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
                 /* ignore error caused by I/O, maybe caused by non exist file */
-                err_num != -1) {
+                ini_err_num != -1) {
+            /* No need to specifically deal with the return value of the strdup
+               of this line. If any error occurs for this strdup call,
+               eh->err_file would simply be NULL.*/
             eh->err_file = strdup(*config_file);
-            free(*config_file);
-            free(hfp.full_filename);
-            free(hfp.editorconfig_file_dir);
-            return err_num;
+            err_num = ini_err_num;
+            goto cleanup;
         }
 
         free(hfp.editorconfig_file_dir);
-        free(*config_file);
+        hfp.editorconfig_file_dir = NULL;
     }
 
     /* value proprocessing */
@@ -528,10 +569,18 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
         return EDITORCONFIG_PARSE_MEMORY_ERROR;
     }
 
-    free(hfp.full_filename);
-    free(config_files);
+ cleanup:
 
-    return 0;
+    if (config_files != NULL) {
+        for (config_file = config_files; *config_file != NULL; config_file++) {
+            free(*config_file);
+        }
+        free(config_files);
+    }
+    free(hfp.full_filename);
+    free(hfp.editorconfig_file_dir);
+
+    return err_num;
 }
 
 /*
