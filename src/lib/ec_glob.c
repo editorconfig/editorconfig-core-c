@@ -31,7 +31,7 @@
 #include <string.h>
 #include <pcre2.h>
 
-#define utarray_oom() { return -1; }
+#define utarray_oom() { return -2; }
 #include "utarray.h"
 #include "misc.h"
 #include "util.h"
@@ -59,7 +59,8 @@ static const UT_icd ut_int_pair_icd = {sizeof(int_pair),NULL,NULL,NULL};
 
 #define PATTERN_MAX  4097
 /*
- * Whether the string matches the given glob pattern
+ * Whether the string matches the given glob pattern. Return 0 if successful, return -1 if a PCRE
+ * error or other regex error occurs, and return -2 if an OOM outside PCRE occurs.
  */
 EDITORCONFIG_LOCAL
 int ec_glob(const char *pattern, const char *string)
@@ -353,11 +354,7 @@ int ec_glob(const char *pattern, const char *string)
         else
             ret = rc;
 
-        pcre2_code_free(re);
-        pcre2_match_data_free(pcre_match_data);
-        utarray_free(nums);
-
-        return ret;
+        goto cleanup;
     }
 
     /* Whether the numbers are in the desired range? */
@@ -375,6 +372,10 @@ int ec_glob(const char *pattern, const char *string)
             break;
 
         num_string = strndup(substring_start, substring_length);
+        if (num_string == NULL) {
+          ret = -2;
+          goto cleanup;
+        }
         num = ec_atoi(num_string);
         free(num_string);
 
@@ -384,6 +385,8 @@ int ec_glob(const char *pattern, const char *string)
 
     if (p != NULL)      /* numbers not matched */
         ret = EC_GLOB_NOMATCH;
+
+ cleanup:
 
     pcre2_code_free(re);
     pcre2_match_data_free(pcre_match_data);

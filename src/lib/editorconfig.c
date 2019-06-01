@@ -283,7 +283,7 @@ static int ini_handler(void* hfp, const char* section, const char* name,
  * If absolute_path does not contain a path separator, set directory and
  * filename to NULL pointers.
  *
- * Returns -1 if an error occurs. Otherwise returns 0.
+ * Returns -1 if an OOM error occurs. Otherwise returns 0.
  */
 static int split_file_path(char** directory, char** filename,
         const char* absolute_path)
@@ -313,6 +313,8 @@ static int split_file_path(char** directory, char** filename,
             return -1;
         }
     }
+
+    return 0;
 }
 
 /*
@@ -506,7 +508,12 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
     }
     for (config_file = config_files; *config_file != NULL; config_file++) {
         int ini_err_num;
-        split_file_path(&hfp.editorconfig_file_dir, NULL, *config_file);
+        err_num = split_file_path(&hfp.editorconfig_file_dir, NULL, *config_file);
+        if (err_num == -1) {
+          err_num = EDITORCONFIG_PARSE_MEMORY_ERROR;
+          goto cleanup;
+        }
+
         if ((ini_err_num = ini_parse(*config_file, ini_handler, &hfp)) != 0 &&
                 /* ignore error caused by I/O, maybe caused by non exist file */
                 ini_err_num != -1) {
