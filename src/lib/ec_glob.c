@@ -139,7 +139,7 @@ int ec_glob(const char *pattern, const char *string)
 
             break;
         case '?':
-            *(p_pcre ++) = '.';
+            STRING_CAT(p_pcre, "[^/]", pcre_str_end);
             break;
         case '*':
             if (*(c+1) == '*')      /* case of ** */
