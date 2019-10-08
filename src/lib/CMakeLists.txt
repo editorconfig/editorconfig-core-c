@@ -33,6 +33,9 @@ set(editorconfig_LIBSRCS
     )
 
 add_library(editorconfig_shared SHARED ${editorconfig_LIBSRCS})
+target_include_directories(editorconfig_shared
+    INTERFACE $<INSTALL_INTERFACE:include>
+)
 set_target_properties(editorconfig_shared PROPERTIES
     OUTPUT_NAME editorconfig
     SOVERSION 0
@@ -45,6 +48,9 @@ endif()
 target_link_libraries(editorconfig_shared ${PCRE2_LIBRARIES})
 
 add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
+target_include_directories(editorconfig_static
+    INTERFACE $<INSTALL_INTERFACE:include>
+)
 set_target_properties(editorconfig_static PROPERTIES
     OUTPUT_NAME editorconfig_static
     VERSION ${PROJECT_VERSION})
