@@ -24,19 +24,9 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-cmake_minimum_required(VERSION 2.8.12)
-cmake_policy(VERSION 2.8.12)
-# project() command sets VERSION variables (since CMake 3.0).
-cmake_policy(SET CMP0048 NEW)
+cmake_minimum_required(VERSION 3.5.1)
 
-project(editorconfig C)
-
-# Must be placed after the call to project().
-set(PROJECT_VERSION_MAJOR 0)
-set(PROJECT_VERSION_MINOR 12)
-set(PROJECT_VERSION_PATCH 4)
-set(PROJECT_VERSION
-    "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
+project(editorconfig VERSION "0.12.4" LANGUAGES C)
 
 set(PROJECT_VERSION_SUFFIX "-development")
 
