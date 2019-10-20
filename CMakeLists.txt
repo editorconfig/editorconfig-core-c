@@ -25,6 +25,7 @@
 #
 
 cmake_minimum_required(VERSION 3.5.1)
+cmake_policy(VERSION 3.2)
 
 project(editorconfig VERSION "0.12.4" LANGUAGES C)
 
