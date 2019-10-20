@@ -1,16 +1,16 @@
 #
-# Copyright (c) 2011-2012 EditorConfig Team
+# Copyright (c) 2011-2019 EditorConfig Team
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1. Redistributions of source code must retain the above copyright notice,
 #    this list of conditions and the following disclaimer.
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 #    this list of conditions and the following disclaimer in the documentation
 #    and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -46,6 +46,11 @@ if(WIN32)
     target_link_libraries(editorconfig_shared Shlwapi)
 endif()
 target_link_libraries(editorconfig_shared ${PCRE2_LIBRARIES})
+if (BUILD_STATICALLY_LINKED_EXE)
+    # disable shared library build when static is enabled
+    set_target_properties(editorconfig_shared PROPERTIES
+        EXCLUDE_FROM_ALL 1)
+endif()
 
 add_library(editorconfig_static STATIC ${editorconfig_LIBSRCS})
 target_include_directories(editorconfig_static
@@ -71,11 +76,19 @@ set(editorconfig_CONFIG_EXPORT_NAME "${config_package_name}Targets")
 set(editorconfig_CONFIG_INSTALL_LIBDIR
     "${CMAKE_INSTALL_LIBDIR}/cmake/${config_package_name}")
 
-install(TARGETS editorconfig_shared editorconfig_static
+install(TARGETS editorconfig_static
     EXPORT ${editorconfig_CONFIG_EXPORT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+if(NOT BUILD_STATICALLY_LINKED_EXE)
+    install(TARGETS editorconfig_shared
+        EXPORT ${editorconfig_CONFIG_EXPORT_NAME}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+endif()
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/editorconfig.pc.in
