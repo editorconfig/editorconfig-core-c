@@ -1,16 +1,16 @@
 #
-# Copyright (c) 2011-2018 EditorConfig Team
+# Copyright (c) 2011-2019 EditorConfig Team
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 # 1. Redistributions of source code must retain the above copyright notice,
 #    this list of conditions and the following disclaimer.
 # 2. Redistributions in binary form must reproduce the above copyright notice,
 #    this list of conditions and the following disclaimer in the documentation
 #    and/or other materials provided with the distribution.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -25,9 +25,14 @@
 #
 
 cmake_minimum_required(VERSION 3.5.1)
+cmake_policy(VERSION 3.5.1)
 
-project(editorconfig VERSION "0.12.4" LANGUAGES C)
+project(editorconfig LANGUAGES C)
 
+# Must be placed after the call to project().
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_VERSION_MINOR 12)
+set(PROJECT_VERSION_PATCH 4)
 set(PROJECT_VERSION_SUFFIX "-development")
 
 include(GNUInstallDirs)
