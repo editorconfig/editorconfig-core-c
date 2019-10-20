@@ -26,32 +26,21 @@
 
 link_directories(${CMAKE_ARCHIVE_OUTPUT_DIR})
 
-# for gcc, BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL is OFF
-if(CMAKE_COMPILER_IS_GNUCC)
-    set(BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL OFF)
-endif(CMAKE_COMPILER_IS_GNUCC)
-
-option(BUILD_STATICALLY_LINKED_EXE
-    "Statically link all libraries when building the executable."
-    ${BUILD_STATICALLY_LINKED_EXE_DEFAULT_VAL})
-
-if(CMAKE_COMPILER_IS_GNUCC)
-    if(BUILD_STATICALLY_LINKED_EXE)
-        # Add -static for linker if we want a statically linked executable
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
-
-        # libpcre2 might be dynamically linked against pthreads (at least on Ubuntu Xenial)
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
-    endif(BUILD_STATICALLY_LINKED_EXE)
-endif(CMAKE_COMPILER_IS_GNUCC)
-
 set(editorconfig_BINSRCS
     main.c)
 
 # targets
 add_executable(editorconfig_bin ${editorconfig_BINSRCS})
+
 if(BUILD_STATICALLY_LINKED_EXE)
     target_link_libraries(editorconfig_bin editorconfig_static)
+    if(NOT WIN32)
+        # Add -static for linker if we want a statically linked executable
+        target_link_libraries(editorconfig_bin "-static")
+
+        # libpcre2 might be dynamically linked against pthreads (at least on Ubuntu Xenial)
+        target_link_libraries(editorconfig_bin "-pthread")
+    endif()
 else(BUILD_STATICALLY_LINKED_EXE)
     target_link_libraries(editorconfig_bin editorconfig_shared)
 endif(BUILD_STATICALLY_LINKED_EXE)
