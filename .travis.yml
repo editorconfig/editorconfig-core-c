@@ -23,7 +23,7 @@ script:
  - mkdir _build
  - cd _build
  - cmake .. -DCMAKE_INSTALL_PREFIX=../_install $OPTIONS
- - cmake --build . --target install
+ - VERBOSE=1 cmake --build . --target install
 
 # Run Tests
 after_script:
