@@ -1,3 +1,5 @@
+# CMakeLists.txt for core testing in
+# editorconfig-core-c.
 #
 # Copyright (c) 2011-2019 EditorConfig Team
 # All rights reserved.
@@ -98,14 +100,23 @@ add_subdirectory(src)
 add_subdirectory(doc)
 add_subdirectory(include)
 
-# Testing. Type "make test" to run tests. Only if the test submodule is
-# checkouted should we do this
+# Testing. Type "make test" to run tests. Only do this if the test submodule is
+# checked out.
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt)
     enable_testing()
-    set(EDITORCONFIG_CMD "${PROJECT_BINARY_DIR}/bin/editorconfig")
+    set(EDITORCONFIG_CMD "editorconfig_bin")
+    set(EDITORCONFIG_CMD_IS_TARGET TRUE)
+        # TRUE => use the given CMake target, here, "editorconfig_bin",
+        # rather than an executable file named "editorconfig_bin".
+        # Used by tests/CMakeLists.txt.
     add_subdirectory(tests)
+    message(STATUS "Tests enabled")
 else()
     message(WARNING
         " Testing files are not found. Testing will not be available. If you obtained the source tree through git, please run `git submodule update --init` to update the tests submodule.")
 endif()
 
+# This is a way to find the EXE name for debugging.  However, it issues a
+# CMake warning under policy CMP0026.
+#get_target_property(out_name editorconfig_bin LOCATION)
+#message(STATUS "main: Editorconfig binary will be in -${out_name}-")
