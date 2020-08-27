@@ -138,7 +138,7 @@ static int array_editorconfig_name_value_add(
     int         name_value_pos;
     /* always use name_lwr but not name, since property names are case
      * insensitive */
-    char        name_lwr[MAX_PROPERTY_NAME];
+    char        name_lwr[MAX_PROPERTY_NAME+1] = {0};
     /* For the first time we came here, aenv->name_values is NULL */
     if (aenv->name_values == NULL) {
         aenv->name_values = (editorconfig_name_value*)malloc(
@@ -153,7 +153,7 @@ static int array_editorconfig_name_value_add(
 
 
     /* name_lwr is the lowercase property name */
-    strlwr(strcpy(name_lwr, name));
+    strlwr(strncpy(name_lwr, name, MAX_PROPERTY_NAME));
 
     name_value_pos = find_name_value_from_name(
             aenv->name_values, aenv->current_value_count, name_lwr);
