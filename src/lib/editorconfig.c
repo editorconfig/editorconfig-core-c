@@ -384,6 +384,20 @@ failure_cleanup:
 }
 
 /*
+ * Free the memory used by an array of strings that was created by
+ * get_filenames().
+ */
+static void free_filenames(char **filenames)
+{
+    if (filenames != NULL) {
+        for (char** filename = filenames; *filename != NULL; filename++) {
+            free(*filename);
+        }
+        free(filenames);
+    }
+}
+
+/*
  * version number comparison
  */
 static int editorconfig_compare_version(
@@ -564,7 +578,7 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
 
     if (eh->name_value_count == 0) {  /* no value is set, just return 0. */
         free(hfp.full_filename);
-        free(config_files);
+        free_filenames(config_files);
         return 0;
     }
     eh->name_values = hfp.array_name_value.name_values;
@@ -573,17 +587,12 @@ int editorconfig_parse(const char* full_filename, editorconfig_handle h)
             sizeof(editorconfig_name_value) * eh->name_value_count);
     if (eh->name_values == NULL) {
         free(hfp.full_filename);
+        free_filenames(config_files);
         return EDITORCONFIG_PARSE_MEMORY_ERROR;
     }
 
  cleanup:
-
-    if (config_files != NULL) {
-        for (config_file = config_files; *config_file != NULL; config_file++) {
-            free(*config_file);
-        }
-        free(config_files);
-    }
+    free_filenames(config_files);
     free(hfp.full_filename);
     free(hfp.editorconfig_file_dir);
 
