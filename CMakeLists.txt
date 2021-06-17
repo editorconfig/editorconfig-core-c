@@ -29,9 +29,9 @@
 cmake_minimum_required(VERSION 3.5.1)
 cmake_policy(VERSION 3.5.1)
 
-project(editorconfig VERSION "0.12.5" LANGUAGES C)
+project(editorconfig VERSION "0.12.6" LANGUAGES C)
 
-set(PROJECT_VERSION_SUFFIX "")
+set(PROJECT_VERSION_SUFFIX "-development")
 
 include(GNUInstallDirs)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake_Modules")
