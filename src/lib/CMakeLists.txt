@@ -43,7 +43,7 @@ set_target_properties(editorconfig_shared PROPERTIES
 
 # We need to link Shwapi since we use PathIsRelative
 if(WIN32)
-    target_link_libraries(editorconfig_shared Shlwapi)
+    target_link_libraries(editorconfig_shared shlwapi)
 endif()
 target_link_libraries(editorconfig_shared ${PCRE2_LIBRARIES})
 if (BUILD_STATICALLY_LINKED_EXE)
@@ -62,7 +62,7 @@ set_target_properties(editorconfig_static PROPERTIES
 
 # We need to link Shwapi since we use PathIsRelative
 if(WIN32)
-    target_link_libraries(editorconfig_static Shlwapi)
+    target_link_libraries(editorconfig_static shlwapi)
 endif()
 target_link_libraries(editorconfig_static ${PCRE2_LIBRARIES})
 
