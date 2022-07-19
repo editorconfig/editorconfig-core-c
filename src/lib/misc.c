@@ -28,7 +28,7 @@
 #include "misc.h"
 
 #ifdef WIN32
-# include <Shlwapi.h>
+# include <shlwapi.h>
 #endif
 
 #if !defined(HAVE_STRCASECMP) && !defined(HAVE_STRICMP)

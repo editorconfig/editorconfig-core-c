@@ -1,3 +1,5 @@
+- Fix cross compiling for Windows
+
 v0.12.4
 
 - Add Windows build scripts.
