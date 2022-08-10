@@ -90,6 +90,16 @@ if(NOT BUILD_STATICALLY_LINKED_EXE)
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 endif()
 
+if(IS_ABSOLUTE "${CMAKE_INSTALL_LIBDIR}")
+    set(libdir_for_pc_file "${CMAKE_INSTALL_LIBDIR}")
+else()
+    set(libdir_for_pc_file "\${prefix}/${CMAKE_INSTALL_LIBDIR}")
+endif()
+if(IS_ABSOLUTE "${CMAKE_INSTALL_INCLUDEDIR}")
+    set(includedir_for_pc_file "${CMAKE_INSTALL_INCLUDEDIR}")
+else()
+    set(includedir_for_pc_file "\${prefix}/${CMAKE_INSTALL_INCLUDEDIR}")
+endif()
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/editorconfig.pc.in
     ${CMAKE_CURRENT_BINARY_DIR}/editorconfig.pc
