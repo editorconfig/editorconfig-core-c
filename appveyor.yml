@@ -1,18 +1,19 @@
 image:
-  - Visual Studio 2017
+  - Visual Studio 2022
   
 environment:
   CONFIG: Release
-  VSVER: 15
+  VSVER: 17
   matrix:
     - ARCH: x86
     - ARCH: x64
+    #- ARCH: arm64
 
 install:
   - cmake --version
   - git submodule update --init
   # Download PCRE2 sources
-  - ps: ./init.ps1 -pcre 10.32
+  - ps: ./init.ps1 -pcre "10.37"
   # Build and install PCRE2
   - ps: ./build.ps1 -proj pcre2 -config $env:CONFIG -arch $env:ARCH -vsver $env:VSVER -init -install
 

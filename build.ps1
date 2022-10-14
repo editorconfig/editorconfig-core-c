@@ -12,11 +12,11 @@ param(
     [ValidateSet("Debug","Release")]
     [string] $config = "Release",
 
-    [ValidateSet("x86","x64")]
+    [ValidateSet("x86","x64","arm64")]
     [string] $arch = "x64",
     
 
-    [ValidateSet("17","16","15","14","12")]
+    [ValidateSet("17","16","15","14")]
     [int] $vsver = 15
 )
 
@@ -95,8 +95,15 @@ if ($init) {
         }
     }
 
+    $cmake_arch=""
     if($arch -eq "x64"){
-        $gen += " Win64"
+        $cmake_arch += "x64"
+    }
+    elseif($arch -eq "x86"){
+        $cmake_arch += "Win32"
+    }
+    elseif($arch -eq "arm64"){
+        $cmake_arch += "ARM64"
     }
 
     mkdir $dest -ErrorAction SilentlyContinue | Out-Null
@@ -106,14 +113,14 @@ if ($init) {
             pcre2 {
                 $BUILD_SHARED_LIBS = "ON"
                 if ($static -eq "ON"){ $BUILD_SHARED_LIBS = "OFF"}
-                exec { cmake -G "$gen" -DCMAKE_INSTALL_PREFIX="$PREFIX" -DPCRE2_STATIC_RUNTIME="$static" `
+                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DPCRE2_STATIC_RUNTIME="$static" `
                     -DBUILD_SHARED_LIBS="$BUILD_SHARED_LIBS" -DPCRE2_BUILD_PCRE2GREP="OFF" -DPCRE2_BUILD_TESTS="OFF" `
                     "../../pcre2" }
             }
             core {
                 $MSVC_MD = "ON"
                 if ($static -eq "ON"){ $MSVC_MD = "OFF"}
-                exec { cmake -G "$gen" -DCMAKE_INSTALL_PREFIX="$PREFIX" -DMSVC_MD="$MSVC_MD" -DPCRE2_STATIC="$static" `
+                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DMSVC_MD="$MSVC_MD" -DPCRE2_STATIC="$static" `
                     "../../../." }
             }
         }
