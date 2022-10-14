@@ -8,7 +8,7 @@ param(
     [ValidateSet("Debug","Release")]
     [string] $config = "Release",
 
-    [ValidateSet("x86","x64")]
+    [ValidateSet("x86","x64","arm64")]
     [string] $arch = "x64"
 )
 
