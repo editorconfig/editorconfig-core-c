@@ -52,7 +52,7 @@ add_custom_target(uninstall
     ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 
 # package target
-set(HOME_URL "http://editorconfig.org")
+set(HOME_URL "https://editorconfig.org")
 set(MAILING_LIST "editorconfig@googlegroups.com")
 
 set(CPACK_PACKAGE_VENDOR "EditorConfig Team")
