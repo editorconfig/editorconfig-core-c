@@ -99,7 +99,7 @@ these libraries could be executed properly.
 Automated Build on Windows
 ==========================
 
-Requirements on Windows are [Visual Studio] 2013, 2015 or 2017, [cmake] 2.8.12 or higher and Powershell 3 or higher. For Visual Studio the community edition is sufficient, but the [C++ workload](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2017) is required.
+Requirements on Windows are [Visual Studio] 2015, 2017, 2019 or 2022, [cmake] 2.8.12 or higher and Powershell 3 or higher. For Visual Studio the community edition is sufficient, but the [C++ workload](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2017) is required.
 
     Non-static build is currently not supported.
 
@@ -109,7 +109,7 @@ Download pcre2
 You have to download and extract the pcre2 sources after checkout.
 
 ```powershell
-~> ./init.ps1 [-pcre 10.32]
+~> ./init.ps1 [-pcre "10.40"]
 ```
 
 Arguments:
@@ -130,7 +130,7 @@ The `-install` argument will put the binaries to a location (`bin/$(ARCH)-static
 For the other arguments please see below.
 
 ```powershell
-~> ./build.ps1 [-proj all | core | pcre2] [-init] [-install] [-vsver 15 | 14 | 12] [-arch x64 | x86] [-config Release | Debug]
+~> ./build.ps1 [-proj all | core | pcre2] [-init] [-install] [-vsver 17 | 16 | 15 | 14 ] [-arch x64 | x86 | arm64] [-config Release | Debug]
 ```
 
 Arguments:
@@ -159,7 +159,7 @@ Arguments:
 On Windows the test `utf_8_char` is disabled.
 
 ```powershell
-~> ./test.ps1 [-arch x64 | x86] [-config Release | Debug]
+~> ./test.ps1 [-arch x64 | x86 | arm64] [-config Release | Debug]
 ```
 
 Arguments:

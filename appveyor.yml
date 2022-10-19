@@ -13,7 +13,7 @@ install:
   - cmake --version
   - git submodule update --init
   # Download PCRE2 sources
-  - ps: ./init.ps1 -pcre "10.37"
+  - ps: ./init.ps1 -pcre "10.40"
   # Build and install PCRE2
   - ps: ./build.ps1 -proj pcre2 -config $env:CONFIG -arch $env:ARCH -vsver $env:VSVER -init -install
 

@@ -1,0 +1,73 @@
+name: CI_build
+
+on: [push, pull_request]
+
+jobs:
+  build_windows:
+
+    runs-on: windows-2022
+    strategy:
+      max-parallel: 6
+      matrix:
+        build_configuration: [Release, Debug]
+        build_platform: [x64, arm64, x86]
+        build_vsver: [17]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Download PCRE2 sources
+      run: ./init.ps1 -pcre "10.40"
+
+    - name: Build and install PCRE2
+      run: ./build.ps1 -proj pcre2 -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }} -vsver ${{ matrix.build_vsver }} -init -install
+
+    - name: Build and install editorconfig-core-c
+      run: ./build.ps1 -proj core -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }} -vsver ${{ matrix.build_vsver }} -init -install
+
+    - name: Run the core tests
+      if: matrix.build_platform == 'x86' || matrix.build_platform == 'x64'
+      run: ./test.ps1 -proj core -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }}
+
+  build_linux:
+
+    runs-on: ubuntu-22.04
+    strategy:
+      max-parallel: 4
+      matrix:
+        compiler:
+          - { compiler: GNU,  CC: gcc-11,   CXX: g++-11 }
+          - { compiler: LLVM, CC: clang-14, CXX: clang++-14 }
+        build_configuration: [Release, Debug]
+        build_platform: ["Unix Makefiles"]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Install packages via apt
+      run: |
+           sudo apt-get -qq update
+           sudo apt-get -qq install -y libpcre2-dev cmake doxygen graphviz
+
+    - name: generate cmake
+      env:
+        CC: ${{ matrix.compiler.CC }}
+        CXX: ${{ matrix.compiler.CXX }}
+      run: |
+           mkdir _build
+           cd _build
+           cmake -G "${{ matrix.build_platform }}" -DCMAKE_INSTALL_PREFIX=../_install ..
+
+    - name: build cmake
+      run: |
+           cd _build
+           cmake --build . --config ${{ matrix.build_configuration }} --target install
+
+    - name: run tests
+      run: |
+           cd _build
+           ctest -VV --output-on-failure .
