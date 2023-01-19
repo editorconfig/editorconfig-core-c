@@ -57,6 +57,13 @@ static const UT_icd ut_int_pair_icd = {sizeof(int_pair),NULL,NULL,NULL};
     p += string_len; \
 } while(0)
 
+/* safely add a char to a string then move the pointer to the end */
+#define ADD_CHAR(string, new_chr, end)  do {    \
+    if (string + 1 >= end) \
+        return -1; \
+    *(string ++) = new_chr; \
+} while(0)
+
 #define PATTERN_MAX  4097
 /*
  * Whether the string matches the given glob pattern. Return 0 if successful, return -1 if a PCRE
@@ -131,8 +138,8 @@ int ec_glob(const char *pattern, const char *string)
         case '\\':      /* also skip the next one */
             if (*(c+1) != '\0')
             {
-                *(p_pcre ++) = *(c++);
-                *(p_pcre ++) = *c;
+                ADD_CHAR(p_pcre, *(c++), pcre_str_end);
+                ADD_CHAR(p_pcre, *c, pcre_str_end);
             }
             else
                 STRING_CAT(p_pcre, "\\\\", pcre_str_end);
@@ -208,18 +215,18 @@ int ec_glob(const char *pattern, const char *string)
                 ++ c;
             }
             else
-                *(p_pcre ++) = '[';
+                STRING_CAT(p_pcre, "[", pcre_str_end);
 
             break;
 
         case ']':
             is_in_bracket = 0;
-            *(p_pcre ++) = *c;
+            ADD_CHAR(p_pcre, *c, pcre_str_end);
             break;
 
         case '-':
             if (is_in_bracket)      /* in brackets, - indicates range */
-                *(p_pcre ++) = *c;
+                ADD_CHAR(p_pcre, *c, pcre_str_end);
             else
                 STRING_CAT(p_pcre, "\\-", pcre_str_end);
 
@@ -302,12 +309,12 @@ int ec_glob(const char *pattern, const char *string)
             }
 
             -- brace_level;
-            *(p_pcre ++) = ')';
+            STRING_CAT(p_pcre, ")", pcre_str_end);
             break;
 
         case ',':
             if (brace_level > 0)  /* , inside {...} */
-                *(p_pcre ++) = '|';
+                STRING_CAT(p_pcre, "|", pcre_str_end);
             else
                 STRING_CAT(p_pcre, "\\,", pcre_str_end);
             break;
@@ -326,9 +333,9 @@ int ec_glob(const char *pattern, const char *string)
 
         default:
             if (!isalnum(*c))
-                *(p_pcre ++) = '\\';
+                STRING_CAT(p_pcre, "\\", pcre_str_end);
 
-            *(p_pcre ++) = *c;
+            ADD_CHAR(p_pcre, *c, pcre_str_end);
         }
     }
 
