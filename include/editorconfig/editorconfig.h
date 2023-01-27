@@ -72,13 +72,13 @@
  * @endhtmlonly
  * @manonly
  *
- * -f             Specify conf filename other than ".editorconfig".
+ * \-f             Specify conf filename other than ".editorconfig".
  *
- * -b             Specify version (used by devs to test compatibility).
+ * \-b             Specify version (used by devs to test compatibility).
  *
- * -h OR --help   Print this help message.
+ * \-h OR \-\-help   Print this help message.
  *
- * --version      Display version information.
+ * \-\-version      Display version information.
  *
  * @endmanonly
  *
@@ -181,7 +181,7 @@
  * <li><strong>tab_width</strong>: a whole number defining the number of columns used to represent a tab character. This defaults to the value of <strong>indent_size</strong> and should not usually need to be specified.</li>
  * <li><strong>end_of_line</strong>: set to "lf", "cr", or "crlf" to control how line breaks are represented. The values are case insensitive.</li>
  * <li><strong>charset</strong>: set to "latin1", "utf-8", "utf-8-bom", "utf-16be" or "utf-16le" to control the character set. Use of "utf-8-bom" is discouraged.</li>
- * <li><strong>trim_trailing_whitespace</strong>:  set to "true" to remove any whitespace characters preceeding newline characters and "false" to ensure it doesn't.</li>
+ * <li><strong>trim_trailing_whitespace</strong>:  set to "true" to remove any whitespace characters preceding newline characters and "false" to ensure it doesn't.</li>
  * <li><strong>insert_final_newline</strong>: set to "true" ensure file ends with a newline when saving and "false" to ensure it doesn't.</li>
  * <li><strong>root</strong>: special property that should be specified at the top of the file outside of any sections. Set to "true" to stop <code>.editorconfig</code> files search on current file. The value is case insensitive.</li>
  * </ul>
