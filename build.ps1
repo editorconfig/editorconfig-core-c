@@ -48,8 +48,8 @@ function exec
 }
 
 if ($proj -eq "all"){
-    .\build.ps1 -proj pcre2 -init:$init -install:$install -arch $arch -config $config -static $static
-    .\build.ps1 -proj core -init:$init -install:$install -arch $arch -config $config -static $static
+    .\build.ps1 -proj pcre2 -init:$init -install:$install -vsver $vsver -arch $arch -config $config -static $static
+    .\build.ps1 -proj core -init:$init -install:$install -vsver $vsver -arch $arch -config $config -static $static
     return
 }
 
