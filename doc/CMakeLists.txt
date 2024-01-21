@@ -125,7 +125,7 @@ if(BUILD_DOCUMENTATION)
 
         if(INSTALL_HTML_DOC)
             install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html"
-                DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/doc/editorconfig")
+                DESTINATION "${CMAKE_INSTALL_DOCDIR}")
         endif(INSTALL_HTML_DOC)
 
     else(DOXYGEN_FOUND)
