@@ -192,10 +192,14 @@ int ec_glob(const char *pattern, const char *string)
                     if (!right_bracket)  /* The right bracket may not exist */
                         right_bracket = c + strlen(c);
 
-                    strcat(p_pcre, "\\");
+                    STRING_CAT(p_pcre, "\\", pcre_str_end);
+                    /* Boundary check for strncat below. */
+                    if (pcre_str_end - p_pcre <= right_bracket - c) {
+                        return -1;
+                    }
                     strncat(p_pcre, c, right_bracket - c);
                     if (*right_bracket)  /* right_bracket is a bracket */
-                        strcat(p_pcre, "\\]");
+                        STRING_CAT(p_pcre, "\\]", pcre_str_end);
                     p_pcre += strlen(p_pcre);
                     c = right_bracket;
                     if (!*c)
@@ -339,7 +343,7 @@ int ec_glob(const char *pattern, const char *string)
         }
     }
 
-    *(p_pcre ++) = '$';
+    ADD_CHAR(p_pcre, '$', pcre_str_end);
 
     pcre2_code_free(re); /* ^\\d+\\.\\.\\d+$ */
 
