@@ -27,6 +27,7 @@
 
 #include "global.h"
 
+#include <assert.h>
 #include <ctype.h>
 #include <string.h>
 #include <pcre2.h>
@@ -51,7 +52,8 @@ static const UT_icd ut_int_pair_icd = {sizeof(int_pair),NULL,NULL,NULL};
 /* concatenate the string then move the pointer to the end */
 #define STRING_CAT(p, string, end)  do {    \
     size_t string_len = strlen(string); \
-    if (p + string_len >= end) \
+    assert(end > p); \
+    if (string_len >= (size_t)(end - p)) \
         return -1; \
     strcat(p, string); \
     p += string_len; \
