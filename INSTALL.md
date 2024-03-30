@@ -26,6 +26,9 @@ Manually Install from Source
 **(To build on Windows: Since it's usually a lot harder to manually build on Windows, see the
 section "Automated Build on Windows" for an easier way.)**
 
+Dependencies
+------------
+
 In principle, you should be able to build the source using any C compiler that
 is C99 compliant (i.e., virtually any C compiler that is not archaic). Before
 installing, you need to install the building tool [cmake][] (version >= 2.8.12)
@@ -40,7 +43,21 @@ to build PCRE2 from source. If you want to build the MT version of this library,
 after running `cmake .` in the PCRE2 source directory, please replace all
 occurrence of "MD" with "MT" in the CMakeCache.txt.
 
-Switch to the root directory of editorconfig and execute the following command:
+Obtaining Source
+----------------
+
+The easiest way to obtain EditorConfig C core source is using git:
+
+    git clone --recursive https://github.com/editorconfig/editorconfig-core-c.git
+
+Alternatively, you can download the source tarball/zipfile from [SourceForge][]
+and unarchive it.
+
+Start Building
+--------------
+
+Switch to the root directory of EditorConfig C core source directory and execute
+the following command:
 
     cmake .
 
@@ -171,3 +188,4 @@ Arguments:
 [cmake]: https://cmake.org
 [PCRE2]: https://pcre.org/
 [Visual Studio]: https://visualstudio.microsoft.com
+[SourceForge]: https://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/

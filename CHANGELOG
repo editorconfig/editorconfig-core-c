@@ -1,3 +1,5 @@
+- Clarify the steps of building from source.
+
 v0.12.7
 
 - Fix pointer overflow in STRING_CAT.
