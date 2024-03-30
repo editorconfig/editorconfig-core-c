@@ -1,4 +1,19 @@
-- Fix cross compiling for Windows
+- Fix pointer overflow in STRING_CAT.
+- Fix a few more stack buffer overflows.
+- Add license for FindPcre2 from LuaDist.
+- Document and CI fixes.
+
+v0.12.6
+
+- Update property key, value length limits per spec change.
+- Fix potential buffer overflow in ec_glob.
+- CI fixes.
+- Fix paths in pkg-config file with absolute CMAKE_INSTALL_*.
+- Fix cross compiling for Windows.
+
+v0.12.5
+
+- Fix memory leak in editorconfig_parse() which would occur if no .editorconfig is found.
 
 v0.12.4
 
