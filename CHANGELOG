@@ -1,3 +1,5 @@
+v0.12.7
+
 - Fix pointer overflow in STRING_CAT.
 - Fix a few more stack buffer overflows.
 - Add license for FindPcre2 from LuaDist.
