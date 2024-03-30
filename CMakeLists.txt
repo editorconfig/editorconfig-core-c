@@ -31,7 +31,7 @@ cmake_policy(VERSION 3.5.1)
 
 project(editorconfig VERSION "0.12.7" LANGUAGES C)
 
-set(PROJECT_VERSION_SUFFIX "-development")
+set(PROJECT_VERSION_SUFFIX "")
 
 include(GNUInstallDirs)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake_Modules")
