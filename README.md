@@ -37,8 +37,8 @@ Getting Help
 
 For help with the EditorConfig C Core code, please write to our
 [mailing list][]. Bugs and feature requests should be submitted to our
-[issue tracker][]. If you find any security bugs, please send them privately to
-`hong AT topbug DOT net` -- they need to be embargoed before fixed.
+[issue tracker][]. If you find any security bugs, please report them at the
+[security page][]..
 
 If you are writing a plugin a language that can import C libraries, you may
 want to import and use the EditorConfig library directly.  If you do use the
@@ -64,3 +64,4 @@ LICENSE file for details.
 [documentation]: http://docs.editorconfig.org/ "EditorConfig C Core documentation"
 [downloads]: https://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/
 [dev doc]: http://docs.editorconfig.org/en/master "EditorConfig C Core latest development version documentation"
+[security page]: https://github.com/editorconfig/editorconfig-core-c/security
