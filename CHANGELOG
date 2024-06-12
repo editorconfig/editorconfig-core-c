@@ -1,3 +1,7 @@
+v0.12.8
+
+- Bump CMake requirement to 3.16.3
+- lib/ec_glob: plug leak of nums utarray
 - Clarify the steps of building from source.
 
 v0.12.7
