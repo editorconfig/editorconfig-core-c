@@ -53,16 +53,20 @@ static const UT_icd ut_int_pair_icd = {sizeof(int_pair),NULL,NULL,NULL};
 #define STRING_CAT(p, string, end)  do {    \
     size_t string_len = strlen(string); \
     assert(end > p); \
-    if (string_len >= (size_t)(end - p)) \
-        return -1; \
+    if (string_len >= (size_t)(end - p)) { \
+        ret = -1; \
+        goto cleanup; \
+    } \
     strcat(p, string); \
     p += string_len; \
 } while(0)
 
 /* safely add a char to a string then move the pointer to the end */
 #define ADD_CHAR(string, new_chr, end)  do {    \
-    if (string + 1 >= end) \
-        return -1; \
+    if (string + 1 >= end) { \
+        ret = -1; \
+        goto cleanup; \
+    } \
     *(string ++) = new_chr; \
 } while(0)
 
