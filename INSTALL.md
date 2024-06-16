@@ -31,7 +31,7 @@ Dependencies
 
 In principle, you should be able to build the source using any C compiler that
 is C99 compliant (i.e., virtually any C compiler that is not archaic). Before
-installing, you need to install the building tool [cmake][] (version >= 2.8.12)
+installing, you need to install the building tool [cmake][] (version >= 3.16.3)
 and dependency [PCRE2][]. To install cmake and pcre with package manager:
 
 - Arch Linux: `pacman -S cmake pcre2`
@@ -116,7 +116,7 @@ these libraries could be executed properly.
 Automated Build on Windows
 ==========================
 
-Requirements on Windows are [Visual Studio] 2015, 2017, 2019 or 2022, [cmake] 2.8.12 or higher and Powershell 3 or higher. For Visual Studio the community edition is sufficient, but the [C++ workload](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2017) is required.
+Requirements on Windows are [Visual Studio] 2015, 2017, 2019 or 2022, [cmake] 3.16.3 or higher and Powershell 3 or higher. For Visual Studio the community edition is sufficient, but the [C++ workload](https://docs.microsoft.com/en-us/cpp/build/vscpp-step-0-installation?view=vs-2017) is required.
 
     Non-static build is currently not supported.
 
