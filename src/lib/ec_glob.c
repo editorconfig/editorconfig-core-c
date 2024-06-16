@@ -91,7 +91,7 @@ int ec_glob(const char *pattern, const char *string)
     pcre2_code *              re;
     int                       rc;
     size_t *                  pcre_result;
-    pcre2_match_data *        pcre_match_data;
+    pcre2_match_data *        pcre_match_data = NULL;
     char                      l_pattern[2 * PATTERN_MAX];
     _Bool                     are_braces_paired = 1;
     UT_array *                nums;     /* number ranges */
