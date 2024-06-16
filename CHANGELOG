@@ -1,3 +1,7 @@
+v0.12.9
+
+- lib/ec_glob: Fix potentially uninitialized variable warning.
+
 v0.12.8
 
 - Bump CMake requirement to 3.16.3
