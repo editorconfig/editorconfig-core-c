@@ -31,25 +31,25 @@ jobs:
       if: matrix.build_platform == 'x86' || matrix.build_platform == 'x64'
       run: ./test.ps1 -proj core -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }}
 
-    - uses: olegtarasov/get-tag@v2.1.4
-      id: tagName
+    - name: Get short SHA
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
 
-    - name: zip artifacts for ${{ matrix.build_platform }}
+    - name: zip artifacts for ${{ matrix.build_platform }} on ${{ github.ref_name }} with sha ${{ github.sha }}
       if: matrix.build_configuration == 'Release'
-      run: 7z a editorconfig-core-c_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip .\bin\${{ matrix.build_platform }}-static\build\*
+      run: 7z a editorconfig-core-c_${{ github.ref_name }}_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip .\bin\${{ matrix.build_platform }}-static\build\*
 
     - name: Archive artifacts for ${{ matrix.build_platform }}
       if: matrix.build_configuration == 'Release'
       uses: actions/upload-artifact@v4
       with:
-          name: editorconfig-core-c_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
-          path: editorconfig-core-c_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+          name: editorconfig-core-c_${{ github.ref_name }}_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip
+          path: editorconfig-core-c_${{ github.ref_name }}_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip
 
     - name: Create release on tagging
       uses: softprops/action-gh-release@v2
       if: startsWith(github.ref, 'refs/tags/')
       with:
-          files: editorconfig-core-c_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip
+          files: editorconfig-core-c_${{ github.ref_name }}_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip
 
 
 
@@ -60,8 +60,8 @@ jobs:
       fail-fast: false
       matrix:
         compiler:
-          - { compiler: GNU,  CC: gcc-12,   CXX: g++-12 }
-          - { compiler: LLVM, CC: clang-15, CXX: clang++-15 }
+          - { compiler: GNU,  CC: gcc-11,   CXX: g++-11 }
+          - { compiler: LLVM, CC: clang-14, CXX: clang++-14 }
         build_configuration: [Release, Debug]
         build_platform: ["Unix Makefiles"]
 
