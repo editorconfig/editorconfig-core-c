@@ -19,7 +19,7 @@ jobs:
         submodules: recursive
 
     - name: Download PCRE2 sources
-      run: ./init.ps1 -pcre "10.40"
+      run: ./init.ps1 -pcre "10.45"
 
     - name: Build and install PCRE2
       run: ./build.ps1 -proj pcre2 -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }} -vsver ${{ matrix.build_vsver }} -init -install
@@ -31,12 +31,12 @@ jobs:
       if: matrix.build_platform == 'x86' || matrix.build_platform == 'x64'
       run: ./test.ps1 -proj core -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }}
 
-    - uses: olegtarasov/get-tag@v2.1.3
+    - uses: olegtarasov/get-tag@v2.1.4
       id: tagName
 
     - name: zip artifacts for ${{ matrix.build_platform }}
       if: matrix.build_configuration == 'Release'
-      run: 7z a editorconfig-core-c_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip .\bin\${{ matrix.build_platform }}-static\build\
+      run: 7z a editorconfig-core-c_${{ steps.tagName.outputs.tag }}_${{ matrix.build_platform }}.zip .\bin\${{ matrix.build_platform }}-static\build\*
 
     - name: Archive artifacts for ${{ matrix.build_platform }}
       if: matrix.build_configuration == 'Release'
@@ -60,8 +60,8 @@ jobs:
       fail-fast: false
       matrix:
         compiler:
-          - { compiler: GNU,  CC: gcc-11,   CXX: g++-11 }
-          - { compiler: LLVM, CC: clang-14, CXX: clang++-14 }
+          - { compiler: GNU,  CC: gcc-12,   CXX: g++-12 }
+          - { compiler: LLVM, CC: clang-15, CXX: clang++-15 }
         build_configuration: [Release, Debug]
         build_platform: ["Unix Makefiles"]
 
