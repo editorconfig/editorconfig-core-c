@@ -58,13 +58,13 @@ jobs:
 
   build_linux:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
         compiler:
-          - { compiler: GNU,  CC: gcc-11,   CXX: g++-11 }
-          - { compiler: LLVM, CC: clang-14, CXX: clang++-14 }
+          - { compiler: GNU,  CC: gcc-14,   CXX: g++-14 }
+          - { compiler: LLVM, CC: clang-18, CXX: clang++-18 }
         build_configuration: [Release, Debug]
         build_platform: ["Unix Makefiles"]
 
