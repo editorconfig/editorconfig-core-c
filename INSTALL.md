@@ -126,7 +126,7 @@ Download pcre2
 You have to download and extract the pcre2 sources after checkout.
 
 ```powershell
-~> ./init.ps1 [-pcre "10.40"]
+~> ./init.ps1 [-pcre "10.45"]
 ```
 
 Arguments:

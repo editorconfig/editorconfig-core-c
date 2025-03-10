@@ -7,7 +7,7 @@ jobs:
 
     runs-on: windows-2022
     strategy:
-      max-parallel: 6
+      fail-fast: false
       matrix:
         build_configuration: [Release, Debug]
         build_platform: [x64, arm64, x86]
@@ -19,7 +19,7 @@ jobs:
         submodules: recursive
 
     - name: Download PCRE2 sources
-      run: ./init.ps1 -pcre "10.40"
+      run: ./init.ps1 -pcre "10.45"
 
     - name: Build and install PCRE2
       run: ./build.ps1 -proj pcre2 -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }} -vsver ${{ matrix.build_vsver }} -init -install
@@ -31,15 +31,37 @@ jobs:
       if: matrix.build_platform == 'x86' || matrix.build_platform == 'x64'
       run: ./test.ps1 -proj core -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }}
 
+    - name: Get short SHA
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+
+    - name: zip artifacts for ${{ matrix.build_platform }} on ${{ github.ref_name }} with sha ${{ github.sha }}
+      if: matrix.build_configuration == 'Release'
+      run: 7z a editorconfig-core-c_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip .\bin\${{ matrix.build_platform }}-static\build\*
+
+    - name: Archive artifacts for ${{ matrix.build_platform }}
+      if: matrix.build_configuration == 'Release'
+      uses: actions/upload-artifact@v4
+      with:
+          name: editorconfig-core-c_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip
+          path: editorconfig-core-c_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip
+
+    - name: Create release on tagging
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+          files: editorconfig-core-c_${{ env.SHORT_SHA }}_${{ matrix.build_platform }}.zip
+
+
+
   build_linux:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
-      max-parallel: 4
+      fail-fast: false
       matrix:
         compiler:
-          - { compiler: GNU,  CC: gcc-11,   CXX: g++-11 }
-          - { compiler: LLVM, CC: clang-14, CXX: clang++-14 }
+          - { compiler: GNU,  CC: gcc-14,   CXX: g++-14 }
+          - { compiler: LLVM, CC: clang-18, CXX: clang++-18 }
         build_configuration: [Release, Debug]
         build_platform: ["Unix Makefiles"]
 
@@ -57,6 +79,36 @@ jobs:
       env:
         CC: ${{ matrix.compiler.CC }}
         CXX: ${{ matrix.compiler.CXX }}
+      run: |
+           mkdir _build
+           cd _build
+           cmake -G "${{ matrix.build_platform }}" -DCMAKE_INSTALL_PREFIX=../_install ..
+
+    - name: build cmake
+      run: |
+           cd _build
+           cmake --build . --config ${{ matrix.build_configuration }} --target install
+
+    - name: run tests
+      run: |
+           cd _build
+           ctest -VV --output-on-failure .
+
+  build_macos:
+
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        build_configuration: [Release, Debug]
+        build_platform: ["Unix Makefiles"]
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: generate cmake
       run: |
            mkdir _build
            cd _build
