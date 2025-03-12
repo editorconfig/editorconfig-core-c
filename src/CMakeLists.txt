@@ -62,24 +62,6 @@ configure_file(
 include_directories(BEFORE
     "${PROJECT_SOURCE_DIR}/include")
 
-if(WIN32)
-    # MSVC_MD option
-    option(MSVC_MD
-        "Use /MD instead of /MT flag when compiling with Microsoft Visual C++. This option takes no effect when using compilers other than Microsoft Visual C++."
-        OFF)
-endif()
-
-# replace all /MD with /MT for msvc if MSVC_MD is off
-if(MSVC AND NOT MSVC_MD)
-    foreach(flag_var
-            CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
-            CMAKE_C_FLAGS_MINSIZEREL CMAKE_C_FLAGS_RELWITHDEBINFO)
-        if(${flag_var} MATCHES "/MD")
-            string(REGEX REPLACE "/MD" "/MT" ${flag_var} "${${flag_var}}")
-        endif(${flag_var} MATCHES "/MD")
-    endforeach(flag_var)
-endif()
-
 # Use unsigned char to represent plain char
 if(MSVC)
     add_definitions("-J")

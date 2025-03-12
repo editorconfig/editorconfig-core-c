@@ -118,10 +118,8 @@ if ($init) {
                     "../../pcre2" }
             }
             core {
-                $MSVC_MD = "ON"
-                if ($static -eq "ON"){ $MSVC_MD = "OFF"}
-                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DMSVC_MD="$MSVC_MD" -DPCRE2_STATIC="$static" `
-                    "../../../." }
+                $MsvcRuntime = if($static -eq "ON") { "MultiThreaded" } else { "MultiThreadedDLL" }
+                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DCMAKE_MSVC_RUNTIME_LIBRARY="$MsvcRuntime" -DPCRE2_STATIC="$static" "../../../." }
             }
         }
     } finally {
