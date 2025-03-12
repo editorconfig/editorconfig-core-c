@@ -109,19 +109,17 @@ if ($init) {
     mkdir $dest -ErrorAction SilentlyContinue | Out-Null
     Push-Location $dest
     try {
+        $MsvcRuntime = if($static -eq "ON") { "MultiThreaded" } else { "MultiThreadedDLL" }
         switch ($proj) {
             pcre2 {
                 $BUILD_SHARED_LIBS = "ON"
                 if ($static -eq "ON"){ $BUILD_SHARED_LIBS = "OFF"}
-                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DPCRE2_STATIC_RUNTIME="$static" `
+                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DPCRE2_STATIC_RUNTIME="$static" -DCMAKE_MSVC_RUNTIME_LIBRARY="$MsvcRuntime" `
                     -DBUILD_SHARED_LIBS="$BUILD_SHARED_LIBS" -DPCRE2_BUILD_PCRE2GREP="OFF" -DPCRE2_BUILD_TESTS="OFF" `
                     "../../pcre2" }
             }
             core {
-                $MSVC_MD = "ON"
-                if ($static -eq "ON"){ $MSVC_MD = "OFF"}
-                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DMSVC_MD="$MSVC_MD" -DPCRE2_STATIC="$static" `
-                    "../../../." }
+                exec { cmake -G "$gen" -A $cmake_arch -DCMAKE_INSTALL_PREFIX="$PREFIX" -DCMAKE_MSVC_RUNTIME_LIBRARY="$MsvcRuntime" -DPCRE2_STATIC="$static" "../../../." }
             }
         }
     } finally {

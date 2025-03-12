@@ -86,13 +86,6 @@ could be used when generating the project file:
     documentation, try to set this option to the path to doxygen.
     e.g. cmake -DDOXYGEN_EXECUTABLE=/opt/doxygen/bin/doxygen .
 
-    -DMSVC_MD=[ON|OFF]                      Default: OFF
-    Use /MD instead of /MT flag when compiling with Microsoft Visual C++. This
-    option takes no effect when using compilers other than Microsoft Visual
-    C++. Note that the option chosen here must be consistent with PCRE2.
-    e.g. We want to use /MD instead of /MT when compiling with MSVC.
-    cmake -DMSVC_MD=ON .
-
 On UNIX/Linux with gcc, the project file is often a Makefile, in which case you
 can type "make" to compile editorconfig.  If you are using a different compiler
 or platform the compilation command may differ. For example, if you generate an
