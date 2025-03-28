@@ -50,7 +50,7 @@ extern "C" {
 typedef void*   editorconfig_handle;
 
 /*!
- * @brief Create and intialize a default editorconfig_handle object.
+ * @brief Create and initialize a default editorconfig_handle object.
  *
  * @retval NULL Failed to create the editorconfig_handle object.
  *
