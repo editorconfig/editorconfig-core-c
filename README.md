@@ -57,7 +57,7 @@ BSD License. The See LICENSE file for details. Some code in `src/lib/misc.c` is
 distributed under their own license (see the source file for details). See the
 LICENSE file for details.
 
-[EditorConfig]: http://editorconfig.org "EditorConfig Homepage"
+[EditorConfig]: https://editorconfig.org "EditorConfig Homepage"
 [INSTALL.md]: https://github.com/editorconfig/editorconfig-core-c/blob/master/INSTALL.md
 [mailing list]: http://groups.google.com/group/editorconfig "EditorConfig mailing list"
 [issue tracker]: https://github.com/editorconfig/editorconfig-core-c/issues
