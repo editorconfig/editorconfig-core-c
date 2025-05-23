@@ -71,6 +71,8 @@ if(BUILD_DOCUMENTATION)
         add_custom_command(
             OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/man/man1/editorconfig.1
             COMMAND
+            ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/man
+            COMMAND
             ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-1"
             MAIN_DEPENDENCY
             ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
@@ -87,6 +89,8 @@ if(BUILD_DOCUMENTATION)
 
         add_custom_command(
             OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/man/man5/editorconfig-format.5
+            COMMAND
+            ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/man
             COMMAND
             ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile-5"
             MAIN_DEPENDENCY
