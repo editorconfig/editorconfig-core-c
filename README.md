@@ -38,7 +38,7 @@ Getting Help
 For help with the EditorConfig C Core code, please write to our
 [mailing list][]. Bugs and feature requests should be submitted to our
 [issue tracker][]. If you find any security bugs, please report them at the
-[security page][]..
+[security page][].
 
 If you are writing a plugin a language that can import C libraries, you may
 want to import and use the EditorConfig library directly.  If you do use the
