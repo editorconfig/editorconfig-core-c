@@ -1,5 +1,5 @@
 param(
-    $pcre="10.45"
+    $pcre="10.46"
 )
 
 $ErrorActionPreference="Stop"

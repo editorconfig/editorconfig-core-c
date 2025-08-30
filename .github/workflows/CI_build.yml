@@ -19,7 +19,7 @@ jobs:
         submodules: recursive
 
     - name: Download PCRE2 sources
-      run: ./init.ps1 -pcre "10.45"
+      run: ./init.ps1 -pcre "10.46"
 
     - name: Build and install PCRE2
       run: ./build.ps1 -proj pcre2 -config ${{ matrix.build_configuration }} -arch ${{ matrix.build_platform }} -vsver ${{ matrix.build_vsver }} -init -install
