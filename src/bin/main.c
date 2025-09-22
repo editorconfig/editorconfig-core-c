@@ -81,7 +81,7 @@ int main(int argc, const char* argv[])
     int                                 name_value_count;
     editorconfig_handle                 eh;
     char**                              file_paths = NULL;
-    int                                 path_count; /* the count of path input*/
+    int                                 path_count = 0; /* the count of path input*/
     /* Will be a EditorConfig file name if -f is specified on command line */
     const char*                         conf_filename = NULL;
 
