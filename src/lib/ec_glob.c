@@ -130,7 +130,7 @@ int ec_glob(const char *pattern, const char *string)
     }
 
     /* used to search for {num1..num2} case */
-    re = pcre2_compile("^\\{[\\+\\-]?\\d+\\.\\.[\\+\\-]?\\d+\\}$", PCRE2_ZERO_TERMINATED, 0,
+    re = pcre2_compile_8((PCRE2_SPTR8)"^\\{[\\+\\-]?\\d+\\.\\.[\\+\\-]?\\d+\\}$", PCRE2_ZERO_TERMINATED, 0,
             &error_code, &erroffset, NULL);
     if (!re)        /* failed to compile */
         return -1;
@@ -279,7 +279,7 @@ int ec_glob(const char *pattern, const char *string)
                     pcre2_match_data *  match_data = pcre2_match_data_create_from_pattern(re, NULL);
 
                     /* Check the case of {num1..num2} */
-                    rc = pcre2_match(re, c, cc - c + 1, 0, 0, match_data, NULL);
+                    rc = pcre2_match(re, (PCRE2_SPTR8)c, cc - c + 1, 0, 0, match_data, NULL);
 
                     pcre2_match_data_free(match_data);
 
@@ -353,7 +353,7 @@ int ec_glob(const char *pattern, const char *string)
 
     pcre2_code_free(re); /* ^\\d+\\.\\.\\d+$ */
 
-    re = pcre2_compile(pcre_str, PCRE2_ZERO_TERMINATED, 0, &error_code, &erroffset, NULL);
+    re = pcre2_compile((PCRE2_SPTR8)pcre_str, PCRE2_ZERO_TERMINATED, 0, &error_code, &erroffset, NULL);
 
     if (!re)        /* failed to compile */
     {
@@ -362,7 +362,7 @@ int ec_glob(const char *pattern, const char *string)
     }
 
     pcre_match_data = pcre2_match_data_create_from_pattern(re, NULL);
-    rc = pcre2_match(re, string, strlen(string), 0, 0, pcre_match_data, NULL);
+    rc = pcre2_match(re, (PCRE2_SPTR8)string, strlen(string), 0, 0, pcre_match_data, NULL);
 
     if (rc < 0)     /* failed to match */
     {
