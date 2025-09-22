@@ -193,7 +193,7 @@ int main(int argc, const char* argv[])
             printf("[%s]\n", full_filename);
 
         if (!strcmp(full_filename, "-")) {
-            int             len;
+            size_t          len;
 
             /* Read a line from stdin. If EOF encountered, continue */
             if (!fgets(file_line_buffer, FILENAME_MAX + 1, stdin)) {
@@ -207,12 +207,12 @@ int main(int argc, const char* argv[])
             -- i;
 
             /* trim the trailing space characters */
-            len = strlen(file_line_buffer) - 1;
-            while (len >= 0 && isspace(file_line_buffer[len]))
+            len = strlen(file_line_buffer);
+            while (len > 0 && isspace(file_line_buffer[len - 1]))
                 -- len;
-            if (len < 0) /* we meet a blank line */
+            if (len == 0) /* we meet a blank line */
                 continue;
-            file_line_buffer[len + 1] = '\0';
+            file_line_buffer[len] = '\0';
 
             full_filename = file_line_buffer;
             while (isspace(*full_filename))
