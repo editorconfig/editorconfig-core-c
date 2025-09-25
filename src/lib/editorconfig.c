@@ -343,6 +343,12 @@ static char** get_filenames(const char* path, const char* filename)
     int slashes = count_slashes(path);
     int i;
 
+#ifdef WIN32
+    /* detect whether file is on an UNC share such as //server/sharename/filename */
+    if (slashes >= 3 && path[0] == '/' && path[1] == '/')
+        slashes -= 3;
+#endif
+
     files = (char**) calloc(slashes+1, sizeof(char*));
     if (files == NULL)
         goto failure_cleanup;
