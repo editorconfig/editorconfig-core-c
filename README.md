@@ -3,7 +3,6 @@
 
 [![GitHub release](https://img.shields.io/github/release/editorconfig/editorconfig-core-c.svg)](../../releases/latest)
 [![Build Status](https://github.com/editorconfig/editorconfig-core-c/actions/workflows/CI_build.yml/badge.svg)](https://github.com/editorconfig/editorconfig-core-c/actions/workflows/CI_build.yml)
-[![Build status](https://ci.appveyor.com/api/projects/status/u9t8m4uech5kejoi/branch/master?svg=true)](https://ci.appveyor.com/project/xuhdev/editorconfig-core-c/branch/master)
 
 EditorConfig makes it easy to maintain the correct coding style when switching
 between different text editors and between different projects.  The
