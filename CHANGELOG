@@ -1,3 +1,9 @@
+v0.12.10
+
+- Make path splitting algorithm UNC-aware (#135)
+- Update utarray.h to 2.3.0 (#137)
+- Miscellaneous fixes.
+
 v0.12.9
 
 - lib/ec_glob: Fix potentially uninitialized variable warning.
