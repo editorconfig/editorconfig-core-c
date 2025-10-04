@@ -26,8 +26,8 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-cmake_minimum_required(VERSION 3.16.3)
-cmake_policy(VERSION 3.16.3)
+cmake_minimum_required(VERSION 3.18.4)
+cmake_policy(VERSION 3.18.4)
 
 project(editorconfig VERSION "0.12.11" LANGUAGES C)
 
