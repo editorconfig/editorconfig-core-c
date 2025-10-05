@@ -6,7 +6,7 @@ Runtime Dependency
 Installing From a Binary Package
 ================================
 
-Windows binary packages can be downloaded [here](http://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/).
+Windows binary packages can be downloaded the [Release page][].
 
 Windows users can also install EditorConfig core by [Chocolatey](http://chocolatey.org/packages/editorconfig.core).
 
@@ -50,8 +50,8 @@ The easiest way to obtain EditorConfig C core source is using git:
 
     git clone --recursive https://github.com/editorconfig/editorconfig-core-c.git
 
-Alternatively, you can download the source tarball/zipfile from [SourceForge][]
-and unarchive it.
+Alternatively, you can download the source tarball/zipfile from the [Release
+page][] and unarchive it.
 
 Start Building
 --------------
@@ -181,4 +181,4 @@ Arguments:
 [cmake]: https://cmake.org
 [PCRE2]: https://pcre.org/
 [Visual Studio]: https://visualstudio.microsoft.com
-[SourceForge]: https://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/
+[Release page]: https://github.com/editorconfig/editorconfig-core-c/releases
