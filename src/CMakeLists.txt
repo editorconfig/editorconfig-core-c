@@ -71,9 +71,15 @@ endif()
 
 # Use high warning levels
 if(MSVC)
-  add_compile_options(/W4 /WX)
+    add_compile_options(/W4)
+    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+        add_compile_options(/WX)
+    endif()
 else()
-  add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+    add_compile_options(-Wall -Wextra -Wpedantic)
+    if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+        add_compile_options(-Werror)
+    endif()
 endif()
 
 add_subdirectory(lib)
