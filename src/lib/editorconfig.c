@@ -288,7 +288,7 @@ static int ini_handler(void* hfp, const char* section, const char* name,
 static int split_file_path(char** directory, char** filename,
         const char* absolute_path)
 {
-    char* path_char = strrchr(absolute_path, '/');
+    const char* path_char = strrchr(absolute_path, '/');
 
     if (path_char == NULL) {
         if (directory)
