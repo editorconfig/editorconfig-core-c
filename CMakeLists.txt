@@ -111,11 +111,17 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt)
         # Used by tests/CMakeLists.txt.
     add_subdirectory(tests)
 
-    # Test for new exclude properties
-    add_test(NAME exclude_properties_test
+    # Test for new exclude properties - display_exclude_patterns
+    add_test(NAME exclude_properties_display_test
         COMMAND editorconfig_bin -f ${CMAKE_CURRENT_SOURCE_DIR}/test_exclude/.editorconfig ${CMAKE_CURRENT_SOURCE_DIR}/test_exclude/dummy.txt
     )
-    set_tests_properties(exclude_properties_test PROPERTIES PASS_REGULAR_EXPRESSION "display_exclude_patterns=.*\\nindex_exclude_patterns=.*")
+    set_tests_properties(exclude_properties_display_test PROPERTIES PASS_REGULAR_EXPRESSION "display_exclude_patterns=\*\.min\.js, \*\.log")
+
+    # Test for new exclude properties - index_exclude_patterns
+    add_test(NAME exclude_properties_index_test
+        COMMAND editorconfig_bin -f ${CMAKE_CURRENT_SOURCE_DIR}/test_exclude/.editorconfig ${CMAKE_CURRENT_SOURCE_DIR}/test_exclude/dummy.txt
+    )
+    set_tests_properties(exclude_properties_index_test PROPERTIES PASS_REGULAR_EXPRESSION "index_exclude_patterns=\*\.o, build/")
     message(STATUS "Tests enabled")
 else()
     message(WARNING
