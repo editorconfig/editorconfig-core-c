@@ -1,0 +1,3 @@
+[*]
+display_exclude_patterns = *.min.js, *.log
+index_exclude_patterns = *.o, build/

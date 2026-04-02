@@ -184,6 +184,8 @@
  * <li><strong>trim_trailing_whitespace</strong>:  set to "true" to remove any whitespace characters preceding newline characters and "false" to ensure it doesn't.</li>
  * <li><strong>insert_final_newline</strong>: set to "true" ensure file ends with a newline when saving and "false" to ensure it doesn't.</li>
  * <li><strong>root</strong>: special property that should be specified at the top of the file outside of any sections. Set to "true" to stop <code>.editorconfig</code> files search on current file. The value is case insensitive.</li>
+ * <li><strong>display_exclude_patterns</strong>: a comma-separated list of glob patterns specifying files and directories that should not be displayed in file trees or project views. Patterns are matched using the same rules as section names. This property is typically set in the <code>[ * ]</code> section to apply globally.</li>
+ * <li><strong>index_exclude_patterns</strong>: a comma-separated list of glob patterns specifying files and directories that should not be indexed or included in search results. Patterns are matched using the same rules as section names. This property is typically set in the <code>[ * ]</code> section to apply globally.</li>
  * </ul>
  *
  * For any property, a value of "unset" is to remove the effect of that

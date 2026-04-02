@@ -110,6 +110,12 @@ if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/CMakeLists.txt)
         # rather than an executable file named "editorconfig_bin".
         # Used by tests/CMakeLists.txt.
     add_subdirectory(tests)
+
+    # Test for new exclude properties
+    add_test(NAME exclude_properties_test
+        COMMAND editorconfig_bin -f ${CMAKE_CURRENT_SOURCE_DIR}/test_exclude/.editorconfig ${CMAKE_CURRENT_SOURCE_DIR}/test_exclude/dummy.txt
+    )
+    set_tests_properties(exclude_properties_test PROPERTIES PASS_REGULAR_EXPRESSION "display_exclude_patterns=.*\\nindex_exclude_patterns=.*")
     message(STATUS "Tests enabled")
 else()
     message(WARNING
