@@ -96,8 +96,12 @@ int ec_glob(const char *pattern, const char *string)
     _Bool                     are_braces_paired = 1;
     UT_array *                nums;     /* number ranges */
     int                       ret = 0;
+    size_t                    pattern_len = strlen(pattern);
 
-    strcpy(l_pattern, pattern);
+    /* Reject patterns that would overflow l_pattern in the copy below. */
+    if (pattern_len >= sizeof(l_pattern))
+        return -1;
+    memcpy(l_pattern, pattern, pattern_len + 1);
     p_pcre = pcre_str + 1;
     pcre_str_end = pcre_str + 2 * PATTERN_MAX;
 
