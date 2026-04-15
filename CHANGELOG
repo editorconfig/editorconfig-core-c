@@ -1,6 +1,12 @@
 v0.12.11
 
 - Fix CVE-2026-40489
+- Bump minimum CMake version to 3.18.4 (#140)
+- Turn on warning as error only for Debug builds (#144)
+- Fix strncpy buffer truncation warning in ini.c (#148)
+- Fix gcc 15.2 compile error (#150)
+- Point installation instructions to GitHub releases instead of SourceForge (#141)
+- CI fixes.
 
 v0.12.10
 
