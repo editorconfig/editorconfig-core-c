@@ -1,7 +1,7 @@
 # CMakeLists.txt for core testing in
 # editorconfig-core-c.
 #
-# Copyright (c) 2011-2025 EditorConfig Team
+# Copyright (c) 2011-2026 EditorConfig Team
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@ cmake_policy(VERSION 3.18.4)
 
 project(editorconfig VERSION "0.12.11" LANGUAGES C)
 
-set(PROJECT_VERSION_SUFFIX "-development")
+set(PROJECT_VERSION_SUFFIX "")
 
 include(GNUInstallDirs)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake_Modules")
