@@ -125,6 +125,8 @@ char* ec_strdup(const char *str)
     char*       copy;
 
     len = strlen(str) + 1;
+    if (len == 0)
+        return (NULL);
     if ((copy = malloc(len)) == NULL)
         return (NULL);
     memcpy(copy, str, len);
@@ -183,6 +185,8 @@ char* ec_strndup(const char* str, size_t n)
     for (len = 0; len < n && str[len]; len++)
         continue;
 
+    if (len == (size_t)-1)
+        return (NULL);
     if ((copy = malloc(len + 1)) == NULL)
         return (NULL);
     memcpy(copy, str, len);
