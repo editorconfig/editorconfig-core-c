@@ -64,3 +64,7 @@ LICENSE file for details.
 [downloads]: https://sourceforge.net/projects/editorconfig/files/EditorConfig-C-Core/
 [dev doc]: http://docs.editorconfig.org/en/master "EditorConfig C Core latest development version documentation"
 [security page]: https://github.com/editorconfig/editorconfig-core-c/security
+
+### Issue #157
+- **Status:** Fix proposed in PR
+- **Description:** Potential overflow on handling brackets in ec_glob.c
